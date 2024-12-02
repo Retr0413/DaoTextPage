@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>だおだおテキスト ログイン</title>
+    <style>
+        body {
+            background-color: #ffd670;
+            background-image: radial-gradient(circle, #ff9770, #ffd670);
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            color: #4d2600;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff2cc;
+            padding: 40px;
+            border-radius: 50% 20% / 10% 40%;
+            box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .character {
+            width: 200px;
+            transform: rotate(-15deg);
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 3px dashed #ff9770;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            font-size: 16px;
+            background-color: #fffde7;
+        }
+
+        input::placeholder {
+            color: #ffb347;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #ff6347;
+            box-shadow: 0 0 10px rgba(255, 99, 71, 0.5);
+            transform: scale(1.05);
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: #ff6347;
+            border: none;
+            border-radius: 50px 20px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>ログイン</h1>
+        <form method="POST" action="{{ url_for('auth.login') }}">
+            <div class="form-group">
+                <label for="username">ユーザー名</label>
+                <input type="text" id="username" name="username" placeholder="ユーザー名を入力" required>
+            </div>
+            <div class="form-group">
+                <label for="password">パスワード</label>
+                <input type="password" id="password" name="password" placeholder="パスワードを入力" required>
+            </div>
+            <button type="submit">ログイン</button>
+        </form>
+    </div>
+</body>
+</html>
