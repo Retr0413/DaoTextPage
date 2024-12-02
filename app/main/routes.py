@@ -20,6 +20,8 @@ def index():
 @main_bp.route('/add',methods=['GET','POST'])
 @login_required
 def add():
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
     if request.method == 'POST':
         title = request.form['title']
         context = request.form['context']
