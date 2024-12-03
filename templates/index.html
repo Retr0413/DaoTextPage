@@ -138,55 +138,16 @@
         <h1 class="title-plate">だおだおテキスト</h1>
 
         <div class="description">
-            <p>だおだおテキストとは？</p>
-            <p>だおだおテキストです。だおだおけずったテキストです。</p>
+            <p>だおだおテキストの一覧</p>
         </div>
 
-        <div class="usage-note">
-            <p><strong>ご使用に関する注意</strong></p>
-            <p>勝手に使っていいけど、自分が作ったって言わないでね。</p>
-        </div>
-
-        <div class="pink-section">
-            <h2>★1</h2>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <img src="/api/placeholder/150/150" alt="Icon">
-                    <div class="stars">★★★★</div>
-                    <div>だお1</div>
-                </div>
-                <div class="grid-item">
-                    <img src="/api/placeholder/150/150" alt="Icon">
-                    <div class="stars">★★★★</div>
-                    <div>だお2</div>
-                </div>
-                <div class="grid-item">
-                    <img src="/api/placeholder/150/150" alt="Icon">
-                    <div class="stars">★★★★</div>
-                    <div>だお3</div>
-                </div>
+        <div class="grid-container">
+            {% for text in texts %}
+            <div class="grid-item">
+                <h2>{{ text.title }}</h2>
+                <a href="{{ url_for('main.text_detail', id=text.id) }}">詳細を見る</a>
             </div>
-        </div>
-
-        <div class="yellow-section">
-            <h2>★2</h2>
-            <div class="grid-container">
-                <div class="grid-item">
-                    <img src="/api/placeholder/150/150" alt="Icon">
-                    <div class="stars">★★★★</div>
-                    <div>だお10</div>
-                </div>
-                <div class="grid-item">
-                    <img src="/api/placeholder/150/150" alt="Icon">
-                    <div class="stars">★★★★</div>
-                    <div>だお11</div>
-                </div>
-                <div class="grid-item">
-                    <img src="/api/placeholder/150/150" alt="Icon">
-                    <div class="stars">★★★★</div>
-                    <div>だお12</div>
-                </div>
-            </div>
+            {% endfor %}
         </div>
     </main>
 
