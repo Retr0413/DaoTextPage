@@ -31,12 +31,13 @@ def seed_data():
     """初期データをデータベースに登録する関数"""
     if not Text.query.first():  # データが存在しない場合のみ登録
         sample_texts = [
-            {"title": "クローラー", "pdf_path": "uploads/星1クローラー.pdf", "context": "クローラーの内容"},
-            {"title": "ロボットハンド", "pdf_path": "uploads/星1ロボットハンド.pdf", "context": "ロボットハンドの内容"},
+            {"title": "クローラー", "pdf_path": "uploads/星1クローラー.pdf", "context": "クローラーの内容", "stars": 1},
+            {"title": "ロボットハンド", "pdf_path": "uploads/星1ロボットハンド.pdf", "context": "ロボットハンドの内容", "stars": 1},
+            {"title": "エレベーター", "pdf_path": "uploads/星2エレベーター.pdf", "context": "エレベーターの内容", "stars": 2},
+            {"title": "モノレール", "pdf_path": "uploads/星3モノレール.pdf", "context": "モノレールの内容", "stars": 3},
         ]
         for text in sample_texts:
-            new_text = Text(title=text["title"], pdf_path=text["pdf_path"], context=text["context"])
+            new_text = Text(title=text["title"], pdf_path=text["pdf_path"], context=text["context"], stars=text["stars"])
             db.session.add(new_text)
         db.session.commit()
         print("初期データが登録されました。")
-

@@ -36,7 +36,10 @@ def uploaded_file(filename):
 def index():
     """テキスト一覧ページ"""
     texts = Text.query.all()
-    return render_template('index.html', texts=texts)
+    texts_by_star = {}
+    for text in texts:
+        texts_by_star.setdefault(text.stars, []).append(text)
+    return render_template('index.html', texts_by_star=texts_by_star)
 
 @main_bp.route('/add', methods=['GET', 'POST'])
 @login_required

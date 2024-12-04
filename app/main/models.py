@@ -9,3 +9,4 @@ class Text(db.Model):
     title = db.Column(db.String(100), nullable=False)
     context = db.Column(db.Text, nullable=True)
     pdf_path = db.Column(db.String(200), nullable=True)
+    stars = db.Column(db.Integer, nullable=False)
