@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <title>だおだおテキスト</title>
     <style>
-        /* Existing styles */
         body { margin: 0; padding: 0; font-family: sans-serif; background: #fff; }
         .header { background: #000; color: #fff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
         .header .logo { font-size: 24px; font-weight: bold; }
@@ -33,14 +32,13 @@
     <main class="main-content">
         <h1 class="title-plate">だおだおテキスト</h1>
 
-        <!-- Grouped by star ratings -->
         {% for star, texts in texts_by_star.items() %}
         <section>
             <h2>★{{ star }}</h2>
             <div class="grid-container">
                 {% for text in texts %}
                 <div class="grid-item">
-                    <img src="/static/pdf-placeholder.png" alt="PDF Thumbnail">
+                    <img src="{{ url_for('static', filename=text.text_png) }}" alt="{{ text.title }}">
                     <h3>{{ text.title }}</h3>
                     <p>{{ text.context }}</p>
                     <a href="{{ url_for('main.text_detail', id=text.id) }}">詳細を見る</a>

@@ -6,11 +6,9 @@ import os
 
 main_bp = Blueprint('main', __name__)
 
-# DaoTextPage直下のuploadsフォルダを指定
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')  
 ALLOWED_EXTENSIONS = {'pdf'}
 
-# アップロードフォルダが存在しない場合は作成
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
@@ -49,25 +47,20 @@ def add():
         title = request.form['title']
         file = request.files['file']
 
-        # ファイルがアップロードされていない場合
         if 'file' not in request.files or file.filename == '':
             flash('ファイルがアップロードされていません。')
             return redirect(request.url)
 
-        # ファイルが許可された形式か確認
         if file and allowed_file(file.filename):
-            # ファイルの保存
             filename = secure_filename(file.filename)
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(file_path)
 
-            # PDFの内容を抽出
             reader = PdfReader(file_path)
             pdf_content = ""
             for page in reader.pages:
                 pdf_content += page.extract_text()
 
-            # データベースに保存
             text = Text(title=title, context=pdf_content, pdf_path=filename)
             db.session.add(text)
             db.session.commit()

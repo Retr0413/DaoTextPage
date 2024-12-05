@@ -22,10 +22,10 @@ def login():
         password = request.form['password']
         user = login_service(username, password)
         
-        if user: # ログイン成功
+        if user: 
             session['user_id'] = user['id']
             return redirect(url_for('main.add'))
-        else: # ログイン失敗
+        else: 
             flash('ログインに失敗しました。')
             return redirect(url_for('auth.login'))
         

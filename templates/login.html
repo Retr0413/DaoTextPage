@@ -6,28 +6,25 @@
     <title>だおだおテキスト ログイン</title>
     <style>
         body {
-            background-color: #ffd670;
-            background-image: radial-gradient(circle, #ff9770, #ffd670);
+            background-color: #ffefd5;
             font-family: 'Comic Sans MS', cursive, sans-serif;
-            color: #4d2600;
+            color: #ff6b6b;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0;
         }
 
         .login-container {
-            background-color: #fff2cc;
+            background-color: #fff;
             padding: 40px;
-            border-radius: 50% 20% / 10% 40%;
-            box-shadow: 10px 10px 0 rgba(0, 0, 0, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
 
         .character {
-            width: 200px;
-            transform: rotate(-15deg);
+            width: 150px;
             margin-bottom: 20px;
         }
 
@@ -37,39 +34,37 @@
 
         input {
             width: 100%;
-            padding: 15px 20px;
-            border: 3px dashed #ff9770;
-            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
-            font-size: 16px;
-            background-color: #fffde7;
+            padding: 10px 15px;
+            border: 2px solid #ffc0cb;
+            border-radius: 25px;
+            font-size: 16px
         }
 
         input::placeholder {
-            color: #ffb347;
+            color: #ffb6c1;
         }
 
         input:focus {
             outline: none;
-            border-color: #ff6347;
-            box-shadow: 0 0 10px rgba(255, 99, 71, 0.5);
-            transform: scale(1.05);
+            border-color: #ff69b4;
+            box-shadow: 0 0 5px rgba(255, 192, 203, 0.5);
         }
 
         button {
             width: 100%;
-            padding: 15px;
-            background-color: #ff6347;
+            padding: 10px;
+            background-color: #ff69b4;
             border: none;
-            border-radius: 50px 20px;
+            border-radius: 25px;
             color: #fff;
-            font-size: 18px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: background-color 0.3s ease;
         }
 
-        button:hover {
-            transform: scale(1.1);
+           button:hover {
+            background-color: #ff1493;
         }
     </style>
 </head>
