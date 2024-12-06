@@ -13,36 +13,91 @@
         }
 
         header {
-            background-color: #343a40;
+            background-color: #000;
             color: #fff;
             padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
+        .header .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .triangle-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .header .nav {
+            font-size: 14px;
+        }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .footer-nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-nav a:hover {
+            color: #FFD700;
+        }
 
         .pdf-container {
-            width: 100vw;  
-            height: 100vh; 
-            border: none;  
+            width: 100vw;
+            height: 100vh;
+            border: none;
         }
     </style>
 </head>
 <body>
     <header>
-        <div class="container">
+        <div class="logo">
+            <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
+            <span>だおだおテキスト</span>
+        </div>
+        <div class="nav">
             <a href="/" class="btn btn-light">TOPへ</a>
         </div>
     </header>
 
-    <main class="container-fluid" style="padding: 0;">
+    <main class="container-fluid" style="padding: 20px;">
         <h2 class="text-center">{{ text.title }}</h2>
         <p class="text-center">{{ text.context }}</p>
 
-        <h4 class="text-center">PDFファイルを表示:</h4>
+        <h4 class="text-center">テキスト内容:</h4>
         <iframe
             class="pdf-container"
             src="{{ url_for('static', filename=text.pdf_path) }}"
             frameborder="0">
         </iframe>
     </main>
+
+    <footer>
+        <nav class="footer-nav">
+            <a href="#">サイトマップ</a>
+            <a href="#">SNS</a>
+            <a href="#">トップ</a>
+            <a href="#">リンク</a>
+            <a href="#">だおだおテキスト</a>
+        </nav>
+    </footer>
 </body>
 </html>
