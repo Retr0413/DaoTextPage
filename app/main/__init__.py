@@ -36,6 +36,7 @@ def seed_data():
             {"title": "モノレール", "pdf_path": "uploads/星3モノレール.pdf", "text_png" : "uploads/モノレール.png", "context": "モノレールの内容", "stars": 3},
             {"title": "ステアリングカー", "pdf_path": "uploads/星3ステアリングカー.pdf", "text_png" : "uploads/ステアリングカー.png", "context": "ステアリングカーの内容", "stars": 3},
             {"title": "ライントレース", "pdf_path": "uploads/星3ライントレース.pdf", "text_png" : "uploads/ライントレース.png", "context": "ライントレースの内容", "stars": 3},
+            {"title": "二足歩行ロボット", "pdf_path": "uploads/星3二足歩行ロボット.pdf", "text_png" : "uploads/二足歩行ロボット.png", "context": "二足歩行ロボットの内容", "stars": 3},
             {"title": "六足歩行ロボット", "pdf_path": "uploads/星4六足歩行ロボット.pdf", "text_png" : "uploads/六足歩行ロボット.png", "context": "六足歩行ロボットの内容", "stars": 4},
         ]
         for text in sample_texts:
