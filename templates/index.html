@@ -10,6 +10,7 @@
         .triangle-logo { width: 40px; height: 40px; margin-right: 10px; object-fit: contain; }
         .header .nav { font-size: 14px; }
         .main-content { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .notice-title h2 { padding: 1rem 2rem; border: 6px double #000; }
         .title-plate { background: #000; color: #fff; padding: 20px 20px; margin: 20px auto; display: block; text-align: center; border-radius: 5px; font-size: 30px; font-weight: bold; width: fit-content; }
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin: 20px 0; }
         .grid-item { background: #fff; border: 1px solid #ddd; border-radius: 10px; padding: 15px; text-align: center; transition: transform 0.2s; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; justify-content: center; align-items: center; height: auto; min-height: 360px; box-sizing: border-box; }
@@ -39,14 +40,14 @@
     <main class="main-content">
         <h1 class="title-plate">だおだおテキスト</h1>
         <h1 class="notice-title">
-            <h2 class="title">注意事項</h2>
-            <h2 class="notice">このテキストは、だおだおが作成したテキストになります。営利目的ではなく、あくまで個人的な情報発信の場所として活用していく予定です。<br>
-                                </h2>
+            <h2 class="title">###　使用方法　###</h2>
+            <h2 class="notice">このテキストは、だおだおが作成したテキストになります。営利目的ではなく、あくまで個人的な情報発信の場所として活用していきます。</h2>
+            <h3>＃注意事項：このテキストを営利目的で流量したり、コピーをして配布するなどは、やめて下さい。</h3>
         </h1>
 
         {% for star, texts in texts_by_star.items() %}
         <section>
-            <h2>★{{ star }}</h2>
+            <h2 class="text_star">★{{ star }}</h2>
             <div class="grid-container">
                 {% for text in texts %}
                 <div class="grid-item">
