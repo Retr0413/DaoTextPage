@@ -28,6 +28,10 @@
         .button-50::after { position: absolute; top: 33%; left: 30px; transform: translate(-50%, -50%); color: #000000; font-size: 1.2em; content: ''; }
         .yellow-section .grid-item { background: #fff4d6; }
         .stars { color: #FFD700; font-size: 18px; font-weight: bold; margin: 10px 0; }
+        .box1 { padding: 0.2em 0.5em; margin: 2em 0; background: #ffffff; box-shadow: 0px 0px 0px 10px #ffffff; border: dashed 2px #000; }
+        .button { display: flex; flex-wrap: wrap; gap: 10px; }
+        .button label { margin-right: 10px; }
+        .button [type="checkbox"] { accent-color: #3DA8AA }
 
         /* サイドボタンCSS */
         #menu-fixed { width: 0; z-index: 2; height: 100%; background: #0F0F0F; position: fixed; top: 0; left: 0; overflow: hidden; transition: width 0.3s ease-in-out; box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.19), 8px 0px 10px rgba(0, 0, 0, 0.23); text-align: center; }
@@ -35,6 +39,7 @@
         .menu { list-style: none; padding: 0; margin: 0; color: #fff; }
         .menu li { padding: 15px; cursor: pointer; margin-top: 20px; }
         .menu li:hover { background: #333; }
+        .menu a { color: #fff; }
         .back-button { display: none; font-size: 50px; color: #fff; padding: 10px; margin-left: 20px; cursor: pointer; text-align: left; }
         #menu-fixed.expanded .back-button { display: block; }
     </style>
@@ -50,8 +55,9 @@
     <div id="menu-fixed">
         <div class="back-button" id="close-sidebar">←</div>
         <ul class="menu">
-            <li>機構</li>
+            <li>機構の説明</li>
             <li>リンク</li>
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作成依頼リンク</a></li>
         </ul>
     </div>
 
@@ -62,24 +68,26 @@
             <h2 class="notice">このテキストは、だおだおが作成したテキストになります。営利目的ではなく、あくまで個人的な情報発信の場所として活用していきます。</h2>
             <h3>＃注意事項：このテキストを営利目的で流量したり、コピーをして配布するなどは、やめて下さい。</h3>
         </h1>
-        <h2 class="mechanism-button">機構</h2>
-        <div class="button">
-            <label><input type="checkbox" name="mechanism" value="リンク機構">リンク機構</label>
-            <label><input type="checkbox" name="mechanism" value="クローラー">クローラー</label>
-            <label><input type="checkbox" name="mechanism" value="走る">走る</label>
-            <label><input type="checkbox" name="mechanism" value="ラチェット">ラチェット</label>
-            <label><input type="checkbox" name="mechanism" value="すり足">すり足</label>
-            <label><input type="checkbox" name="mechanism" value="ラックギア">ラックギア</label>
-            <label><input type="checkbox" name="mechanism" value="昇降機構">昇降機構</label>
-            <label><input type="checkbox" name="mechanism" value="ターンテーブル">ターンテーブル</label>
-            <label><input type="checkbox" name="mechanism" value="回転する台">回転する台</label>
-            <label><input type="checkbox" name="mechanism" value="ベベルギア">ベベルギア</label>
-            <label><input type="checkbox" name="mechanism" value="カラーセンサー">カラーセンサー</label>
-            <label><input type="checkbox" name="mechanism" value="ライントレース">ライントレース</label>
-            <label><input type="checkbox" name="mechanism" value="歩行">歩行</label>
-            <label><input type="checkbox" name="mechanism" value="重心移動">重心移動</label>
-            <label><input type="checkbox" name="mechanism" value="ノブホイールギア">ノブホイールギア</label>
-        </div>
+        <form method="get" action="{{ url_for('main.index') }}" id="search-form">
+            <div class="box1">
+                <h2>機構</h2>
+                <div class="button">
+                    {% for mechanism in ["リンク機構", "クローラー", "走る", "ラチェット", "すり足", 
+                                        "ラックギア", "昇降機構", "ターンテーブル", "回転する台", 
+                                        "ベベルギア", "カラーセンサー", "ライントレース", "歩行", 
+                                        "重心移動", "ノブホイールギア"] %}
+                    <label>
+                        <input 
+                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="document.getElementById('search-form').submit()" 
+                            {% if mechanism in selected_mechanism %}checked{% endif %}>
+                        {{ mechanism }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            
+        </form>
+
         {% for star, texts in texts_by_star.items() %}
         <section>
             <h2 class="text_star">★{{ star }}</h2>
