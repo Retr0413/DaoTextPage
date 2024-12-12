@@ -3,6 +3,7 @@ from app.main.models import db, Text
 from werkzeug.utils import secure_filename
 from PyPDF2 import PdfReader
 import os
+from sqlalchemy import or_
 
 main_bp = Blueprint('main', __name__)
 
@@ -35,18 +36,18 @@ def index():
     """テキスト一覧ページ"""
     selected_mechanism = request.args.getlist('mechanism')
     texts = Text.query
+
     if selected_mechanism:
-        filters_conditions = []
-        for mechanism in selected_mechanism:
-            filters_conditions.append(Text.mechanism.contains(mechanism))
-        if filters_conditions:
-            texts = texts.filter(db.or_(*filters_conditions))
+        filters = [Text.mechanism.contains(mechanism) for mechanism in selected_mechanism]
+        texts = texts.filter(or_(*filters))
             
-    texts = Text.query.all()
+    texts = texts.all()
     texts_by_star = {}
+    
     for text in texts:
         texts_by_star.setdefault(text.stars, []).append(text)
-    return render_template('index.html', texts_by_star=texts_by_star)
+
+    return render_template('index.html', texts_by_star=texts_by_star, selected_mechanism=selected_mechanism)
 
 @main_bp.route('/add', methods=['GET', 'POST'])
 @login_required
