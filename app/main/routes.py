@@ -33,6 +33,15 @@ def uploaded_file(filename):
 @main_bp.route('/')
 def index():
     """テキスト一覧ページ"""
+    selected_mechanism = request.args.getlist('mechanism')
+    texts = Text.query
+    if selected_mechanism:
+        filters_conditions = []
+        for mechanism in selected_mechanism:
+            filters_conditions.append(Text.mechanism.contains(mechanism))
+        if filters_conditions:
+            texts = texts.filter(db.or_(*filters_conditions))
+            
     texts = Text.query.all()
     texts_by_star = {}
     for text in texts:

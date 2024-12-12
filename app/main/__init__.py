@@ -40,7 +40,7 @@ def seed_data():
             {"title": "六足歩行ロボット", "pdf_path": "uploads/星4六足歩行ロボット.pdf", "text_png" : "uploads/六足歩行ロボット.png", "context": "六足歩行ロボットの内容", "mechanism": "歩行", "stars": 4},
         ]
         for text in sample_texts:
-            new_text = Text(title=text["title"], pdf_path=text["pdf_path"], text_png=text["text_png"], context=text["context"], stars=text["stars"])
+            new_text = Text(title=text["title"], pdf_path=text["pdf_path"], text_png=text["text_png"], context=text["context"], mechanism=text["mechanism"], stars=text["stars"])
             db.session.add(new_text)
         db.session.commit()
         print("初期データが登録されました。")
