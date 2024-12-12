@@ -14,11 +14,9 @@ if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
 
 def allowed_file(filename):
-    """許可された拡張子か確認"""
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def login_required(func):
-    """ログイン必須デコレータ"""
     def wrapper(*args, **kwargs):
         if 'user_id' not in session:
             return redirect(url_for('auth.login'))
@@ -28,31 +26,27 @@ def login_required(func):
 
 @main_bp.route('/uploads/<path:filename>')
 def uploaded_file(filename):
-    """プロジェクト直下のuploadsフォルダ内のファイルを提供"""
     return send_from_directory(UPLOAD_FOLDER, filename)
 
 @main_bp.route('/')
 def index():
-    """テキスト一覧ページ"""
-    selected_mechanism = request.args.getlist('mechanism')
+    selected_mechanisms = request.args.getlist('mechanisms')
+    print(f"Selected mechanisms: {selected_mechanisms}")  # デバッグ用
     texts = Text.query
-
-    if selected_mechanism:
-        filters = [Text.mechanism.contains(mechanism) for mechanism in selected_mechanism]
+    if selected_mechanisms:
+        filters = [Text.mechanism.contains(mechanism) for mechanism in selected_mechanisms]
         texts = texts.filter(or_(*filters))
-            
     texts = texts.all()
+
     texts_by_star = {}
-    
     for text in texts:
         texts_by_star.setdefault(text.stars, []).append(text)
 
-    return render_template('index.html', texts_by_star=texts_by_star, selected_mechanism=selected_mechanism)
+    return render_template('index.html', texts_by_star=texts_by_star, selected_mechanism=selected_mechanisms)
 
 @main_bp.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
-    """新しいPDFをアップロードして登録"""
     if request.method == 'POST':
         title = request.form['title']
         file = request.files['file']
@@ -80,6 +74,5 @@ def add():
 
 @main_bp.route('/text/<int:id>')
 def text_detail(id):
-    """個別のPDFテキスト表示"""
     text = Text.query.get_or_404(id)
     return render_template('text.html', text=text)
