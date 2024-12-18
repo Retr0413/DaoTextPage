@@ -20,13 +20,20 @@ def login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        user = login_service(username, password)
+        result = login_service({'username': username, 'password': password})
         
-        if user: 
-            session['user_id'] = user['id']
-            return redirect(url_for('main.add'))
-        else: 
-            flash('ログインに失敗しました。')
-            return redirect(url_for('auth.login'))
-        
+        if 'id' in result:
+            session['user_id'] = result['id']
+            session['username'] = result['username']
+            flash('ログイン', 'success')
+            return redirect(url_for('main.index'))
+        else:
+            flash(result.get('message', 'ログイン失敗'), 'danger')
+
     return render_template('login.html')
+
+@auth.route('/logout')
+def logout():
+    session.clear()
+    flash('ログアウト', 'info')
+    return redirect(url_for('auth.login'))

@@ -2,7 +2,9 @@ from flask import Flask
 from app.main.config import Config
 from app.main.routes import main_bp
 from app.main.models import db, Text
+from app.auth.models import User
 from app.auth.routes import auth
+from werkzeug.security import generate_password_hash
 import os
 
 def create_app():
@@ -15,17 +17,25 @@ def create_app():
 
     db.init_app(app)
 
-    app.register_blueprint(main_bp)
-    app.register_blueprint(auth)
-
     with app.app_context():
         db.create_all()
         seed_data()  
+
+    app.register_blueprint(main_bp)
+    app.register_blueprint(auth)
 
     return app
 
 def seed_data():
     """初期データをデータベースに登録する関数"""
+    if not User.query.first():
+        initial_user = User(
+            id=1,
+            username='daodao', 
+            password_hash=generate_password_hash('DefaultTakuma', method='pbkdf2:sha256')
+        )
+        db.session.add(initial_user)
+
     if not Text.query.first():  
         base_texts = [
             {"title": "クローラー", "pdf_path": "uploads/星1クローラー.pdf", "text_png" : "uploads/クローラー.png", "context": "みんな大好きクローラー。凸凹な地形も走れる", "mechanism": "クローラー" "走る", "stars": 1},
@@ -42,5 +52,6 @@ def seed_data():
         for text in base_texts:
             new_text = Text(title=text["title"], pdf_path=text["pdf_path"], text_png=text["text_png"], context=text["context"], mechanism=text["mechanism"], stars=text["stars"])
             db.session.add(new_text)
-        db.session.commit()
-        print("初期データが登録されました。")
+
+    db.session.commit()
+    print('初期データの登録が完了しました。')
