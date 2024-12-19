@@ -76,3 +76,7 @@ def add():
 def text_detail(id):
     text = Text.query.get_or_404(id)
     return render_template('text.html', text=text)
+
+@main_bp.route('/mechanism', methods=['GET', 'POST'])
+def mechanism():
+    return render_template('mechanism.html')
