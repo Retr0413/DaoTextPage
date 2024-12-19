@@ -28,6 +28,11 @@
         .button-50::after { position: absolute; top: 33%; left: 30px; transform: translate(-50%, -50%); color: #000000; font-size: 1.2em; content: ''; }
         .yellow-section .grid-item { background: #fff4d6; }
         .stars { color: #FFD700; font-size: 18px; font-weight: bold; margin: 10px 0; }
+        .stars_box { width: 8%; }
+        .text_star { font-size: 30px; padding: 0 18px; }
+        .mechanism summary { font-weight: bold; margin: 20px 0; font-size: 30px; }
+        .mechanism details[open] { padding: 0.5em }
+        .mechanism details[open] summary { border-bottom: 1px solid #000; }
         .box1 { padding: 0.2em 0.5em; margin: 2em 0; background: #ffffff; box-shadow: 0px 0px 0px 10px #ffffff; border: dashed 2px #000; } 
         .button { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 5px; }
         .button label { margin-right: 10px; }
@@ -49,7 +54,7 @@
         <div class="logo" id="toggle-sidebar">
             <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
         </div>
-        <div class="nav"></div>
+        <div class="nav">だおだおテキストとは?</div>
     </header>
 
     <div id="menu-fixed">
@@ -70,14 +75,16 @@
             <h3>＃注意事項：このテキストを営利目的で流量したり、コピーをして配布するなどは、やめて下さい。</h3>
         </h1>
         <form method="get" action="{{ url_for('main.index') }}" id="search-form">
+        <div class="mechanism">
+            <details id="mechanism-details" open>
+            <summary>機構で絞り込む</summary>
             <div class="box1">
-                <h2>機構</h2>
                 <h3>ギア</h3>
                 <div class="button">
                     {% for mechanism in ["ラックギア", "べべルギア", "ノブホイールギア"] %}
                     <label>
                         <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="document.getElementById('search-form').submit()" 
+                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
                             {% if mechanism in selected_mechanism %}checked{% endif %}>
                         {{ mechanism }}
                     </label>
@@ -88,7 +95,7 @@
                     {% for mechanism in ["歩行", "走る", "すり足", "重心移動"] %}
                     <label>
                         <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="document.getElementById('search-form').submit()" 
+                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
                             {% if mechanism in selected_mechanism %}checked{% endif %}>
                         {{ mechanism }}
                     </label>
@@ -99,7 +106,7 @@
                     {% for mechanism in ["リンク機構", "昇降機構"] %}
                     <label>
                         <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="document.getElementById('search-form').submit()" 
+                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
                             {% if mechanism in selected_mechanism %}checked{% endif %}>
                         {{ mechanism }}
                     </label>
@@ -110,7 +117,7 @@
                     {% for mechanism in ["カラーセンサー"] %}
                     <label>
                         <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="document.getElementById('search-form').submit()" 
+                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
                             {% if mechanism in selected_mechanism %}checked{% endif %}>
                         {{ mechanism }}
                     </label>
@@ -121,19 +128,22 @@
                     {% for mechanism in ["回転する台", "ラチェット", "ライントレース", "ターンテーブル", "クローラー"] %}
                     <label>
                         <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="document.getElementById('search-form').submit()" 
+                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm" 
                             {% if mechanism in selected_mechanism %}checked{% endif %}>
                         {{ mechanism }}
                     </label>
                     {% endfor %}
                 </div>
             </div>
-            
+            </details>
+        </div>
         </form>
 
         {% for star, texts in texts_by_star.items() %}
         <section>
-            <h2 class="text_star">★{{ star }}</h2>
+            <div class="stars_box">
+                <h2 class="text_star">★{{ star }}</h2>
+            </div>
             <div class="grid-container">
                 {% for text in texts %}
                 <div class="grid-item">
@@ -172,6 +182,18 @@
         closeButton.addEventListener('click', () => {
             sidebar.classList.remove('expanded');
         });
+
+        function submitForm() {
+            const details = document.getElementById('mechanism-details');
+            const wasOpen = details.open;
+
+            const form = document.getElementById('search-form');
+            form.submit();
+
+            if (wasOpen) {
+                details.setAttribute('open', 'true');
+            }
+        }
     </script>
 </body>
 </html>
