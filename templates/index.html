@@ -33,6 +33,7 @@
         .mechanism summary { font-weight: bold; margin: 20px 0; font-size: 30px; }
         .mechanism details[open] { padding: 0.5em }
         .mechanism details[open] summary { border-bottom: 1px solid #000; }
+        .mechanism-tag { display: inline-block; margin: 0 5px; padding: 2px 8px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; font-size: 12px; }
         .box1 { padding: 0.2em 0.5em; margin: 2em 0; background: #ffffff; box-shadow: 0px 0px 0px 10px #ffffff; border: dashed 2px #000; } 
         .button { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 5px; }
         .button label { margin-right: 10px; }
@@ -149,6 +150,10 @@
                 <div class="grid-item">
                     <img src="{{ url_for('static', filename=text.text_png) }}" alt="{{ text.title }}">
                     <h3>{{ text.title }}</h3>
+                    <small>{% for mechanism in text.mechanism.split('、') %}
+                        <span class="mechanism-tag">{{ mechanism.strip() }}</span>
+                        {% endfor %}
+                    </small>
                     <p>{{ text.context }}</p>
                     <a href="{{ url_for('main.text_detail', id=text.id) }}" class="button-50" data-stars="{{ star }}">
                         テキストを見る
