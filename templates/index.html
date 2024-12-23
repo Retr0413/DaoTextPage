@@ -129,7 +129,7 @@
                     {% for mechanism in ["回転する台", "ラチェット", "ライントレース", "ターンテーブル", "クローラー"] %}
                     <label>
                         <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm" 
+                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
                             {% if mechanism in selected_mechanism %}checked{% endif %}>
                         {{ mechanism }}
                     </label>
