@@ -80,3 +80,23 @@ def text_detail(id):
 @main_bp.route('/mechanism', methods=['GET', 'POST'])
 def mechanism():
     return render_template('mechanism.html')
+
+@main_bp.route('/mechanism/gears', methods=['GET'])
+def gears():
+    return render_template('gear_mechanism.html')
+
+@main_bp.route('/mechanism/movement', methods=['GET'])
+def movement():
+    return render_template('movement_mechanism.html')
+
+@main_bp.route('/mechanism/basic', methods=['GET'])
+def basic_mechanisms():
+    return render_template('basic_mechanism.html')
+
+@main_bp.route('/mechanism/sensors', methods=['GET'])
+def sensors():
+    return render_template('sensors_mechanism.html')
+
+@main_bp.route('/mechanism/special', methods=['GET'])
+def special_mechanisms():
+    return render_template('special_mechanism.html')
