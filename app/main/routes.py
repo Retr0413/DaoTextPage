@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory
 from app.main.models import db, Text
 from werkzeug.utils import secure_filename
-from PyPDF2 import PdfReader
+from PyPDF2 import PdfFileReader
 import os
 from sqlalchemy import or_
 
@@ -60,7 +60,7 @@ def add():
             file_path = os.path.join(UPLOAD_FOLDER, filename)
             file.save(file_path)
 
-            reader = PdfReader(file_path)
+            reader = PdfFileReader(file_path)
             pdf_content = ""
             for page in reader.pages:
                 pdf_content += page.extract_text()
