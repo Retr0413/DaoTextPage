@@ -89,15 +89,17 @@
         <div class="nav">
             <div class="nav-item" onclick="toggleDropdown(this)">機構の説明
                 <div class="dropdown-menu">
-                    <a href="{{ url_for('main.mechanism') }}">ギアの説明</a>
-                    <a href="#">リンク機構</a>
-                    <a href="#">センサーの種類</a>
+                    <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
+                    <a href="{{ url_for('main.gears') }}">ギアの種類</a>
+                    <a href="{{ url_for('main.movement') }}">移動方式</a>
+                    <a href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
+                    <a href="{{ url_for('main.sensors') }}">センサー</a>
+                    <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
                 </div>
             </div>
             <div class="nav-item" onclick="toggleDropdown(this)">リンク
                 <div class="dropdown-menu">
-                    <a href="#">外部リンク1</a>
-                    <a href="#">外部リンク2</a>
+                    <a href="https://akiyuki.jp/">外部リンク1</a>
                 </div>
             </div>
             <div class="nav-item" onclick="toggleDropdown(this)">作成依頼リンク
@@ -114,24 +116,24 @@
 
         <ul class="nav nav-pills mb-4 justify-content-center" id="mechanismTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="pill" href="#gears">ギアの種類</a>
+                <a class="nav-link" href="{{ url_for('main.gears') }}">ギアの種類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#movement">移動方式</a>
+                <a class="nav-link" href="{{ url_for('main.movement') }}">移動方式</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#mechanisms">基本機構</a>
+                <a class="nav-link" href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#sensors">センサー</a>
+                <a class="nav-link" href="{{ url_for('main.sensors') }}">センサー</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#special">特殊機構</a>
+                <a class="nav-link" href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
             </li>
         </ul>
 
         <div class="tab-content">
-            <div class="tab-pane fade" >
+            <div class="tab-pane fade show active" id="movement" role="tabpanel" aria-labelledby="basic-tab">
                 <div class="row row-cols-1 row-cols-md-2 g-4">
                     <div class="col-md-6">
                         <div class="card h-100 mechanism-card">
@@ -163,5 +165,28 @@
             <a href="#">だおだおテキスト</a>
         </nav>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ドロップダウンメニューの表示制御
+        function toggleDropdown(element) {
+            const dropdownMenu = element.querySelector('.dropdown-menu');
+            if (dropdownMenu) {
+                dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+            }
+        }
+
+        // タブの初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            var triggerTabList = [].slice.call(document.querySelectorAll('#mechanismTabs button'));
+            triggerTabList.forEach(function(triggerEl) {
+                var tabTrigger = new bootstrap.Tab(triggerEl);
+                triggerEl.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    tabTrigger.show();
+                });
+            });
+        });
+    </script>
 </body>
 </html>

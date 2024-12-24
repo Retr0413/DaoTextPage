@@ -118,20 +118,22 @@
             </a>
         </div>
         <div class="nav">
-            <div class="nav-item">機構の説明
+            <div class="nav-item" onclick="toggleDropdown(this)">機構の説明
                 <div class="dropdown-menu">
-                    <a href="{{ url_for('main.mechanism') }}">ギアの説明</a>
-                    <a href="#">リンク機構</a>
-                    <a href="#">センサーの種類</a>
+                    <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
+                    <a href="{{ url_for('main.gears') }}">ギアの種類</a>
+                    <a href="{{ url_for('main.movement') }}">移動方式</a>
+                    <a href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
+                    <a href="{{ url_for('main.sensors') }}">センサー</a>
+                    <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
                 </div>
             </div>
-            <div class="nav-item">リンク
+            <div class="nav-item" onclick="toggleDropdown(this)">リンク
                 <div class="dropdown-menu">
-                    <a href="#">外部リンク1</a>
-                    <a href="#">外部リンク2</a>
+                    <a href="https://akiyuki.jp/">外部リンク1</a>
                 </div>
             </div>
-            <div class="nav-item">作成依頼リンク
+            <div class="nav-item" onclick="toggleDropdown(this)">作成依頼リンク
                 <div class="dropdown-menu">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
                     <a href="#">その他のリンク</a>

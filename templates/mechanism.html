@@ -89,15 +89,17 @@
         <div class="nav">
             <div class="nav-item" onclick="toggleDropdown(this)">機構の説明
                 <div class="dropdown-menu">
-                    <a href="{{ url_for('main.mechanism') }}">ギアの説明</a>
-                    <a href="#">リンク機構</a>
-                    <a href="#">センサーの種類</a>
+                    <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
+                    <a href="{{ url_for('main.gears') }}">ギアの種類</a>
+                    <a href="{{ url_for('main.movement') }}">移動方式</a>
+                    <a href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
+                    <a href="{{ url_for('main.sensors') }}">センサー</a>
+                    <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
                 </div>
             </div>
             <div class="nav-item" onclick="toggleDropdown(this)">リンク
                 <div class="dropdown-menu">
-                    <a href="#">外部リンク1</a>
-                    <a href="#">外部リンク2</a>
+                    <a href="https://akiyuki.jp/">外部リンク1</a>
                 </div>
             </div>
             <div class="nav-item" onclick="toggleDropdown(this)">作成依頼リンク
@@ -114,19 +116,19 @@
 
         <ul class="nav nav-pills mb-4 justify-content-center" id="mechanismTabs">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="pill" href="#gears">ギアの種類</a>
+                <a class="nav-link" href="{{ url_for('main.gears') }}">ギアの種類</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#movement">移動方式</a>
+                <a class="nav-link" href="{{ url_for('main.movement') }}">移動方式</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#mechanisms">基本機構</a>
+                <a class="nav-link" href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#sensors">センサー</a>
+                <a class="nav-link" href="{{ url_for('main.sensors') }}">センサー</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="pill" href="#special">特殊機構</a>
+                <a class="nav-link" href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
             </li>
         </ul>
 
