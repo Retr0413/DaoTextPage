@@ -1,4 +1,16 @@
+version: '3.8'
 services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: flaskdb
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
   app:
     build: .
     ports:
@@ -12,19 +24,9 @@ services:
       - db
     volumes:
       - .:/app
-    command: >
-      ./wait-for-it.sh db:3306 -- gunicorn -w 2 -b 0.0.0.0:8080 run:app
-
-  db:
-    image: mysql:8.0
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: flaskdb
-    ports:
-      - "3306:3306"
-    volumes:
-      - db_data:/var/lib/mysql
+    # エントリーポイントを使うので command は不要
+    # command: >
+    #   gunicorn -w 2 -b 0.0.0.0:8080 run:app
 
 volumes:
   db_data:
