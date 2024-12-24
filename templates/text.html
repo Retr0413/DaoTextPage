@@ -17,7 +17,7 @@
             color: #fff;
             padding: 15px;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-start;
             align-items: center;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
@@ -25,6 +25,7 @@
         .header .logo {
             display: flex;
             align-items: center;
+            margin-right: 30px;
         }
 
         .triangle-logo {
@@ -34,7 +35,49 @@
         }
 
         .header .nav {
-            font-size: 14px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-item {
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            font-size: 16px;
+            text-align: left;
+        }
+
+        .nav-item:hover {
+            color: #FFD700;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #000;
+            color: #fff;
+            flex-direction: column;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            min-width: 150px;
+        }
+
+        .nav-item:hover .dropdown-menu {
+            display: flex;
+        }
+
+        .dropdown-menu a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 20px;
+            white-space: nowrap;
+        }
+
+        .dropdown-menu a:hover {
+            background-color: #FFD700;
+            color: #000;
         }
 
         footer {
@@ -68,13 +111,34 @@
     </style>
 </head>
 <body>
-    <header>
+    <header class="header">
         <div class="logo">
-            <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
-            <span>だおだおテキスト</span>
+            <a href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
+            </a>
         </div>
         <div class="nav">
-            <a href="/" class="btn btn-light">TOPへ</a>
+            <div class="nav-item" onclick="toggleDropdown(this)">機構の説明
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
+                    <a href="{{ url_for('main.gears') }}">ギアの種類</a>
+                    <a href="{{ url_for('main.movement') }}">移動方式</a>
+                    <a href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
+                    <a href="{{ url_for('main.sensors') }}">センサー</a>
+                    <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">リンク
+                <div class="dropdown-menu">
+                    <a href="https://akiyuki.jp/">外部リンク1</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">作成依頼リンク
+                <div class="dropdown-menu">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
+                    <a href="#">その他のリンク</a>
+                </div>
+            </div>
         </div>
     </header>
 

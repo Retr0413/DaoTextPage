@@ -6,10 +6,12 @@
     <style>
         /* メインCSS */
         body { margin: 0; padding: 0; font-family: sans-serif; background: #fff; }
-        .header { background: #000; color: #fff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
-        .header .logo { display: flex; align-items: center; font-size: 24px; font-weight: bold; cursor: pointer; }
-        .triangle-logo { width: 40px; height: 40px; margin-right: 10px; object-fit: contain; }
-        .header .nav { font-size: 14px; }
+        .header { background: #000; color: #fff; padding: 10px 20px; display: flex; justify-content: flex-start; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); gap: 20px; }
+        .header .logo { display: flex; align-items: center; font-size: 26px; font-weight: bold; cursor: pointer; }
+        .triangle-logo { width: 40px; height: 40px; margin-right: 10px; margin-top: 10px; object-fit: contain; }
+        .header .nav { position: relative; display: flex; gap: 30px; }
+        .header .nav-item { color: #fff; font-size: 18px; cursor: pointer; padding: 10px; position: relative; }
+        .header .nav-item:hover { color: #FFD700; }
         .main-content { max-width: 1200px; margin: 0 auto; padding: 20px; }
         .notice-title h2 { padding: 1rem 2rem; border: 6px double #000; }
         .title-plate { background: #000; color: #fff; padding: 20px 20px; margin: 20px auto; display: block; text-align: center; border-radius: 5px; font-size: 30px; font-weight: bold; width: fit-content; }
@@ -30,49 +32,61 @@
         .stars { color: #FFD700; font-size: 18px; font-weight: bold; margin: 10px 0; }
         .stars_box { width: 8%; }
         .text_star { font-size: 30px; padding: 0 18px; }
-        .mechanism summary { font-weight: bold; margin: 20px 0; font-size: 30px; }
+        .mechanism summary { font-weight: bold; margin: 20px 0; font-size: 40px; }
         .mechanism details[open] { padding: 0.5em }
         .mechanism details[open] summary { border-bottom: 1px solid #000; }
+        .mechanism-tag { display: inline-block; margin: 0 5px; padding: 2px 8px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; font-size: 12px; }
         .box1 { padding: 0.2em 0.5em; margin: 2em 0; background: #ffffff; box-shadow: 0px 0px 0px 10px #ffffff; border: dashed 2px #000; } 
         .button { display: flex; flex-wrap: wrap; gap: 10px; margin: 8px 5px; }
         .button label { margin-right: 10px; }
         .button [type="checkbox"] { accent-color: #3DA8AA }
 
-        /* サイドボタンCSS */
-        #menu-fixed { width: 0; z-index: 2; height: 100%; background: #0F0F0F; position: fixed; top: 0; left: 0; overflow: hidden; transition: width 0.3s ease-in-out; box-shadow: 10px 0px 10px rgba(0, 0, 0, 0.19), 8px 0px 10px rgba(0, 0, 0, 0.23); text-align: center; }
-        #menu-fixed.expanded { width: 280px; }
-        .menu { list-style: none; padding: 0; margin: 0; color: #fff; }
-        .menu li { padding: 15px; cursor: pointer; margin-top: 20px; }
-        .menu li:hover { background: #333; }
-        .menu a { color: #fff; }
-        .back-button { display: none; font-size: 50px; color: #fff; padding: 10px; margin-left: 20px; cursor: pointer; text-align: left; }
-        #menu-fixed.expanded .back-button { display: block; }
+        /* ドロップダウンメニューCSS */
+        .dropdown-menu { position: absolute; top: 100%; left: 0; background: #000; color: #fff; display: none; flex-direction: column; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); min-width: 150px; z-index: 1000; }
+        .dropdown-menu a { color: #fff; text-decoration: none; padding: 10px 20px; white-space: nowrap; }
+        .dropdown-menu a:hover { background: #FFD700; color: #000; }
+        .nav-item.active .fropdown-menu,
+        .nav-item:hover .dropdown-menu { display: flex; }
     </style>
 </head>
 <body>
     <header class="header">
-        <div class="logo" id="toggle-sidebar">
-            <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
+        <div class="logo">
+            <a href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
+            </a>
         </div>
-        <div class="nav">だおだおテキストとは?</div>
+        <div class="nav">
+            <div class="nav-item" onclick="toggleDropdown(this)">機構の説明
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
+                    <a href="{{ url_for('main.gears') }}">ギアの種類</a>
+                    <a href="{{ url_for('main.movement') }}">移動方式</a>
+                    <a href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
+                    <a href="{{ url_for('main.sensors') }}">センサー</a>
+                    <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">リンク
+                <div class="dropdown-menu">
+                    <a href="https://akiyuki.jp/">外部リンク1</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">作成依頼リンク
+                <div class="dropdown-menu">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
+                    <a href="#">その他のリンク</a>
+                </div>
+            </div>
+        </div>
     </header>
-
-    <div id="menu-fixed">
-        <div class="back-button" id="close-sidebar">←</div>
-        <ul class="menu">
-            <li><a href="{{ url_for('main.mechanism') }}">機構の説明</a></li>
-            <li>リンク</li>
-            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作成依頼リンク</a></li>
-            <li><a href="{{ url_for('auth.login') }}">ログイン</a></li>
-        </ul>
-    </div>
 
     <main class="main-content">
         <h1 class="title-plate">だおだおテキスト</h1>
         <h1 class="notice-title">
-            <h2 class="title">### 使用方法 ###</h2>
-            <h2 class="notice">このテキストは、だおだおが作成したテキストになります。営利目的ではなく、あくまで個人的な情報発信の場所として活用していきます。</h2>
-            <h3>＃注意事項：このテキストを営利目的で流量したり、コピーをして配布するなどは、やめて下さい。</h3>
+            <h2 class="title">### だおだおテキストとは？ ###</h2>
+            <h2 class="notice">当サイトは個人が運営する非公式のファンサイトであり、LEGO社およびその他の関連団体・組織とは一切関係ありません。</h2>
+            <h3>＃注意事項：掲載されているテキストや創作物（画像、デザイン、アイデアを含む）の著作権はすべて運営者に帰属します。これらの内容の無断転載、改変、再配布、または商業利用を固く禁じます。</h3>
         </h1>
         <form method="get" action="{{ url_for('main.index') }}" id="search-form">
         <div class="mechanism">
@@ -128,7 +142,7 @@
                     {% for mechanism in ["回転する台", "ラチェット", "ライントレース", "ターンテーブル", "クローラー"] %}
                     <label>
                         <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm" 
+                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
                             {% if mechanism in selected_mechanism %}checked{% endif %}>
                         {{ mechanism }}
                     </label>
@@ -149,6 +163,10 @@
                 <div class="grid-item">
                     <img src="{{ url_for('static', filename=text.text_png) }}" alt="{{ text.title }}">
                     <h3>{{ text.title }}</h3>
+                    <small>{% for mechanism in text.mechanism.split('、') %}
+                        <span class="mechanism-tag">{{ mechanism.strip() }}</span>
+                        {% endfor %}
+                    </small>
                     <p>{{ text.context }}</p>
                     <a href="{{ url_for('main.text_detail', id=text.id) }}" class="button-50" data-stars="{{ star }}">
                         テキストを見る
@@ -171,16 +189,26 @@
     </footer>
 
     <script>
-        const sidebar = document.getElementById('menu-fixed');
-        const toggleButton = document.getElementById('toggle-sidebar');
-        const closeButton = document.getElementById('close-sidebar');
+        function toggleDropdown(element) {
+            const activeClass = 'active';
+            const isActive = element.classList.contains(activeClass);
 
-        toggleButton.addEventListener('click', () => {
-            sidebar.classList.add('expanded');
-        });
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove(activeClass);
+            });
 
-        closeButton.addEventListener('click', () => {
-            sidebar.classList.remove('expanded');
+            if (!isActive) {
+                element.classList.add(activeClass);
+            }
+        }
+
+        document.addEventListener('click', (event) => {
+            const isClickInside = event.target.closest('.nav-item');
+            if (!isClickInside) {
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+            }
         });
 
         function submitForm() {

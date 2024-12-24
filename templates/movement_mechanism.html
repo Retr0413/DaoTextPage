@@ -71,11 +71,10 @@
             color: #FFD700;
         }
 
-        /* ドロップダウンメニューCSS */
         .dropdown-menu { position: absolute; top: 100%; left: 0; background: #000; color: #fff; display: none; flex-direction: column; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); min-width: 150px; z-index: 1000; }
         .dropdown-menu a { color: #fff; text-decoration: none; padding: 10px 20px; white-space: nowrap; }
         .dropdown-menu a:hover { background: #FFD700; color: #000; }
-        .nav-item.active .fropdown-menu,
+        .nav-item.active .dropdown-menu,
         .nav-item:hover .dropdown-menu { display: flex; }
     </style>
 </head>
@@ -111,8 +110,8 @@
         </div>
     </header>
 
-    <div class="container py-5">
-        <h1 class="text-center mb-5">ロボット機構の基礎知識</h1>
+    <main class="container py-5">
+        <h1 class="text-center mb-4">移動方式</h1>
 
         <ul class="nav nav-pills mb-4 justify-content-center" id="mechanismTabs">
             <li class="nav-item">
@@ -132,39 +131,10 @@
             </li>
         </ul>
 
-        <div class="tab-content">
-            <div class="tab-pane fade show active" >
+        <div class="tab-content" id="mechanismTabContent">
+            <div class="tab-pane fade show active" id="movement" role="tabpanel" aria-labelledby="movement-tab">
                 <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col-md-4">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">ラックギア</h5>
-                                <p class="card-text">直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品（ラック）で構成されています。エレベーターや工作機械などで使用されます。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">べベルギア</h5>
-                                <p class="card-text">軸が直角に交差する場所で動力を伝達するための歯車。コーナー動作や方向転換に使用されます。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">ノブホイールギア</h5>
-                                <p class="card-text">手動で回転させる際に使用される大きな円形のギア。精密な調整や手動操作が必要な場面で活用されます。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" >
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col-md-6">
+                    <div class="col">
                         <div class="card h-100 mechanism-card">
                             <div class="card-body">
                                 <h5 class="card-title">歩行</h5>
@@ -172,7 +142,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col">
                         <div class="card h-100 mechanism-card">
                             <div class="card-body">
                                 <h5 class="card-title">走る</h5>
@@ -180,7 +150,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col">
                         <div class="card h-100 mechanism-card">
                             <div class="card-body">
                                 <h5 class="card-title">すり足</h5>
@@ -188,7 +158,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col">
                         <div class="card h-100 mechanism-card">
                             <div class="card-body">
                                 <h5 class="card-title">重心移動</h5>
@@ -198,87 +168,8 @@
                     </div>
                 </div>
             </div>
-
-            <div class="tab-pane fade" >
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col-md-6">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">リンク機構</h5>
-                                <p class="card-text">複数の棒状の部品を連結させて動きを伝達する機構。複雑な動きを実現できます。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">昇降機構</h5>
-                                <p class="card-text">垂直方向の動きを実現する機構。エレベーターのような上下動作に使用されます。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" >
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col-md-12">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">カラーセンサー</h5>
-                                <p class="card-text">物体の色を検知するセンサー。ライントレースや物体の識別に使用されます。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="tab-pane fade" >
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col-md-4">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">回転する台</h5>
-                                <p class="card-text">水平面で回転する機構。展示や方向転換に使用されます。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">ラチェット</h5>
-                                <p class="card-text">一方向にのみ回転を許可する機構。逆転防止に使用されます。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">ライントレース</h5>
-                                <p class="card-text">地面に引かれたラインに沿って自動で進む機能。センサーとモーターの制御で実現します。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">ターンテーブル</h5>
-                                <p class="card-text">水平面での回転台。物体の方向転換や展示に使用されます。</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">クローラー</h5>
-                                <p class="card-text">無限軌道を使用した移動機構。不整地での移動に適しています。</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
-    </div>
+    </main>
 
     <footer>
         <nav class="footer-nav">
@@ -291,5 +182,26 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ドロップダウンメニューの表示制御
+        function toggleDropdown(element) {
+            const dropdownMenu = element.querySelector('.dropdown-menu');
+            if (dropdownMenu) {
+                dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+            }
+        }
+
+        // タブの初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            var triggerTabList = [].slice.call(document.querySelectorAll('#mechanismTabs button'));
+            triggerTabList.forEach(function(triggerEl) {
+                var tabTrigger = new bootstrap.Tab(triggerEl);
+                triggerEl.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    tabTrigger.show();
+                });
+            });
+        });
+    </script>
 </body>
 </html>
