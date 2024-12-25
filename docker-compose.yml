@@ -1,8 +1,8 @@
+# docker-compose.dev.yml の例
 version: '3.8'
 services:
   db:
     image: mysql:8.0
-    restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: flaskdb
@@ -12,21 +12,22 @@ services:
       - db_data:/var/lib/mysql
 
   app:
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
+    volumes:
+      - .:/app 
     environment:
+      FLASK_ENV: development
+      FLASK_DEBUG: 1
       DB_USER: root
       DB_PASSWORD: password
       DB_HOST: db
       DB_NAME: flaskdb
     depends_on:
       - db
-    volumes:
-      - .:/app
-    # エントリーポイントを使うので command は不要
-    # command: >
-    #   gunicorn -w 2 -b 0.0.0.0:8080 run:app
 
 volumes:
   db_data:
