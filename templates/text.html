@@ -36,7 +36,7 @@
 
         .header .nav {
             display: flex;
-            gap: 20px;
+            gap: 50px;
             align-items: center;
         }
 
@@ -137,6 +137,11 @@
                 <div class="dropdown-menu">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
                     <a href="#">その他のリンク</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">ログイン
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('auth.login') }}">ログイン</a>
                 </div>
             </div>
         </div>

@@ -9,7 +9,7 @@
         .header { background: #000; color: #fff; padding: 10px 20px; display: flex; justify-content: flex-start; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); gap: 20px; }
         .header .logo { display: flex; align-items: center; font-size: 26px; font-weight: bold; cursor: pointer; }
         .triangle-logo { width: 40px; height: 40px; margin-right: 10px; margin-top: 10px; object-fit: contain; }
-        .header .nav { position: relative; display: flex; gap: 80px; }
+        .header .nav { position: relative; display: flex; gap: 50px; }
         .header .nav-item { color: #fff; font-size: 18px; cursor: pointer; padding: 10px; position: relative; }
         .header .nav-item:hover { color: #FFD700; }
         .main-content { max-width: 1200px; margin: 0 auto; padding: 20px; }
@@ -47,6 +47,111 @@
         .dropdown-menu a:hover { background: #FFD700; color: #000; }
         .nav-item.active .fropdown-menu,
         .nav-item:hover .dropdown-menu { display: flex; }
+
+        /* スライドショーCSS */
+        .img-frame {
+            position: relative;
+            width: 70%;
+            height: 300px;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        @media screen and (max-width: 767px) {
+            .img-frame {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        .img-01, .img-02, .img-03, .img-04, .img-05, .img-06 {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .img-01 {
+            background-image: url("{{ url_for('static', filename='uploads/クローラー.png') }}");
+            animation: slide-animation-01 24s infinite;
+        }
+
+        .img-02 {
+            background-image: url("{{ url_for('static', filename='uploads/エレベーター.png') }}");
+            animation: slide-animation-02 24s infinite;
+        }
+
+        .img-03 {
+            background-image: url("{{ url_for('static', filename='uploads/ステアリングカー.png') }}");
+            animation: slide-animation-03 24s infinite;
+        }
+
+        .img-04 {
+            background-image: url("{{ url_for('static', filename='uploads/ロボットハンド.png') }}");
+            animation: slide-animation-04 24s infinite;
+        }
+
+        .img-05 {
+            background-image: url("{{ url_for('static', filename='uploads/ライントレース.png') }}");
+            animation: slide-animation-05 24s infinite;
+        }
+
+        .img-06 {
+            background-image: url("{{ url_for('static', filename='uploads/六足歩行ロボット.png') }}");
+            animation: slide-animation-06 24s infinite;
+        }
+
+        @keyframes slide-animation-01 {
+            0% { opacity: 1; transform: scale(1.0); }
+            30% { opacity: 1; }
+            40% { opacity: 0; transform: scale(1.15); }
+            100% { opacity: 0; transform: scale(1.15); }
+        }
+
+        @keyframes slide-animation-02 {
+            0% { opacity: 0; }
+            30% { opacity: 0; transform: scale(1.1); }
+            40% { opacity: 1; }
+            60% { opacity: 1; }
+            70% { opacity: 0; transform: scale(1.0); }
+            100% { opacity: 0; }
+        }
+
+        @keyframes slide-animation-03 {
+            0% { opacity: 0; }
+            60% { opacity: 0; transform: scale(1.0); }
+            70% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1.1); }
+        }
+
+        @keyframes slide-animation-04 {
+            0% { opacity: 1; transform: scale(1.0); }
+            30% { opacity: 1; }
+            40% { opacity: 0; transform: scale(1.15); }
+            100% { opacity: 0; transform: scale(1.15); }
+        }
+
+        @keyframes slide-animation-05 {
+            0% { opacity: 0; }
+            30% { opacity: 0; transform: scale(1.1); }
+            40% { opacity: 1; }
+            60% { opacity: 1; }
+            70% { opacity: 0; transform: scale(1.0); }
+            100% { opacity: 0; }
+        }
+
+        @keyframes slide-animation-06 {
+            0% { opacity: 0; }
+            60% { opacity: 0; transform: scale(1.0); }
+            70% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; transform: scale(1.1); }
+        }
     </style>
 </head>
 <body>
@@ -78,79 +183,95 @@
                     <a href="#">その他のリンク</a>
                 </div>
             </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">ログイン
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('auth.login') }}">ログイン</a>
+                </div>
+            </div>
         </div>
     </header>
 
     <main class="main-content">
         <h1 class="title-plate">だおだおテキスト</h1>
+
+        <div class="img-frame">
+            <div class="img-01"></div>
+            <div class="img-02"></div>
+            <div class="img-03"></div>
+            <div class="img-04"></div>
+            <div class="img-05"></div>
+            <div class="img-06"></div>
+        </div>
+
         <h1 class="notice-title">
             <h2 class="title">### だおだおテキストとは？ ###</h2>
             <h2 class="notice">当サイトは個人が運営する非公式のファンサイトであり、LEGO社およびその他の関連団体・組織とは一切関係ありません。</h2>
             <h3>＃注意事項：掲載されているテキストや創作物（画像、デザイン、アイデアを含む）の著作権はすべて運営者に帰属します。これらの内容の無断転載、改変、再配布、または商業利用を固く禁じます。</h3>
         </h1>
+
         <form method="get" action="{{ url_for('main.index') }}" id="search-form">
-        <div class="mechanism">
-            <details id="mechanism-details" open>
-            <summary>機構で絞り込む</summary>
-            <div class="box1">
-                <h3>ギア</h3>
-                <div class="button">
-                    {% for mechanism in ["ラックギア", "べべルギア", "ノブホイールギア"] %}
-                    <label>
-                        <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
-                            {% if mechanism in selected_mechanism %}checked{% endif %}>
-                        {{ mechanism }}
-                    </label>
-                    {% endfor %}
-                </div>
-                <h3>移動</h3>
-                <div class="button">
-                    {% for mechanism in ["歩行", "走る", "すり足", "重心移動"] %}
-                    <label>
-                        <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
-                            {% if mechanism in selected_mechanism %}checked{% endif %}>
-                        {{ mechanism }}
-                    </label>
-                    {% endfor %}
-                </div>
-                <h3>機構</h3>
-                <div class="button">
-                    {% for mechanism in ["リンク機構", "昇降機構"] %}
-                    <label>
-                        <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
-                            {% if mechanism in selected_mechanism %}checked{% endif %}>
-                        {{ mechanism }}
-                    </label>
-                    {% endfor %}
-                </div>
-                <h3>センサー</h3>
-                <div class="button">
-                    {% for mechanism in ["カラーセンサー"] %}
-                    <label>
-                        <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
-                            {% if mechanism in selected_mechanism %}checked{% endif %}>
-                        {{ mechanism }}
-                    </label>
-                    {% endfor %}
-                </div>
-                <h3>動き</h3>
-                <div class="button">
-                    {% for mechanism in ["回転する台", "ラチェット", "ライントレース", "ターンテーブル", "クローラー"] %}
-                    <label>
-                        <input 
-                            type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
-                            {% if mechanism in selected_mechanism %}checked{% endif %}>
-                        {{ mechanism }}
-                    </label>
-                    {% endfor %}
-                </div>
+            <div class="mechanism">
+                <details id="mechanism-details" open>
+                    <summary>機構で絞り込む</summary>
+                    <div class="box1">
+                        <h3>ギア</h3>
+                        <div class="button">
+                            {% for mechanism in ["ラックギア", "べべルギア", "ノブホイールギア"] %}
+                            <label>
+                                <input 
+                                    type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
+                                    {% if mechanism in selected_mechanism %}checked{% endif %}>
+                                {{ mechanism }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        <h3>移動</h3>
+                        <div class="button">
+                            {% for mechanism in ["歩行", "走る", "すり足", "重心移動"] %}
+                            <label>
+                                <input 
+                                    type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
+                                    {% if mechanism in selected_mechanism %}checked{% endif %}>
+                                {{ mechanism }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        <h3>機構</h3>
+                        <div class="button">
+                            {% for mechanism in ["リンク機構", "昇降機構"] %}
+                            <label>
+                                <input 
+                                    type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
+                                    {% if mechanism in selected_mechanism %}checked{% endif %}>
+                                {{ mechanism }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        <h3>センサー</h3>
+                        <div class="button">
+                            {% for mechanism in ["カラーセンサー"] %}
+                            <label>
+                                <input 
+                                    type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
+                                    {% if mechanism in selected_mechanism %}checked{% endif %}>
+                                {{ mechanism }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                        <h3>動き</h3>
+                        <div class="button">
+                            {% for mechanism in ["回転する台", "ラチェット", "ライントレース", "ターンテーブル", "クローラー"] %}
+                            <label>
+                                <input 
+                                    type="checkbox" name="mechanisms" value="{{ mechanism }}" onchange="submitForm()" 
+                                    {% if mechanism in selected_mechanism %}checked{% endif %}>
+                                {{ mechanism }}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </details>
             </div>
-            </details>
-        </div>
         </form>
 
         {% for star, texts in texts_by_star.items() %}
