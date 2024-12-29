@@ -5,32 +5,212 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>だおだおテキスト ログイン</title>
     <style>
-        body { background-color: #727272; font-family: 'Comic Sans MS', cursive, sans-serif; color: #000000; height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .triangle-logo { width: 60px; height: 50px; margin-right: 0px; object-fit: contain; }
-        .login-container { background-color: #ffffff; padding: 40px; border-radius: 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: center; }
-        .character { width: 150px; margin-bottom: 20px; }
-        .form-group { margin-bottom: 15px; }
-        input { width: 90%; padding: 10px 15px; border: 2px solid #000000; border-radius: 25px; font-size: 16px }
-        input::placeholder { color: #000000; }
-        input:focus { outline: none; border-color: #000000; box-shadow: 0 0 5px rgba(255, 192, 203, 0.5); }
-        button { width: 100%; padding: 10px; background-color: #000000; border: none; border-radius: 25px; color: #fff; font-size: 16px; font-weight: bold; cursor: pointer; transition: background-color 0.3s ease; }
-        button:hover { background-color: #000000; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body {
+            background-color: #727272;
+            color: #000000;
+        }
+
+        .header {
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            gap: 20px;
+        }
+
+        .header .logo {
+            display: flex;
+            align-items: center;
+            font-size: 26px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .triangle-logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            object-fit: contain;
+        }
+
+        .nav {
+            display: flex;
+            gap: 50px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #fff;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        .nav-icon {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .nav-item:hover {
+            color: #FFD700;
+        }
+
+        .main-content {
+            flex: 1; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .login-container h1 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input {
+            width: 90%;
+            padding: 10px 15px;
+            border: 2px solid #000000;
+            border-radius: 25px;
+            font-size: 16px;
+        }
+
+        input::placeholder {
+            color: #000000;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #000000;
+            box-shadow: 0 0 5px rgba(255, 192, 203, 0.5);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #000000;
+            border: none;
+            border-radius: 25px;
+            color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #333333;
+        }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 14px;
+        }
+
+        .footer-nav a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .footer-nav a:hover {
+            color: #FFD700;
+        }
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h1><img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">ログイン</h1>
-        <form method="POST" action="{{ url_for('auth.login') }}">
-            <div class="form-group">
-                <label for="username">ユーザー名</label>
-                <input type="text" id="username" name="username" placeholder="ユーザー名を入力" required>
+    <header class="header">
+        <div class="logo">
+            <a href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
+            </a>
+        </div>
+        <div class="nav">
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/歯車.png') }}" alt="説明" class="nav-icon">
+                機構の説明
             </div>
-            <div class="form-group">
-                <label for="password">パスワード</label>
-                <input type="password" id="password" name="password" placeholder="パスワードを入力" required>
+            <div class="nav-item">
+                <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
+                リンク
             </div>
-            <button type="submit">ログイン</button>
-        </form>
+            <div class="nav-item">
+                <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
+                作成依頼リンク
+            </div>
+            <div class="nav-item">
+                <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
+                ログイン
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <div class="main-content">
+        <div class="login-container">
+            <h1><img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">ログイン</h1>
+            <form method="POST" action="{{ url_for('auth.login') }}">
+                <div class="form-group">
+                    <label for="username">ユーザー名</label>
+                    <input type="text" id="username" name="username" placeholder="ユーザー名を入力" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">パスワード</label>
+                    <input type="password" id="password" name="password" placeholder="パスワードを入力" required>
+                </div>
+                <button type="submit">ログイン</button>
+            </form>
+        </div>
     </div>
+
+    <footer>
+        <nav class="footer-nav">
+            <a href="#">サイトマップ</a>
+            <a href="#">SNS</a>
+            <a href="#">トップ</a>
+            <a href="#">リンク</a>
+            <a href="#">だおだおテキスト</a>
+        </nav>
+    </footer>
 </body>
 </html>

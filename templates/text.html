@@ -80,6 +80,42 @@
             color: #000;
         }
 
+        .nav-icon {
+            width: 30px; 
+            height: 30px; 
+            object-fit: contain; 
+            -webkit-filter: brightness(0) invert(1);
+            filter: brightness(0) invert(1);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+            margin: 0 20px;
+        }
+
+        .mechanism-tag {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            background-color: #f5f5f5;
+            color: #333;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
         footer {
             background-color: #000;
             color: #fff;
@@ -118,31 +154,21 @@
             </a>
         </div>
         <div class="nav">
-            <div class="nav-item" onclick="toggleDropdown(this)">機構の説明
-                <div class="dropdown-menu">
-                    <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
-                    <a href="{{ url_for('main.gears') }}">ギアの種類</a>
-                    <a href="{{ url_for('main.movement') }}">移動方式</a>
-                    <a href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
-                    <a href="{{ url_for('main.sensors') }}">センサー</a>
-                    <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
-                </div>
+            <div class="nav-item">
+                <img src="{{ url_for('static', filename='uploads/歯車.png') }}" alt="説明" class="nav-icon">
+                機構の説明
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">リンク
-                <div class="dropdown-menu">
-                    <a href="https://akiyuki.jp/">外部リンク1</a>
-                </div>
+            <div class="nav-item">
+                <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
+                リンク
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">作成依頼リンク
-                <div class="dropdown-menu">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
-                    <a href="#">その他のリンク</a>
-                </div>
+            <div class="nav-item">
+                <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
+                作成依頼リンク
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">ログイン
-                <div class="dropdown-menu">
-                    <a href="{{ url_for('auth.login') }}">ログイン</a>
-                </div>
+            <div class="nav-item">
+                <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
+                ログイン
             </div>
         </div>
     </header>
@@ -150,8 +176,15 @@
     <main class="container-fluid" style="padding: 20px;">
         <h2 class="text-center">{{ text.title }}</h2>
         <p class="text-center">{{ text.context }}</p>
+        
+        <div class="section-title">使用している機構</div>
+        <div class="text-center">
+            {% for mechanism in text.mechanism.split(",") %}
+                <span class="mechanism-tag">{{ mechanism.strip() }}</span>
+            {% endfor %}
+        </div>
 
-        <h4 class="text-center">テキスト内容:</h4>
+        <div class="section-title">テキスト内容</div>
         <iframe
             class="pdf-container"
             src="{{ url_for('static', filename=text.pdf_path) }}"
@@ -168,5 +201,28 @@
             <a href="#">だおだおテキスト</a>
         </nav>
     </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ドロップダウンメニューの表示制御
+        function toggleDropdown(element) {
+            const dropdownMenu = element.querySelector('.dropdown-menu');
+            if (dropdownMenu) {
+                dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
+            }
+        }
+
+        // タブの初期化
+        document.addEventListener('DOMContentLoaded', function() {
+            var triggerTabList = [].slice.call(document.querySelectorAll('#mechanismTabs button'));
+            triggerTabList.forEach(function(triggerEl) {
+                var tabTrigger = new bootstrap.Tab(triggerEl);
+                triggerEl.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    tabTrigger.show();
+                });
+            });
+        });
+    </script>
 </body>
 </html>

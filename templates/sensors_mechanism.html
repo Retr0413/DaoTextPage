@@ -22,6 +22,19 @@
         .header .nav { position: relative; display: flex; gap: 50px; }
         .header .nav-item { color: #fff; font-size: 18px; cursor: pointer; padding: 10px; position: relative; }
         .header .nav-item:hover { color: #FFD700; }
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-icon {
+            width: 30px; 
+            height: 30px; 
+            object-fit: contain; 
+            -webkit-filter: brightness(0) invert(1);
+            filter: brightness(0) invert(1);
+        }
         .mechanism-card {
             transition: transform 0.2s;
         }
@@ -32,20 +45,22 @@
         .nav-pills .nav-link.active {
             background-color: #0d6efd;
         }
-        .category-content {
-            display: none;
-        }
-        .category-content.active {
-            display: block;
-        }
         .row {
             display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
+            flex-direction: column; 
+            gap: 20px; 
         }
+
         .col {
-            flex: 0 0 calc(50% - 10px);
+            flex: 1 1 auto; 
+            width: 100%;
             box-sizing: border-box;
+        }
+
+        .card {
+            width: 100%; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+            border-radius: 8px; 
         }
 
         footer {
@@ -86,7 +101,9 @@
             </a>
         </div>
         <div class="nav">
-            <div class="nav-item" onclick="toggleDropdown(this)">機構の説明
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/歯車.png') }}" alt="説明" class="nav-icon">
+                機構の説明
                 <div class="dropdown-menu">
                     <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
                     <a href="{{ url_for('main.gears') }}">ギアの種類</a>
@@ -96,18 +113,24 @@
                     <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
                 </div>
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">リンク
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
+                リンク
                 <div class="dropdown-menu">
                     <a href="https://akiyuki.jp/">外部リンク1</a>
                 </div>
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">作成依頼リンク
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
+                作成依頼リンク
                 <div class="dropdown-menu">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
                     <a href="#">その他のリンク</a>
                 </div>
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">ログイン
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
+                ログイン
                 <div class="dropdown-menu">
                     <a href="{{ url_for('auth.login') }}">ログイン</a>
                 </div>
@@ -139,16 +162,12 @@
             </li>
         </ul>
 
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="sensors" role="tabpanel" aria-labelledby="sensors-tab">
-                <div class="row row-cols-1 row-cols-md-2 g-4">
-                    <div class="col-md-12">
-                        <div class="card h-100 mechanism-card">
-                            <div class="card-body">
-                                <h5 class="card-title">カラーセンサー</h5>
-                                <p class="card-text">物体の色を検知するセンサー。ライントレースや物体の識別に使用されます。</p>
-                            </div>
-                        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mechanism-card">
+                    <div class="card-body">
+                        <h5 class="card-title">カラーセンサー</h5>
+                        <p class="card-text">物体の色を検知するセンサー。ライントレースや物体の識別に使用されます。</p>
                     </div>
                 </div>
             </div>
