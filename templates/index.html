@@ -22,7 +22,7 @@
         .grid-item:hover { transform: scale(1.05); }
         .grid-item img { width: auto; max-width: 150px; height: 150px; margin-bottom: 10px; flex-shrink: 0; object-fit: cover; }
         .footer { background: #000; color: #fff; padding: 20px; text-align: center; margin-top: 40px; }
-        .footer-nav { display: flex; justify-content: center; gap: 20px; font-size: 14px; }
+        .footer-nav { display: flex; justify-content: center; gap: 50px; font-size: 14px; }
         .footer-nav a { color: #fff; text-decoration: none; }
         .footer-nav a:hover { color: #FFD700; }
         .pink-section .grid-item { background: #ffe3e6; }
@@ -40,9 +40,9 @@
         .mechanism-tag { display: inline-block; margin: 0 5px; padding: 2px 8px; border: 1px solid #ddd; border-radius: 4px; background: #f5f5f5; font-size: 12px; }
         .box1 { padding: 0.2em 0.5em; margin: 0.5em 0; background: #ffffff; box-shadow: 0px 0px 0px 10px #ffffff; border: dashed 2px #000; } 
         .box1 h3 { font-size: 20px; font-weight: bold; margin: 10px 0; }
-        .button { display: flex; flex-wrap: wrap; gap: 10px; margin: 5px 5px; }
+        .button { display: flex; flex-wrap: wrap; gap: 15px; margin: 5px 5px; }
         .button label { margin-right: 10px; }
-        .button [type="checkbox"] { accent-color: #3DA8AA }
+        .button [type="checkbox"] { accent-color: #3DA8AA; transform: scale(1.7); }
 
         /* ドロップダウンメニューCSS */
         .dropdown-menu { position: absolute; top: 100%; left: 0; background: #000; color: #fff; display: none; flex-direction: column; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); min-width: 150px; z-index: 1000; }
@@ -55,11 +55,31 @@
         .img-frame { position: relative; width: 100%;  height: 500px;  overflow: hidden; margin: 0 auto; }
         .img-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain;  opacity: 0;  transition: opacity 1s ease-in-out; }
         .img-slide.active { opacity: 1;  }
-        .toggle-button { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px; background-color: #fff; color: #000; border: 1px solid #ddd; border-radius: 4px; font-weight: bold; font-size: 16px; cursor: pointer; }
+        .toggle-button { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px; background-color: #fff; color: #000; border: 1px solid #ddd; border-radius: 4px; font-weight: bold; font-size: 20px; cursor: pointer; }
         .toggle-button:hover { background-color: #f7f7f7; }
         .toggle-button::after { content: '▼';  font-size: 20px; color: #666; transition: transform 0.3s ease; }
         .toggle-button.open::after { content: '▲';  transform: rotate(180deg); }
         .hidden-content { display: none; padding: 10px; border-top: 1px solid #ddd; font-size: 14px; color: #333; background-color: #fff; transition: max-height 0.3s ease, opacity 0.3s ease; }
+
+        /* ================================
+     * タブレット (iPadなど) 向け
+     * ================================ */
+     @media (min-width: 768px) and (max-width: 1024px) {
+      .header .nav-item {
+        font-size: 16px;
+        padding: 8px;
+      }
+      #mechanismTabs {
+        gap: 15px;
+      }
+      #mechanismTabs .nav-link {
+        padding: 8px 12px;
+        font-size: 16px;
+      }
+      .footer-nav {
+        gap: 30px;
+      }
+    }
     </style>
 </head>
 <body>
@@ -86,6 +106,8 @@
                 <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
                 リンク
                 <div class="dropdown-menu">
+                    <a href="">だおだお作成作品</a>
+                    <a href="https://www.lego.com/ja-jp">LEGO公式サイト</a>
                     <a href="https://akiyuki.jp/">外部リンク1</a>
                 </div>
             </div>
@@ -106,7 +128,6 @@
             </div>
         </div>
     </header>
-    
 
     <main class="main-content">
         <h1 class="title-plate">だおだおテキスト</h1>

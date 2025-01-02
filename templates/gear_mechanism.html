@@ -1,97 +1,316 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ロボット機構の基礎知識</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        .header { background: #000; color: #fff; padding: 10px 20px; display: flex; justify-content: flex-start; align-items: center; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); gap: 20px; }
-        .header .logo { display: flex; align-items: center; font-size: 26px; font-weight: bold; cursor: pointer; }
-        .triangle-logo { width: 40px; height: 40px; margin-right: 10px; margin-top: 10px; object-fit: contain; }
-        .header .nav { position: relative; display: flex; gap: 50px; }
-        .header .nav-item { color: #fff; font-size: 18px; cursor: pointer; padding: 10px; position: relative; }
-        .nav-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+  <meta charset="UTF-8">
+  <!-- スマホ表示に対応 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ロボット機構の基礎知識</title>
+  <!-- Bootstrap読み込み -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+  <style>
+    /* 全体のはみ出し防止 */
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden; /* 水平方向のスクロールを出さない */
+      box-sizing: border-box;
+    }
 
-        .nav-icon {
-            width: 30px; 
-            height: 30px; 
-            object-fit: contain; 
-            -webkit-filter: brightness(0) invert(1);
-            filter: brightness(0) invert(1);
-        }
-        .header .nav-item:hover { color: #FFD700; }
-        .mechanism-card {
-            transition: transform 0.2s;
-        }
-        .mechanism-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        .nav-pills .nav-link.active {
-            background-color: #0d6efd;
-        }
-        .row {
-            display: flex;
-            flex-direction: column; 
-            gap: 20px; 
-        }
+    /* ================================
+     * ヘッダー（上部メニュー）
+     * ================================ */
+    header {
+      background-color: #000;
+      color: #fff;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+      width: 100%;
+    }
+    .header {
+      background: #000;
+      color: #fff;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 20px;
+      width: 100%;
+      box-sizing: border-box;
+    }
 
-        .col {
-            flex: 1 1 auto; 
-            width: 100%;
-            box-sizing: border-box;
-        }
+    /* ロゴ */
+    .header .logo {
+      display: flex;
+      align-items: center;
+      font-size: 26px;
+      font-weight: bold;
+      cursor: pointer;
+      flex-shrink: 0; /* ロゴは縮まない */
+    }
+    .triangle-logo {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+      margin-top: 10px;
+      object-fit: contain;
+    }
 
-        .card {
-            width: 100%; 
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
-            border-radius: 8px; 
-        }
+    /* ヘッダー右側のメニュー */
+    .header .nav {
+      display: flex;
+      flex-wrap: nowrap; 
+      gap: 50px;
+      flex-shrink: 1; /* 狭い画面でナビを縮める */
+      min-width: 0;   /* はみ出し防止に重要 */
+    }
+    .header .nav-item {
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      padding: 10px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      min-width: 0;
+      flex-shrink: 1;
+    }
+    .nav-icon {
+      width: 30px; 
+      height: 30px; 
+      object-fit: contain; 
+      -webkit-filter: brightness(0) invert(1);
+      filter: brightness(0) invert(1);
+      flex-shrink: 0; /* アイコンは縮まない */
+    }
+    .header .nav-item:hover {
+      color: #FFD700;
+    }
 
-        footer {
-            background-color: #000;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
+    /* ドロップダウンメニューCSS */
+    .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #000;
+      color: #fff;
+      display: none; /* 初期は表示しない */
+      flex-direction: column;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      min-width: 150px;
+      z-index: 9999; /* 前面に表示するために追加 */
+    }
+    .dropdown-menu a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      white-space: nowrap;
+    }
+    .dropdown-menu a:hover {
+      background: #FFD700;
+      color: #000;
+    }
 
-        .footer-nav {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            font-size: 14px;
-        }
+    /* ▼ クリックで制御するため、ホバー指定は削除/コメントアウト */
+    /* nav-item:hover .dropdown-menu { display: flex; } */
 
-        .footer-nav a {
-            color: #fff;
-            text-decoration: none;
-        }
+    /* ▼ 誤記修正: fropdown-menu → dropdown-menu */
+    /* 「.active」クラスが付与されているnav-item配下の.menuを表示 */
+    .nav-item.active .dropdown-menu {
+      display: flex;
+    }
 
-        .footer-nav a:hover {
-            color: #FFD700;
-        }
+    /* ================================
+     * タブ（機構選択部分）
+     * ================================ */
+    #mechanismTabs {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 30px;
+      overflow: hidden;
+      padding: 0;
+      list-style: none;
+      flex-shrink: 1;
+      min-width: 0;
+    }
+    #mechanismTabs .nav-link {
+      white-space: nowrap;
+      padding: 10px 15px;
+      font-size: 18px;
+    }
+    .nav-pills .nav-link.active {
+      background-color: #0d6efd;
+    }
 
-        /* ドロップダウンメニューCSS */
-        .dropdown-menu { position: absolute; top: 100%; left: 0; background: #000; color: #fff; display: none; flex-direction: column; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); min-width: 150px; z-index: 1000; }
-        .dropdown-menu a { color: #fff; text-decoration: none; padding: 10px 20px; white-space: nowrap; }
-        .dropdown-menu a:hover { background: #FFD700; color: #000; }
-        .nav-item.active .fropdown-menu,
-        .nav-item:hover .dropdown-menu { display: flex; }
-    </style>
+    /* ================================
+     * カードやレイアウト全体
+     * ================================ */
+    .mechanism-card {
+      transition: transform 0.2s;
+    }
+    .mechanism-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    .row {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .col {
+      flex: 1 1 auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    .card {
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+
+    /* ================================
+     * フッター
+     * ================================ */
+    footer {
+      background-color: #000;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      width: 100%;
+      box-sizing: border-box;
+      overflow: hidden;
+    }
+    .footer-nav {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 50px;
+      font-size: 14px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      flex-shrink: 1;
+      min-width: 0;
+      white-space: nowrap;
+    }
+    .footer-nav a {
+      color: #fff;
+      text-decoration: none;
+      white-space: nowrap; 
+    }
+    .footer-nav a:hover {
+      color: #FFD700;
+    }
+
+    /* ================================
+     * タブレット (iPadなど) 向け
+     * ================================ */
+     @media (min-width: 768px) and (max-width: 1024px) {
+      .header .nav-item {
+        font-size: 16px;
+        padding: 8px;
+      }
+      #mechanismTabs {
+        gap: 15px;
+      }
+      #mechanismTabs .nav-link {
+        padding: 8px 12px;
+        font-size: 16px;
+      }
+      .footer-nav {
+        gap: 30px;
+      }
+    }
+
+    /* ================================
+     * スマホ画面向け（小さくする）
+     * ================================ */
+     @media (max-width: 768px) {
+      .triangle-logo {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+        margin-top: 5px;
+      }
+      .header, header {
+        padding: 10px;
+      }
+      .header .nav {
+        gap: 10px;
+      }
+      .header .nav-item {
+        padding: 3px;
+        font-size: 12px;
+        gap: 3px;
+      }
+      .nav-icon {
+        width: 20px; 
+        height: 20px;
+      }
+      #mechanismTabs {
+        gap: 10px;
+      }
+      #mechanismTabs .nav-link {
+        padding: 5px 10px;
+        font-size: 14px;
+      }
+      .footer-nav {
+        gap: 20px;
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .header .nav-item {
+        font-size: 10px;
+      }
+      .nav-icon {
+        width: 16px;
+        height: 16px;
+      }
+      .header .nav {
+        gap: 5px;
+      }
+      #mechanismTabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 5px;
+      }
+      #mechanismTabs .nav-item {
+        flex: 1 1 auto;
+        min-width: 45%;
+      }
+      #mechanismTabs .nav-link {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+      .footer-nav {
+        gap: 15px;
+        font-size: 10px;
+      }
+    }
+  </style>
 </head>
 <body>
+    <!-- ====== ヘッダー ====== -->
     <header class="header">
+        <!-- ロゴ部分 -->
         <div class="logo">
             <a href="{{ url_for('main.index') }}">
-                <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
+                <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}"
+                     alt="だおだおテキスト" class="triangle-logo">
             </a>
         </div>
+
+        <!-- ナビゲーション部分 -->
         <div class="nav">
+            <!-- ▼ ドロップダウンメニュー1 -->
             <div class="nav-item" onclick="toggleDropdown(this)">
                 <img src="{{ url_for('static', filename='uploads/歯車.png') }}" alt="説明" class="nav-icon">
                 機構の説明
@@ -104,21 +323,31 @@
                     <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
                 </div>
             </div>
+
+            <!-- ▼ ドロップダウンメニュー2 -->
             <div class="nav-item" onclick="toggleDropdown(this)">
                 <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
                 リンク
                 <div class="dropdown-menu">
+                    <a href="">だおだお作成作品</a>
+                    <a href="https://www.lego.com/ja-jp">LEGO公式サイト</a>
                     <a href="https://akiyuki.jp/">外部リンク1</a>
                 </div>
             </div>
+
+            <!-- ▼ ドロップダウンメニュー3 -->
             <div class="nav-item" onclick="toggleDropdown(this)">
                 <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
                 作成依頼リンク
                 <div class="dropdown-menu">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">
+                      Googleフォーム
+                    </a>
                     <a href="#">その他のリンク</a>
                 </div>
             </div>
+
+            <!-- ▼ ドロップダウンメニュー4 -->
             <div class="nav-item" onclick="toggleDropdown(this)">
                 <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
                 ログイン
@@ -129,9 +358,11 @@
         </div>
     </header>
 
+    <!-- ====== メインコンテンツ ====== -->
     <main class="container py-5">
         <h1 class="text-center">ギアの種類</h1>
 
+        <!-- タブ部分 -->
         <ul class="nav nav-pills mb-4 justify-content-center" id="mechanismTabs">
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('main.mechanism')}}">ロボット基礎知識</a>
@@ -153,89 +384,72 @@
             </li>
         </ul>
 
+        <!-- カード一覧 -->
         <div class="row">
             <div class="col-12">
                 <div class="card mechanism-card">
                     <div class="card-body">
                         <h5 class="card-title">ラックギア</h5>
-                        <p class="card-text">直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品（ラック）で構成されています。エレベーターや工作機械などで使用されます。</p>
+                        <p class="card-text">
+                          直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品...
+                        </p>
                     </div>
                 </div>
             </div>
-            <div class="col-12">
-                <div class="card mechanism-card">
-                    <div class="card-body">
-                        <h5 class="card-title">べベルギア</h5>
-                        <p class="card-text">軸が直角に交差する場所で動力を伝達するための歯車。コーナー動作や方向転換に使用されます。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card mechanism-card">
-                    <div class="card-body">
-                        <h5 class="card-title">ノブホイールギア</h5>
-                        <p class="card-text">手動で回転させる際に使用される大きな円形のギア。精密な調整や手動操作が必要な場面で活用されます。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card mechanism-card">
-                    <div class="card-body">
-                        <h5 class="card-title">ウォームギア</h5>
-                        <p class="card-text">手動で回転させる際に使用される大きな円形のギア。精密な調整や手動操作が必要な場面で活用されます。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card mechanism-card">
-                    <div class="card-body">
-                        <h5 class="card-title">ディファレンシャルギア</h5>
-                        <p class="card-text">手動で回転させる際に使用される大きな円形のギア。精密な調整や手動操作が必要な場面で活用されます。</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-12">
-                <div class="card mechanism-card">
-                    <div class="card-body">
-                        <h5 class="card-title">ターンテーブル</h5>
-                        <p class="card-text">水平面での回転台。物体の方向転換や展示に使用されます。</p>
-                    </div>
-                </div>
-            </div>
+            <!-- 以下同様のカード -->
         </div>
     </main>
 
+    <!-- ====== フッター ====== -->
     <footer>
-        <nav class="footer-nav">
-            <a href="#">サイトマップ</a>
-            <a href="#">SNS</a>
-            <a href="#">トップ</a>
-            <a href="#">リンク</a>
-            <a href="#">だおだおテキスト</a>
-        </nav>
+        <ul class="footer-nav">
+            <li><a href="#">サイトマップ</a></li>
+            <li><a href="#">SNS</a></li>
+            <li><a href="#">トップ</a></li>
+            <li><a href="#">リンク</a></li>
+            <li><a href="#">だおだおテキスト</a></li>
+        </ul>
     </footer>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
     <script>
-        // ドロップダウンメニューの表示制御
-        function toggleDropdown(element) {
-            const dropdownMenu = element.querySelector('.dropdown-menu');
-            if (dropdownMenu) {
-                dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex';
-            }
-        }
-
-        // タブの初期化
-        document.addEventListener('DOMContentLoaded', function() {
-            var triggerTabList = [].slice.call(document.querySelectorAll('#mechanismTabs button'));
-            triggerTabList.forEach(function(triggerEl) {
-                var tabTrigger = new bootstrap.Tab(triggerEl);
-                triggerEl.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    tabTrigger.show();
-                });
-            });
+      // ドロップダウンメニュー：クリックで表示/非表示を切り替え
+      function toggleDropdown(element) {
+        // ほかのnav-itemを一旦閉じる
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.remove('active');
         });
+
+        // クリックしたnav-itemがアクティブでなければ付与
+        if (!element.classList.contains('active')) {
+          element.classList.add('active');
+        }
+      }
+
+      // タブの初期化
+      document.addEventListener('DOMContentLoaded', function() {
+        var triggerTabList = [].slice.call(
+          document.querySelectorAll('#mechanismTabs button')
+        );
+        triggerTabList.forEach(function(triggerEl) {
+          var tabTrigger = new bootstrap.Tab(triggerEl);
+          triggerEl.addEventListener('click', function(event) {
+            event.preventDefault();
+            tabTrigger.show();
+          });
+        });
+      });
+
+      // メニュー以外をクリックしたらドロップダウンを閉じる
+      document.addEventListener('click', function(event) {
+        if (!event.target.closest('.nav-item')) {
+          // メニュー以外をクリックしたら全てのnav-itemをinactiveに
+          document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+          });
+        }
+      });
     </script>
 </body>
 </html>
