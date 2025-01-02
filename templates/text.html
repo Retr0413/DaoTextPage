@@ -36,7 +36,7 @@
 
         .header .nav {
             display: flex;
-            gap: 20px;
+            gap: 50px;
             align-items: center;
         }
 
@@ -80,6 +80,42 @@
             color: #000;
         }
 
+        .nav-icon {
+            width: 30px; 
+            height: 30px; 
+            object-fit: contain; 
+            -webkit-filter: brightness(0) invert(1);
+            filter: brightness(0) invert(1);
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 30px 0;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #ddd;
+            margin: 0 20px;
+        }
+
+        .mechanism-tag {
+            display: inline-block;
+            margin: 5px;
+            padding: 8px 12px;
+            background-color: #f5f5f5;
+            color: #333;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+        }
+
         footer {
             background-color: #000;
             color: #fff;
@@ -90,7 +126,7 @@
         .footer-nav {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 50px;
             font-size: 14px;
         }
 
@@ -104,10 +140,92 @@
         }
 
         .pdf-container {
+            display: block;
             width: 100vw;
             height: 100vh;
             border: none;
+            overflow: auto;
         }
+        
+        /* ================================
+     * スマホ画面向け（小さくする）
+     * ================================ */
+    @media (max-width: 768px) {
+      .triangle-logo {
+        width: 30px;
+        height: 30px;
+        margin-right: 0px;
+        margin-top: 5px;
+      }
+      .header .logo {
+          display: flex;
+          align-items: center;
+          margin-right: 10px;
+      }
+      .header, header {
+        padding: 10px;
+      }
+      .header .nav {
+        gap: 10px;
+      }
+      .header .nav-item {
+        padding: 3px;
+        font-size: 12px;
+        gap: 3px;
+      }
+      .nav-icon {
+        width: 20px; 
+        height: 20px;
+      }
+      #mechanismTabs {
+        gap: 10px;
+      }
+      #mechanismTabs .nav-link {
+        padding: 5px 10px;
+        font-size: 14px;
+      }
+      .footer-nav {
+        gap: 20px;
+        font-size: 12px;
+      }
+      .pdf-container {
+        width: 90vw;
+        height: 60vh;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .header .nav-item {
+        font-size: 10px;
+      }
+      .nav-icon {
+        width: 16px;
+        height: 16px;
+      }
+      .header .logo {
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
+      }
+      .header .nav {
+        gap: 1px;
+      }
+      #mechanismTabs {
+        gap: 5px;
+      }
+      #mechanismTabs .nav-link {
+        font-size: 12px;
+        padding: 4px 8px;
+      }
+      .footer-nav {
+        gap: 15px;
+        font-size: 10px;
+      }
+      .pdf-container {
+        width: 90vw;
+        height: 50vh;
+      }
+    }
     </style>
 </head>
 <body>
@@ -118,7 +236,9 @@
             </a>
         </div>
         <div class="nav">
-            <div class="nav-item" onclick="toggleDropdown(this)">機構の説明
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/歯車.png') }}" alt="説明" class="nav-icon">
+                機構の説明
                 <div class="dropdown-menu">
                     <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
                     <a href="{{ url_for('main.gears') }}">ギアの種類</a>
@@ -128,15 +248,28 @@
                     <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
                 </div>
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">リンク
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
+                リンク
                 <div class="dropdown-menu">
+                    <a href="">だおだお作成作品</a>
+                    <a href="https://www.lego.com/ja-jp">LEGO公式サイト</a>
                     <a href="https://akiyuki.jp/">外部リンク1</a>
                 </div>
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">作成依頼リンク
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
+                作成依頼リンク
                 <div class="dropdown-menu">
                     <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
                     <a href="#">その他のリンク</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
+                ログイン
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('auth.login') }}">ログイン</a>
                 </div>
             </div>
         </div>
@@ -145,8 +278,15 @@
     <main class="container-fluid" style="padding: 20px;">
         <h2 class="text-center">{{ text.title }}</h2>
         <p class="text-center">{{ text.context }}</p>
+        
+        <div class="section-title">使用している機構</div>
+        <div class="text-center">
+            {% for mechanism in text.mechanism.split(",") %}
+                <span class="mechanism-tag">{{ mechanism.strip() }}</span>
+            {% endfor %}
+        </div>
 
-        <h4 class="text-center">テキスト内容:</h4>
+        <div class="section-title">テキスト内容</div>
         <iframe
             class="pdf-container"
             src="{{ url_for('static', filename=text.pdf_path) }}"
@@ -163,5 +303,58 @@
             <a href="#">だおだおテキスト</a>
         </nav>
     </footer>
+
+    <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // ドロップダウンメニュー：クリックで表示/非表示を切り替え
+    function toggleDropdown(element) {
+      // ほかのnav-itemを一旦閉じる
+      document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+      });
+
+      // クリックしたnav-itemがアクティブでなければ付与
+      if (!element.classList.contains('active')) {
+        element.classList.add('active');
+      }
+    }
+
+    // タブの初期化
+    document.addEventListener('DOMContentLoaded', function() {
+      var triggerTabList = [].slice.call(
+        document.querySelectorAll('#mechanismTabs button')
+      );
+      triggerTabList.forEach(function(triggerEl) {
+        var tabTrigger = new bootstrap.Tab(triggerEl);
+        triggerEl.addEventListener('click', function(event) {
+          event.preventDefault();
+          tabTrigger.show();
+        });
+      });
+    });
+
+    // メニュー以外をクリックしたらドロップダウンを閉じる
+    document.addEventListener('click', function(event) {
+      if (!event.target.closest('.nav-item')) {
+        // メニュー以外をクリックしたら全てのnav-itemをinactiveに
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.remove('active');
+        });
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.querySelector('.pdf-container');
+        if (iframe) {
+            iframe.onload = function () {
+                console.log('PDFが正常に読み込まれました');
+            };
+            iframe.onerror = function () {
+                console.error('PDFの読み込みに失敗しました');
+            };
+        }
+    });
+  </script>
 </body>
 </html>

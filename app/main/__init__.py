@@ -6,9 +6,28 @@ from app.auth.models import User
 from app.auth.routes import auth
 from werkzeug.security import generate_password_hash
 from flask_migrate import Migrate
+from sqlalchemy.exc import OperationalError
+from sqlalchemy import text
 import os
+import time
 
 migrate = Migrate()
+
+def wait_for_db(app):
+    """Wait for the database to be ready."""
+    retries = 5
+    while retries > 0:
+        try:
+            with app.app_context():
+                # 単純なクエリを投げてDBと通信できるか確認
+                db.session.execute(text('SELECT 1'))  
+            print("Database is ready!")
+            return
+        except OperationalError:
+            retries -= 1
+            print(f"Database not ready, retrying... ({5 - retries}/5)")
+            time.sleep(2)
+    raise Exception("Database is not ready after 5 retries")
 
 def create_app():
     app = Flask(
@@ -18,20 +37,30 @@ def create_app():
     )
     app.config.from_object(Config)
 
+    # SQLAlchemy と Flask-Migrate の初期化
     db.init_app(app)
     migrate.init_app(app, db)
 
-    with app.app_context():
-        if not User.query.first() or not Text.query.first():
-            seed_data()
-
+    # Blueprint の登録
     app.register_blueprint(main_bp)
     app.register_blueprint(auth)
+
+    # アプリコンテキストで実行
+    with app.app_context():
+        # 1. DB 接続が完了するまで待機
+        wait_for_db(app)
+
+        # 2. テーブルを先に作成
+        db.create_all()
+
+        # 3. テーブル作成後にシードデータを投入
+        seed_data()
 
     return app
 
 def seed_data():
     """初期データをデータベースに登録する関数"""
+    # User テーブルの初期登録
     if not User.query.first():
         initial_user = User(
             id=1,
@@ -40,7 +69,8 @@ def seed_data():
         )
         db.session.add(initial_user)
 
-    if not Text.query.first():  
+    # Text テーブルの初期登録
+    if not Text.query.first():
         base_texts = [
             {
                 "title": "クローラー",
@@ -123,14 +153,14 @@ def seed_data():
                 "stars": 4
             },
         ]
-        for text in base_texts:
+        for text_data in base_texts:
             new_text = Text(
-                title=text["title"],
-                pdf_path=text["pdf_path"],
-                text_png=text["text_png"],
-                context=text["context"],
-                mechanism=", ".join(text["mechanism"]),
-                stars=text["stars"]
+                title=text_data["title"],
+                pdf_path=text_data["pdf_path"],
+                text_png=text_data["text_png"],
+                context=text_data["context"],
+                mechanism=", ".join(text_data["mechanism"]),
+                stars=text_data["stars"]
             )
             db.session.add(new_text)
 
