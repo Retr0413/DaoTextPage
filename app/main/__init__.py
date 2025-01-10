@@ -8,10 +8,17 @@ from werkzeug.security import generate_password_hash
 from flask_migrate import Migrate
 from sqlalchemy.exc import OperationalError
 from sqlalchemy import text
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import os
 import time
 
 migrate = Migrate()
+
+limiter = Limiter(
+    get_remote_address,
+    default_limits=["300 per day", "60 per hour"],
+)
 
 def wait_for_db(app):
     """Wait for the database to be ready."""
@@ -40,6 +47,8 @@ def create_app():
     # SQLAlchemy と Flask-Migrate の初期化
     db.init_app(app)
     migrate.init_app(app, db)
+
+    limiter.init_app(app)
 
     # Blueprint の登録
     app.register_blueprint(main_bp)
