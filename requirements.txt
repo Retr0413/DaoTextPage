@@ -7,3 +7,4 @@ PyPDF2>=3.0.1
 cryptography>=41.0.1
 Flask-Migrate==4.0.4
 flask-limiter>=1.4.0
+Flask-Talisman>=1.0.0
