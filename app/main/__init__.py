@@ -22,7 +22,7 @@ limiter = Limiter(
 
 def wait_for_db(app):
     """Wait for the database to be ready."""
-    retries = 5
+    retries = 10
     while retries > 0:
         try:
             with app.app_context():
@@ -33,7 +33,7 @@ def wait_for_db(app):
         except OperationalError:
             retries -= 1
             print(f"Database not ready, retrying... ({5 - retries}/5)")
-            time.sleep(2)
+            time.sleep(3)
     raise Exception("Database is not ready after 5 retries")
 
 def create_app():
