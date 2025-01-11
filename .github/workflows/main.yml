@@ -1,4 +1,4 @@
-name: CI for Flask Application
+name: DaoText Security Scan
 
 on:
   push:
@@ -23,27 +23,9 @@ jobs:
           pip install safety bandit
 
       - name: Run Safety (Dependency Vulnerabilities)
-        run: safety check -r requirements.txt
+        run: |
+          safety check -r requirements.txt
 
       - name: Run Bandit (Code Vulnerabilities)
-        run: bandit -r .
-
-  build:
-    name: Build Flask Docker Image
-    needs: security-scan  # セキュリティスキャンが成功した場合にのみ実行
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Authenticate Docker
         run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-
-      - name: Build Docker Image
-        run: |
-          docker build -t flask-app:${{ github.sha }} .
-
-      - name: Test Docker Image
-        run: |
-          docker run --rm -p 8080:8080 flask-app:${{ github.sha }}
+          bandit -r .
