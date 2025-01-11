@@ -133,13 +133,25 @@
         <h1 class="title-plate">だおだおテキスト</h1>
 
         <div class="img-frame">
-            <img src="{{ url_for('static', filename='uploads/クローラー.png') }}" alt="クローラー" class="img-slide">
-            <img src="{{ url_for('static', filename='uploads/エレベーター.png') }}" alt="エレベーター" class="img-slide">
-            <img src="{{ url_for('static', filename='uploads/ステアリングカー.png') }}" alt="ステアリングカー" class="img-slide">
-            <img src="{{ url_for('static', filename='uploads/ロボットハンド.png') }}" alt="ロボットハンド" class="img-slide">
-            <img src="{{ url_for('static', filename='uploads/ライントレース.png') }}" alt="ライントレース" class="img-slide">
-            <img src="{{ url_for('static', filename='uploads/六足歩行ロボット.png') }}" alt="六足歩行ロボット" class="img-slide">
-        </div>        
+            <a href="{{ url_for('main.text_detail', id=1) }}" class="img-slide-link">
+                <img src="{{ url_for('static', filename='uploads/クローラー.png') }}" alt="クローラー" class="img-slide">
+            </a>
+            <a href="{{ url_for('main.text_detail', id=4) }}" class="img-slide-link">
+                <img src="{{ url_for('static', filename='uploads/エレベーター.png') }}" alt="エレベーター" class="img-slide">
+            </a>
+            <a href="{{ url_for('main.text_detail', id=7) }}" class="img-slide-link">
+                <img src="{{ url_for('static', filename='uploads/ステアリングカー.png') }}" alt="ステアリングカー" class="img-slide">
+            </a>
+            <a href="{{ url_for('main.text_detail', id=2) }}" class="img-slide-link">
+                <img src="{{ url_for('static', filename='uploads/ロボットハンド.png') }}" alt="ロボットハンド" class="img-slide">
+            </a>
+            <a href="{{ url_for('main.text_detail', id=8) }}" class="img-slide-link">
+                <img src="{{ url_for('static', filename='uploads/ライントレース.png') }}" alt="ライントレース" class="img-slide">
+            </a>
+            <a href="{{ url_for('main.text_detail', id=10) }}" class="img-slide-link">
+                <img src="{{ url_for('static', filename='uploads/六足歩行ロボット.png') }}" alt="六足歩行ロボット" class="img-slide">
+            </a>
+        </div>                     
 
         <section class="notice-title">
             <button class="toggle-button" onclick="toggleDaodaoText()">だおだおテキストについて</button>
@@ -310,11 +322,16 @@
         // スライドショー
         document.addEventListener("DOMContentLoaded", () => {
             const slides = document.querySelectorAll(".img-slide");
+            const slideLinks = document.querySelectorAll(".img-slide-link");
             let currentSlide = 0;
 
             function showSlide(index) {
                 slides.forEach((slide, i) => {
                     slide.classList.toggle("active", i === index);
+                });
+                slideLinks.forEach((link, i) => {
+                    link.style.pointerEvents = i === index ? "auto" : "none"; // Only the active slide is clickable
+                    link.style.opacity = i === index ? "1" : "0"; // Show only the active link
                 });
             }
 
@@ -327,7 +344,6 @@
 
             setInterval(nextSlide, 5000);
         });
-
     </script>
 </body>
 </html>

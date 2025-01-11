@@ -55,6 +55,7 @@
       height: 40px;
       margin-right: 10px;
       margin-top: 10px;
+      margin-bottom: 10px;
       object-fit: contain;
     }
 
@@ -93,24 +94,36 @@
 
     /* ドロップダウンメニューCSS */
     .dropdown-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        background: #000;
-        color: #fff;
-        display: none;
-        flex-direction: column;
-        box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        min-width: 150px;
-        z-index: 9999; /* 前面に表示するために追加 */
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #000;
+      color: #fff;
+      display: none; /* 初期は表示しない */
+      flex-direction: column;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      min-width: 150px;
+      z-index: 9999; /* 前面に表示するために追加 */
     }
-    .dropdown-menu a { color: #fff; text-decoration: none; padding: 10px 20px; white-space: nowrap; }
-    .dropdown-menu a:hover { background: #FFD700; color: #000; }
-    .nav-item.active .fropdown-menu,
-    .nav-item:hover .dropdown-menu { display: flex; }
+    .dropdown-menu a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px 20px;
+      white-space: nowrap;
+    }
+    .dropdown-menu a:hover {
+      background: #FFD700;
+      color: #000;
+    }
 
-    /* クリックで開閉するので、ホバー用CSSは削除 */
+    /* ▼ クリックで制御するため、ホバー指定は削除/コメントアウト */
     /* nav-item:hover .dropdown-menu { display: flex; } */
+
+    /* ▼ 誤記修正: fropdown-menu → dropdown-menu */
+    /* 「.active」クラスが付与されているnav-item配下の.menuを表示 */
+    .nav-item.active .dropdown-menu {
+      display: flex;
+    }
 
     /* ================================
      * タブ（機構選択部分）
@@ -218,35 +231,71 @@
     /* ================================
      * スマホ画面向け（小さくする）
      * ================================ */
-     @media (max-width: 768px) {
+    @media (max-width: 768px) {
       .triangle-logo {
         width: 30px;
         height: 30px;
         margin-right: 5px;
         margin-top: 5px;
+        margin-bottom: 5px;
       }
       .header, header {
         padding: 10px;
       }
       .header .nav {
         gap: 10px;
+        text-align: left;
       }
       .header .nav-item {
-        padding: 3px;
+        padding: 5px;
         font-size: 12px;
         gap: 3px;
+        text-align: left;
       }
+      .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #000;
+    color: #fff;
+    display: none; /* 初期は表示しない */
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    min-width: 120px; /* 幅を小さく */
+    padding: 5px; /* 内側余白を調整 */
+    z-index: 9999; /* 前面に表示するために追加 */
+  }
+  .dropdown-menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 13px; /* 内側余白を小さく */
+    font-size: 12px; /* テキストサイズを小さく */
+    white-space: nowrap;
+  }
+  .dropdown-menu a:hover {
+    background: #FFD700;
+    color: #000;
+  }
       .nav-icon {
         width: 20px; 
         height: 20px;
       }
       #mechanismTabs {
-        gap: 10px;
-      }
-      #mechanismTabs .nav-link {
-        padding: 5px 10px;
-        font-size: 14px;
-      }
+    display: grid; /* Use grid layout */
+    grid-template-columns: repeat(3, 1fr); /* Three equal-width columns */
+    justify-content: start; /* Align grid items to the left */
+    gap: 10px; /* Add spacing between items */
+    padding: 0; /* Remove extra padding */
+    list-style: none; /* Remove default list styling */
+  }
+  #mechanismTabs .nav-item {
+    text-align: center; /* Center the text and content inside each item */
+  }
+  #mechanismTabs .nav-link {
+    white-space: nowrap; /* Prevent text wrapping */
+    padding: 5px 10px; /* Adjust padding for compactness */
+    font-size: 14px; /* Adjust font size for readability */
+  }
       .footer-nav {
         gap: 20px;
         font-size: 12px;
