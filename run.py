@@ -1,17 +1,16 @@
 from app.main import create_app
 from app.main.models import db
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
+import logging
 
 app = create_app()
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    is_debug = os.getenv("FLASK_ENV") == "development"
-    host = os.getenv('FLASK_HOST', "127.0.0.1")
-    port = int(os.getenv('FLASK_PORT', 5000))
+logging.basicConfig(level=logging.DEBUG)
 
-    app.run(host=host, port=port, debug=is_debug)
+if __name__ == "__main__":
+    db_path = os.path.join('static/uploads', 'app.db')
+    if not os.path.exists(db_path):
+        with app.app_context():
+            db.create_all()
+            print(f"Database initialized at: {db_path}")
+    app.run(host="0.0.0.0", port=8080)

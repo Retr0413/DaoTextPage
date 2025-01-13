@@ -20,21 +20,21 @@ limiter = Limiter(
     default_limits=["300 per day", "60 per hour"],
 )
 
-def wait_for_db(app):
-    """Wait for the database to be ready."""
-    retries = 10
-    while retries > 0:
-        try:
-            with app.app_context():
-                # 単純なクエリを投げてDBと通信できるか確認
-                db.session.execute(text('SELECT 1'))  
-            print("Database is ready!")
-            return
-        except OperationalError:
-            retries -= 1
-            print(f"Database not ready, retrying... ({5 - retries}/5)")
-            time.sleep(3)
-    raise Exception("Database is not ready after 5 retries")
+# def wait_for_db(app):
+#     """Wait for the database to be ready."""
+#     retries = 10
+#     while retries > 0:
+#         try:
+#             with app.app_context():
+#                 # 単純なクエリを投げてDBと通信できるか確認
+#                 db.session.execute(text('SELECT 1'))  
+#             print("Database is ready!")
+#             return
+#         except OperationalError:
+#             retries -= 1
+#             print(f"Database not ready, retrying... ({5 - retries}/5)")
+#             time.sleep(3)
+#     raise Exception("Database is not ready after 5 retries")
 
 def create_app():
     app = Flask(
@@ -57,7 +57,7 @@ def create_app():
     # アプリコンテキストで実行
     with app.app_context():
         # 1. DB 接続が完了するまで待機
-        wait_for_db(app)
+        # wait_for_db(app)
 
         # 2. テーブルを先に作成
         db.create_all()
