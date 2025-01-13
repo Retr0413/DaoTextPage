@@ -3,7 +3,7 @@ name: DaoText Security Scan
 on:
   push:
     branches:
-      - main  # mainブランチへのpushをトリガーに設定
+      - main
 
 jobs:
   security-scan:
