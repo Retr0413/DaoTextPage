@@ -10,6 +10,7 @@ from sqlalchemy.exc import OperationalError
 from sqlalchemy import text
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
+from flask_talisman import Talisman
 import os
 import time
 
@@ -19,6 +20,34 @@ limiter = Limiter(
     get_remote_address,
     default_limits=["300 per day", "60 per hour"],
 )
+
+csp = {
+    'default-src': ['\'self\''],  # デフォルトは自ドメインのみ許可
+    'style-src': [
+        '\'self\'',  # 自身のCSSを許可
+        'https://fonts.googleapis.com',  # Google Fonts（必要な場合）
+        'https://cdn.jsdelivr.net'  # Bootstrap CDN（必要な場合）
+    ],
+    'script-src': [
+        '\'self\'',  # 自身のJavaScriptを許可
+        'https://cdn.jsdelivr.net'  # Bootstrap JS（必要な場合）
+    ],
+    'font-src': [
+        '\'self\'',
+        'https://fonts.gstatic.com'  # Google Fonts（必要な場合）
+    ],
+    'img-src': [
+        '\'self\'',  # 自身の画像を許可
+        'data:',  # Base64エンコード画像を許可
+        'https://cdn.jsdelivr.net'  # 必要に応じて外部画像を許可
+    ],
+    'object-src': [
+        '\'self\'',  # 自身のPDFを許可
+        'data:'  # Base64エンコードされたPDFを許可
+    ]
+}
+
+talisman = Talisman(content_security_policy=csp)
 
 # def wait_for_db(app):
 #     """Wait for the database to be ready."""
@@ -47,6 +76,8 @@ def create_app():
     # SQLAlchemy と Flask-Migrate の初期化
     db.init_app(app)
     migrate.init_app(app, db)
+
+    talisman.init_app(app)
 
     limiter.init_app(app)
 
