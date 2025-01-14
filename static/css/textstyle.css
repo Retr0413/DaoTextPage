@@ -1,0 +1,244 @@
+/* 全体の設定 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+header {
+    background-color: #000;
+    color: #fff;
+    padding: 15px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header .logo {
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.triangle-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.header .nav {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+}
+
+.nav-item {
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    font-size: 16px;
+    text-align: left;
+}
+
+.nav-item:hover {
+    color: #FFD700;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #000;
+    color: #fff;
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    min-width: 150px;
+}
+
+.nav-item:hover .dropdown-menu {
+    display: flex;
+}
+
+.dropdown-menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    white-space: nowrap;
+}
+
+.dropdown-menu a:hover {
+    background-color: #FFD700;
+    color: #000;
+}
+
+.nav-icon {
+    width: 30px; 
+    height: 30px; 
+    object-fit: contain; 
+    -webkit-filter: brightness(0) invert(1);
+    filter: brightness(0) invert(1);
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 30px 0;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.section-title::before,
+.section-title::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #ddd;
+    margin: 0 20px;
+}
+
+.mechanism-tag {
+    display: inline-block;
+    margin: 5px;
+    padding: 8px 12px;
+    background-color: #f5f5f5;
+    color: #333;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+}
+
+footer {
+    background-color: #000;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+    font-size: 14px;
+}
+
+.footer-nav a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-nav a:hover {
+    color: #FFD700;
+}
+
+.pdf-container {
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    border: none;
+    overflow: auto;
+}
+
+/* ================================
+ * タブレット (iPadなど) 向け
+ * ================================ */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .header .nav-item {
+        font-size: 16px;
+        padding: 8px;
+    }
+    .footer-nav {
+        gap: 30px;
+    }
+}
+
+/* ================================
+ * スマホ画面向け（小さくする）
+ * ================================ */
+@media (max-width: 768px) {
+    .triangle-logo {
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+      .header .logo {
+        display: flex;
+        align-items: center;
+        margin-right: 10px;
+    }
+      .header, header {
+        padding: 10px;
+      }
+      .header .nav {
+        gap: 10px;
+        text-align: left;
+      }
+      .header .nav-item {
+        padding: 5px;
+        font-size: 12px;
+        gap: 3px;
+        text-align: left;
+      }
+      .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #000;
+    color: #fff;
+    display: none; /* 初期は表示しない */
+    flex-direction: column;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    min-width: 120px; /* 幅を小さく */
+    padding: 5px; /* 内側余白を調整 */
+    z-index: 9999; /* 前面に表示するために追加 */
+  }
+  .dropdown-menu a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 13px; /* 内側余白を小さく */
+    font-size: 12px; /* テキストサイズを小さく */
+    white-space: nowrap;
+  }
+  .dropdown-menu a:hover {
+    background: #FFD700;
+    color: #000;
+  }
+      .nav-icon {
+        width: 20px; 
+        height: 20px;
+      }
+    .footer-nav {
+        gap: 20px;
+        font-size: 12px;
+    }
+    .pdf-container {
+        width: 90vw;
+        height: 50vh;
+    }
+}
+
+@media (max-width: 576px) {
+    .header .nav-item {
+        font-size: 10px;
+      }
+      .nav-icon {
+        width: 16px;
+        height: 16px;
+      }
+      .header .nav {
+        gap: 5px;
+      }
+    .footer-nav {
+        gap: 15px;
+        font-size: 10px;
+    }
+    .pdf-container {
+        width: 90vw;
+        height: 50vh;
+    }
+}
