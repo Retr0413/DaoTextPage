@@ -110,29 +110,16 @@ header {
     border: 1px solid #ddd;
     font-size: 14px;
 }
-
-footer {
-    background-color: #000;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
-
-.footer-nav {
-    display: flex;
-    justify-content: center;
-    gap: 50px;
-    font-size: 14px;
-}
-
-.footer-nav a {
-    color: #fff;
-    text-decoration: none;
-}
-
-.footer-nav a:hover {
-    color: #FFD700;
-}
+.footer { background: #000; color: #fff; padding: 20px; text-align: center; margin-top: 40px; }
+.footer h1 { font-size: 10px; color: #8e8e8e; margin-top: 20px; }
+.footer-nav { display: flex; justify-content: center; gap: 70px; font-size: 14px; }
+.footer-nav a { color: #fff; text-decoration: none; }
+.text-item { display: flex; margin: 0; padding-left: 10px; }
+.footer-nav ul { padding-left: 10px; }
+.footer-nav li { font-size: 10px; color: #8e8e8e; text-align: left; padding-top: 2px; }
+.footer-nav li:hover { color: #FFD700; }
+.footer-nav li a { font-size: 10px; color: #8e8e8e; text-align: left; }
+.footer-nav li a:hover { color: #FFD700; }
 
 .pdf-container {
     display: block;

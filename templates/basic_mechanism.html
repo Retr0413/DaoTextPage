@@ -110,49 +110,75 @@
     <div class="row">
       <div class="col-12">
         <div class="card mechanism-card">
-          <div class="card-body">
-            <h5 class="card-title">リンク機構</h5>
-            <p class="card-text">
-              複数の棒状の部品を連結させて動きを伝達する機構。複雑な動きを実現できます。
-            </p>
-          </div>
+            <div class="card-body">
+                <h5 class="card-title">リンク機構</h5>
+                <p class="card-text">リンク機構は、複数の部分を連結して動作を実現するために使用されます。レゴでは、アームや脚の動作に利用されます。</p>
+            </div>
         </div>
+    </div>
+
+    <div class="col-12">
+      <div class="card mechanism-card">
+          <div class="card-body">
+              <h5 class="card-title">カム</h5>
+              <p class="card-text">カムは、回転運動を直線運動に変換するための機構です。レゴでは、特定の動作を実現するためにカムを設計することができます。</p>
+          </div>
       </div>
-      <div class="col-12">
+    </div>
+
+    <div class="col-12">
         <div class="card mechanism-card">
-          <div class="card-body">
-            <h5 class="card-title">昇降機構</h5>
-            <p class="card-text">
-              垂直方向の動きを実現する機構。エレベーターのような上下動作に使用されます。
-            </p>
-          </div>
+            <div class="card-body">
+                <h5 class="card-title">昇降機構</h5>
+                <p class="card-text">昇降機構は、レゴのクレーンやリフトモデルに見られます。ラックギアやカムを使用して、物体を上下に移動させることができます。</p>
+            </div>
         </div>
-      </div>
-      <div class="col-12">
-        <div class="card mechanism-card">
-          <div class="card-body">
-            <h5 class="card-title">カム</h5>
-            <p class="card-text">
-              垂直方向の動きを実現する機構。エレベーターのような上下動作に使用されます。
-            </p>
-          </div>
-        </div>
-      </div>
+    </div>
     </div>
   </main>
 
   <!-- ================================
        フッター
        ================================ -->
-  <footer>
-    <ul class="footer-nav">
-      <li><a href="#">サイトマップ</a></li>
-      <li><a href="#">SNS</a></li>
-      <li><a href="#">トップ</a></li>
-      <li><a href="#">リンク</a></li>
-      <li><a href="#">だおだおテキスト</a></li>
-    </ul>
-  </footer>
+       <footer class="footer">
+        <nav class="footer-nav">
+            <div class="text_item">
+                <a href="#">サイトマップ</a>
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">テキストページ</a></li>
+                    <li><a href="{{ url_for('main.mechanism') }}">機構の説明</a></li>
+                </ul>
+            </div>
+            <a href="{{ url_for('main.index') }}">トップ</a>
+            <div class="text_item">
+                <a href="#">リンク
+                    <ul>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作品作成依頼</a></li>
+                    </ul>
+                </a>
+            </div>
+            <div class="text_item">
+                <a href="#">だおだおテキスト</a>
+                <div>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=1) }}">クローラー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=2) }}">ロボットハンド</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=3) }}">たじたじくん</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=4) }}">エレベーター</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=5) }}">ターンテーブル</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=6) }}">モノレール</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=7) }}">ステアリングカー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=8) }}">ライントレース</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=9) }}">二足歩行ロボット</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=10) }}">六足歩行ロボット</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h1 class="footerbottom">@2025 DaoDao_Text_Page</h1>
+    </footer>
 
   <!-- Bootstrap JS -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>

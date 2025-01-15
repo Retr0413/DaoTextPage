@@ -103,7 +103,7 @@
                     <div class="card-body">
                         <h5 class="card-title">ベベルギア</h5>
                         <p class="card-text">
-                          直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品...
+                          べべルギアは、異なる軸の間で動力を伝達するために使用されます。レゴでは、車両や機械の方法の方向転換に役立ちます。
                         </p>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                   <div class="card-body">
                       <h5 class="card-title">ウォームギア</h5>
                       <p class="card-text">
-                        直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品...
+                        ウォームギアは、回転を直角に変えることができ、通常は減速機構として使用されます。レゴの機構では、モーターの回転を減速させるために利用されることが多いです。
                       </p>
                   </div>
               </div>
@@ -123,7 +123,7 @@
                   <div class="card-body">
                       <h5 class="card-title">ノブホイールギア</h5>
                       <p class="card-text">
-                        直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品...
+                        ノブホイールギアは、手動での操作を可能にするために使用され、特に調整や設定を行う際に便利です。
                       </p>
                   </div>
               </div>
@@ -133,7 +133,7 @@
                   <div class="card-body">
                       <h5 class="card-title">ラックギア</h5>
                       <p class="card-text">
-                        直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品...
+                        ラックギアは、直線運動を実現するために使用されます。レゴでは、車両の昇降きこうやスライド機構に利用されることがあります。
                       </p>
                   </div>
               </div>
@@ -143,7 +143,7 @@
                 <div class="card-body">
                     <h5 class="card-title">ディファレンシャルギア</h5>
                     <p class="card-text">
-                      直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品...
+                      ディファレンシャルギアは、車両が曲がる際に内外の車輪の回転差を吸収するために使用されます。レゴの車両モデルにおいて、スムーズな旋回を実現するために重要です。
                     </p>
                 </div>
             </div>
@@ -153,7 +153,7 @@
               <div class="card-body">
                   <h5 class="card-title">ターンテーブル</h5>
                   <p class="card-text">
-                    直線運動と回転運動を変換するギア。歯車と歯の付いた直線状の部品...
+                    ターンテーブルは、回転するプラットフォームを提供し、レゴのロボットや車両の旋回機構に利用されます。
                   </p>
               </div>
           </div>
@@ -162,14 +162,44 @@
     </main>
 
     <!-- ====== フッター ====== -->
-    <footer>
-        <ul class="footer-nav">
-            <li><a href="#">サイトマップ</a></li>
-            <li><a href="#">SNS</a></li>
-            <li><a href="#">トップ</a></li>
-            <li><a href="#">リンク</a></li>
-            <li><a href="#">だおだおテキスト</a></li>
-        </ul>
+    <footer class="footer">
+        <nav class="footer-nav">
+            <div class="text_item">
+                <a href="#">サイトマップ</a>
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">テキストページ</a></li>
+                    <li><a href="{{ url_for('main.mechanism') }}">機構の説明</a></li>
+                </ul>
+            </div>
+            <a href="{{ url_for('main.index') }}">トップ</a>
+            <div class="text_item">
+                <a href="#">リンク
+                    <ul>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作品作成依頼</a></li>
+                    </ul>
+                </a>
+            </div>
+            <div class="text_item">
+                <a href="#">だおだおテキスト</a>
+                <div>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=1) }}">クローラー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=2) }}">ロボットハンド</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=3) }}">たじたじくん</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=4) }}">エレベーター</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=5) }}">ターンテーブル</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=6) }}">モノレール</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=7) }}">ステアリングカー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=8) }}">ライントレース</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=9) }}">二足歩行ロボット</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=10) }}">六足歩行ロボット</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h1 class="footerbottom">@2025 DaoDao_Text_Page</h1>
     </footer>
 
     <!-- Bootstrap JS -->

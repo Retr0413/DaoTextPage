@@ -7,8 +7,8 @@ from sqlalchemy import or_
 
 main_bp = Blueprint('main', __name__)
 
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')  
-ALLOWED_EXTENSIONS = {'pdf'}
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static/uploads')  
+ALLOWED_EXTENSIONS = {'pdf', 'png'}
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -49,27 +49,50 @@ def index():
 def add():
     if request.method == 'POST':
         title = request.form['title']
-        file = request.files['file']
+        stars = int(request.form['stars'])
+        mechanism = request.form['mechanism']
+        pdf_file = request.files.get('pdf_file')
+        png_file = request.files.get('png_file')
 
-        if 'file' not in request.files or file.filename == '':
-            flash('ファイルがアップロードされていません。')
+        if not title or not stars or not pdf_file or not png_file:
+            flash('すべての項目を入力してください。')
             return redirect(request.url)
+        
+        if pdf_file and allowed_file(pdf_file.filename) and png_file and allowed_file(png_file.filename):
+            pdf_filename = secure_filename(pdf_file.filename)
+            png_filename = secure_filename(png_file.filename)
 
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(UPLOAD_FOLDER, filename)
-            file.save(file_path)
+            pdf_path = os.path.join(UPLOAD_FOLDER, pdf_filename)
+            png_path = os.path.join(UPLOAD_FOLDER, png_filename)
+            pdf_file.save(pdf_path)
+            png_file.save(png_path)
 
-            reader = PdfFileReader(file_path)
-            pdf_content = ""
-            for page in reader.pages:
-                pdf_content += page.extract_text()
-
-            text = Text(title=title, context=pdf_content, pdf_path=filename)
-            db.session.add(text)
+            pdf_context = ""
+            try:
+                reader = PdfFileReader(pdf_path)
+                for page in reader.pages:
+                    pdf_context += page.extract_text()
+            except Exception as e:
+                flash(f'PDFファイルの読み込みに失敗しました: {e}')
+                return redirect(request.url)
+            
+            new_text = Text(
+                title=title,
+                pdf_path=f'uploads/{pdf_filename}',
+                text_png=f'uploads/{png_filename}',
+                context=pdf_context,
+                mechanism=mechanism,
+                stars=stars
+            )
+            db.session.add(new_text)
             db.session.commit()
-            return redirect(url_for('main.index'))
 
+            flash('新しいテキストが追加されました。')
+            return redirect(url_for('main.index'))
+        
+        flash('PDFファイルとPNGファイルをアップロードしてください。')
+        return redirect(request.url)
+    
     return render_template('add.html')
 
 @main_bp.route('/text/<int:id>')

@@ -252,14 +252,44 @@
       </main>
 
     <!-- ====== フッター ====== -->
-    <footer>
-      <ul class="footer-nav">
-          <li><a href="#">サイトマップ</a></li>
-          <li><a href="#">SNS</a></li>
-          <li><a href="#">トップ</a></li>
-          <li><a href="#">リンク</a></li>
-          <li><a href="#">だおだおテキスト</a></li>
-      </ul>
+    <footer class="footer">
+        <nav class="footer-nav">
+            <div class="text_item">
+                <a href="#">サイトマップ</a>
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">テキストページ</a></li>
+                    <li><a href="{{ url_for('main.mechanism') }}">機構の説明</a></li>
+                </ul>
+            </div>
+            <a href="{{ url_for('main.index') }}">トップ</a>
+            <div class="text_item">
+                <a href="#">リンク
+                    <ul>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作品作成依頼</a></li>
+                    </ul>
+                </a>
+            </div>
+            <div class="text_item">
+                <a href="#">だおだおテキスト</a>
+                <div>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=1) }}">クローラー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=2) }}">ロボットハンド</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=3) }}">たじたじくん</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=4) }}">エレベーター</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=5) }}">ターンテーブル</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=6) }}">モノレール</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=7) }}">ステアリングカー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=8) }}">ライントレース</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=9) }}">二足歩行ロボット</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=10) }}">六足歩行ロボット</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h1 class="footerbottom">@2025 DaoDao_Text_Page</h1>
     </footer>
 
   <!-- Bootstrap JS -->
