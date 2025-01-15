@@ -26,7 +26,7 @@ def login():
             session['user_id'] = result['id']
             session['username'] = result['username']
             flash('ログイン', 'success')
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.add'))
         else:
             flash(result.get('message', 'ログイン失敗'), 'danger')
 

@@ -3,28 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <title>新しいテキストを追加</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap読み込み -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/mechanismstyle.css') }}">
 </head>
 <body>
-    <header class="bg-dark text-white py-3">
-        <div class="container">
-            <a href="/" class="btn btn-light">戻る</a>
+    <header class="header">
+        <div class="logo">
+            <a href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
+            </a>
+        </div>
+        <div class="nav">
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/歯車.png') }}" alt="説明" class="nav-icon">
+                機構の説明
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
+                    <a href="{{ url_for('main.gears') }}">ギアの種類</a>
+                    <a href="{{ url_for('main.movement') }}">移動方式</a>
+                    <a href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
+                    <a href="{{ url_for('main.sensors') }}">センサー</a>
+                    <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
+                リンク
+                <div class="dropdown-menu">
+                    <a href="">だおだお作成作品</a>
+                    <a href="https://www.lego.com/ja-jp">LEGO公式サイト</a>
+                    <a href="https://akiyuki.jp/">外部リンク1</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
+                作成依頼リンク
+                <div class="dropdown-menu">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
+                    <a href="#">その他のリンク</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
+                ログイン
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('auth.login') }}">ログイン</a>
+                </div>
+            </div>
         </div>
     </header>
 
     <main class="container my-5">
         <h2>新しいテキストを追加</h2>
-        <form method="POST">
+        <form method="POST" action="/add" enctype="multipart/form-data">
+            <!-- タイトル入力 -->
             <div class="mb-3">
                 <label for="title" class="form-label">タイトル</label>
-                <input type="text" id="title" name="title" class="form-control" required>
+                <input type="text" id="title" name="title" class="form-control" placeholder="タイトルを入力してください" required>
             </div>
+            
+            <!-- PDFファイルアップロード -->
+            <div class="mb-3">
+                <label for="pdf_file" class="form-label">PDFテキストファイル</label>
+                <input type="file" id="pdf_file" name="pdf_file" class="form-control" accept=".pdf" required>
+            </div>
+            
+            <!-- PNG画像アップロード -->
+            <div class="mb-3">
+                <label for="image_file" class="form-label">PNGテキスト画像ファイル</label>
+                <input type="file" id="image_file" name="image_file" class="form-control" accept=".png" required>
+            </div>
+
+            <!-- 内容入力 -->
             <div class="mb-3">
                 <label for="content" class="form-label">内容</label>
-                <textarea id="content" name="content" class="form-control" rows="5" required></textarea>
+                <textarea id="content" name="content" class="form-control" rows="5" placeholder="内容を入力してください" required></textarea>
             </div>
+
+            <!-- メカニズム入力 -->
+            <div class="mb-3">
+                <label for="mechanism" class="form-label">機構</label>
+                <input type="text" id="mechanism" name="mechanism" class="form-control" placeholder="メカニズムを入力してください (例: 歩行, 回転)" required>
+            </div>
+
+            <!-- 星評価 -->
+            <div class="mb-3">
+                <label for="stars" class="form-label">難しさの星</label>
+                <input type="number" id="stars" name="stars" class="form-control" min="1" max="5" required>
+            </div>
+
+            <!-- 送信ボタン -->
             <button type="submit" class="btn btn-primary">追加</button>
         </form>
     </main>
+
+    <footer class="footer">
+        <nav class="footer-nav">
+            <div class="text_item">
+                <a href="#">サイトマップ</a>
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">テキストページ</a></li>
+                    <li><a href="{{ url_for('main.mechanism') }}">機構の説明</a></li>
+                </ul>
+            </div>
+            <a href="{{ url_for('main.index') }}">トップ</a>
+            <div class="text_item">
+                <a href="#">リンク
+                    <ul>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作品作成依頼</a></li>
+                    </ul>
+                </a>
+            </div>
+            <div class="text_item">
+                <a href="#">だおだおテキスト</a>
+                <div>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=1) }}">クローラー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=2) }}">ロボットハンド</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=3) }}">たじたじくん</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=4) }}">エレベーター</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=5) }}">ターンテーブル</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=6) }}">モノレール</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=7) }}">ステアリングカー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=8) }}">ライントレース</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=9) }}">二足歩行ロボット</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=10) }}">六足歩行ロボット</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h1 class="footerbottom">@2025 DaoDao_Text_Page</h1>
+    </footer>
+
+    <!-- Bootstrap JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='javascript/mechanismscript.js') }}"></script>
 </body>
 </html>

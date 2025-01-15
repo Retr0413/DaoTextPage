@@ -85,45 +85,87 @@
                 <div class="card mechanism-card">
                     <div class="card-body">
                         <h5 class="card-title">歩行</h5>
-                        <p class="card-text">二足歩行や多脚歩行など、脚を使って移動する方式。不整地での移動に適していますが、制御が複雑です。</p>
+                        <p class="card-text">レゴのロボットや動物モデルでは、足を使った歩行機構が設計されることがあります。リンク機構を用いて、足の動きを連動させることが可能です。</p>
                     </div>
                 </div>
             </div>
+    
             <div class="col-12">
                 <div class="card mechanism-card">
                     <div class="card-body">
                         <h5 class="card-title">走る</h5>
-                        <p class="card-text">高速な二足移動方式。モーメントと慣性を利用し、瞬間的に両足が地面から離れる状態を作ります。</p>
+                        <p class="card-text">車両モデルでは、車両やトラックを使用して走行します。ギアを組み合わせることが、速度やトルクを調整できます。</p>
                     </div>
                 </div>
             </div>
+
             <div class="col-12">
                 <div class="card mechanism-card">
                     <div class="card-body">
                         <h5 class="card-title">すり足</h5>
-                        <p class="card-text">足を地面から大きく離さずに移動する方式。安定性が高く、重心移動が少なくて済みます。</p>
+                        <p class="card-text">すり足は、滑らかな移動を実現するための技術で、レゴのロボットにおいても応用されることがあります。</p>
                     </div>
                 </div>
             </div>
+
+            <div class="col-12">
+              <div class="card mechanism-card">
+                  <div class="card-body">
+                      <h5 class="card-title">回転</h5>
+                      <p class="card-text">回転機構は、モーターや手動での操作によって実現されます。ギアを使用して、回転速度や方向を調整できます。</p>
+                  </div>
+              </div>
+            </div>
+    
             <div class="col-12">
                 <div class="card mechanism-card">
                     <div class="card-body">
                         <h5 class="card-title">重心移動</h5>
-                        <p class="card-text">体の重心を意図的に移動させることで、バランスを取りながら動作を行う技術です。</p>
+                        <p class="card-text">重心移動は、安定した動作を実現するために重要です。レゴモデルでは、重心を意識した設定が重要です。</p>
                     </div>
                 </div>
             </div>
         </div>
     </main>
 
-    <footer>
+    <footer class="footer">
         <nav class="footer-nav">
-            <a href="#">サイトマップ</a>
-            <a href="#">SNS</a>
-            <a href="#">トップ</a>
-            <a href="#">リンク</a>
-            <a href="#">だおだおテキスト</a>
+            <div class="text_item">
+                <a href="#">サイトマップ</a>
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">テキストページ</a></li>
+                    <li><a href="{{ url_for('main.mechanism') }}">機構の説明</a></li>
+                </ul>
+            </div>
+            <a href="{{ url_for('main.index') }}">トップ</a>
+            <div class="text_item">
+                <a href="#">リンク
+                    <ul>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作品作成依頼</a></li>
+                    </ul>
+                </a>
+            </div>
+            <div class="text_item">
+                <a href="#">だおだおテキスト</a>
+                <div>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=1) }}">クローラー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=2) }}">ロボットハンド</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=3) }}">たじたじくん</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=4) }}">エレベーター</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=5) }}">ターンテーブル</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=6) }}">モノレール</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=7) }}">ステアリングカー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=8) }}">ライントレース</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=9) }}">二足歩行ロボット</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=10) }}">六足歩行ロボット</a></li>
+                    </ul>
+                </div>
+            </div>
         </nav>
+        <h1 class="footerbottom">@2025 DaoDao_Text_Page</h1>
     </footer>
 
   <!-- Bootstrap JS -->

@@ -16,9 +16,15 @@ body { margin: 0; padding: 0; font-family: sans-serif; background: #fff; }
 .grid-item:hover { transform: scale(1.05); }
 .grid-item img { width: auto; max-width: 150px; height: 150px; margin-bottom: 10px; flex-shrink: 0; object-fit: cover; }
 .footer { background: #000; color: #fff; padding: 20px; text-align: center; margin-top: 40px; }
-.footer-nav { display: flex; justify-content: center; gap: 50px; font-size: 14px; }
+.footer h1 { font-size: 10px; color: #8e8e8e; margin-top: 20px; }
+.footer-nav { display: flex; justify-content: center; gap: 70px; font-size: 14px; }
 .footer-nav a { color: #fff; text-decoration: none; }
-.footer-nav a:hover { color: #FFD700; }
+.text-item { display: flex; margin: 0; padding-left: 10px; }
+.footer-nav ul { padding-left: 10px; }
+.footer-nav li { font-size: 10px; color: #8e8e8e; text-align: left; padding-top: 2px; }
+.footer-nav li:hover { color: #FFD700; }
+.footer-nav li a { font-size: 10px; color: #8e8e8e; text-align: left; }
+.footer-nav li a:hover { color: #FFD700; }
 .pink-section .grid-item { background: #ffe3e6; }
 .button-50 { display: flex; justify-content: center; align-items: center; position: relative; width: 150px; margin: 0 auto; margin-top: auto; padding: 0.7em 1em 0.7em 45px; border: none; border-radius: 5px; box-shadow: 0 2px 3px rgb(0 0 0 / 30%), 0 2px 3px -2px rgb(0 0 0 / 20%); background-color: #000000; color: #fff; font-weight: 600; font-size: 1em; text-decoration: none; transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; flex-shrink: 0; }
 .button-50:hover { transform: translateY(-1px); box-shadow: 0 15px 30px -5px rgb(0 0 0 / 20%), 0 0 5px rgb(0 0 0 / 10%); }
