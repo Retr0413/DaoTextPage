@@ -67,11 +67,14 @@
         </div>
 
         <div class="section-title">テキスト内容</div>
-        <iframe
+        <object
             class="pdf-container"
-            src="{{ url_for('static', filename=text.pdf_path) }}"
-            frameborder="0">
-        </iframe>
+            data="{{ url_for('static', filename=text.pdf_path) }}"
+            type="application/pdf"
+            width="100%"
+            height="600">
+            <p>PDFを表示できません。<a href="{{ url_for('static', filename=text.pdf_path) }}" target="_blank">ここをクリックしてPDFを表示してください。</a></p>
+        </object>
     </main>
 
     <footer class="footer">
