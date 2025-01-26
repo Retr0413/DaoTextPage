@@ -9,6 +9,8 @@ main_bp = Blueprint('main', __name__)
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static/uploads')  
 ALLOWED_EXTENSIONS = {'pdf', 'png'}
+PDF_COOKIE_NAME = "text_access_token"
+PDF_COOKIE_VALUE = "text_secure_token"
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)

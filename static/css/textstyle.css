@@ -1,4 +1,3 @@
-/* 全体の設定 */
 body {
     margin: 0;
     padding: 0;
@@ -100,6 +99,20 @@ header {
     margin: 0 20px;
 }
 
+p a {
+    font-size: 40px;
+    text-align: center;
+    display: inline-block;
+    padding: 15px 30px;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    border: 2px solid #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
 .mechanism-tag {
     display: inline-block;
     margin: 5px;
@@ -110,16 +123,53 @@ header {
     border: 1px solid #ddd;
     font-size: 14px;
 }
-.footer { background: #000; color: #fff; padding: 20px; text-align: center; margin-top: 40px; }
-.footer h1 { font-size: 10px; color: #8e8e8e; margin-top: 20px; }
-.footer-nav { display: flex; justify-content: center; gap: 70px; font-size: 14px; }
-.footer-nav a { color: #fff; text-decoration: none; }
-.text-item { display: flex; margin: 0; padding-left: 10px; }
-.footer-nav ul { padding-left: 10px; }
-.footer-nav li { font-size: 10px; color: #8e8e8e; text-align: left; padding-top: 2px; }
-.footer-nav li:hover { color: #FFD700; }
-.footer-nav li a { font-size: 10px; color: #8e8e8e; text-align: left; }
-.footer-nav li a:hover { color: #FFD700; }
+.footer {
+    background: #000;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+    margin-top: 40px;
+}
+.footer h1 {
+    font-size: 10px;
+    color: #8e8e8e;
+    margin-top: 20px;
+}
+.footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 70px;
+    font-size: 14px;
+}
+.footer-nav a {
+    color: #fff;
+    text-decoration: none;
+}
+.text-item {
+    display: flex;
+    margin: 0;
+    padding-left: 10px;
+}
+.footer-nav ul {
+    padding-left: 10px;
+}
+.footer-nav li {
+    font-size: 10px;
+    color: #8e8e8e;
+    text-align: left;
+    padding-top: 2px;
+}
+.footer-nav li:hover {
+    color: #FFD700;
+}
+.footer-nav li a {
+    font-size: 10px;
+    color: #8e8e8e;
+    text-align: left;
+}
+.footer-nav li a:hover {
+    color: #FFD700;
+}
 
 .pdf-container {
     display: block;
@@ -129,9 +179,6 @@ header {
     overflow: auto;
 }
 
-/* ================================
- * タブレット (iPadなど) 向け
- * ================================ */
 @media (min-width: 768px) and (max-width: 1024px) {
     .header .nav-item {
         font-size: 16px;
@@ -140,11 +187,21 @@ header {
     .footer-nav {
         gap: 30px;
     }
+    p a {
+        font-size: 40px;
+        text-align: center;
+        display: inline-block;
+        padding: 15px 30px;
+        background-color: #fff;
+        color: #000;
+        text-decoration: none;
+        border: 2px solid #000;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
 }
 
-/* ================================
- * スマホ画面向け（小さくする）
- * ================================ */
 @media (max-width: 768px) {
     .triangle-logo {
         width: 30px;
@@ -152,53 +209,66 @@ header {
         margin-right: 5px;
         margin-top: 5px;
         margin-bottom: 5px;
-      }
-      .header .logo {
+    }
+    .header .logo {
         display: flex;
         align-items: center;
         margin-right: 10px;
     }
-      .header, header {
+    .header, header {
         padding: 10px;
-      }
-      .header .nav {
+    }
+    .header .nav {
         gap: 10px;
         text-align: left;
-      }
-      .header .nav-item {
+    }
+    .header .nav-item {
         padding: 5px;
         font-size: 12px;
         gap: 3px;
         text-align: left;
-      }
-      .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #000;
-    color: #fff;
-    display: none; /* 初期は表示しない */
-    flex-direction: column;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    min-width: 120px; /* 幅を小さく */
-    padding: 5px; /* 内側余白を調整 */
-    z-index: 9999; /* 前面に表示するために追加 */
-  }
-  .dropdown-menu a {
-    color: #fff;
-    text-decoration: none;
-    padding: 8px 13px; /* 内側余白を小さく */
-    font-size: 12px; /* テキストサイズを小さく */
-    white-space: nowrap;
-  }
-  .dropdown-menu a:hover {
-    background: #FFD700;
-    color: #000;
-  }
-      .nav-icon {
-        width: 20px; 
+    }
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: #000;
+        color: #fff;
+        display: none;
+        flex-direction: column;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        min-width: 120px;
+        padding: 5px;
+        z-index: 9999;
+    }
+    .dropdown-menu a {
+        color: #fff;
+        text-decoration: none;
+        padding: 8px 13px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+    .dropdown-menu a:hover {
+        background: #FFD700;
+        color: #000;
+    }
+    p a {
+        font-size: 40px;
+        text-align: center;
+        display: inline-block;
+        padding: 15px 30px;
+        background-color: #fff;
+        color: #000;
+        text-decoration: none;
+        border: 2px solid #000;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    .nav-icon {
+        width: 20px;
         height: 20px;
-      }
+    }
     .footer-nav {
         gap: 20px;
         font-size: 12px;
@@ -212,17 +282,64 @@ header {
 @media (max-width: 576px) {
     .header .nav-item {
         font-size: 10px;
-      }
-      .nav-icon {
+    }
+    .nav-icon {
         width: 16px;
         height: 16px;
-      }
-      .header .nav {
+    }
+    .header .nav {
         gap: 5px;
-      }
+    }
     .footer-nav {
         gap: 15px;
         font-size: 10px;
+    }
+    p a {
+        font-size: 20px;
+        text-align: center;
+        display: inline-block;
+        padding: 15px 30px;
+        background-color: #fff;
+        color: #000;
+        text-decoration: none;
+        border: 2px solid #000;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
+    }
+    .pdf-container {
+        width: 100%;
+        height: 80vh;
+    }
+}
+
+@media (max-width: 375px) {
+    .header .nav-item {
+        font-size: 8px;
+    }
+    .nav-icon {
+        width: 16px;
+        height: 16px;
+    }
+    .header .nav {
+        gap: 4px;
+    }
+    .footer-nav {
+        gap: 15px;
+        font-size: 10px;
+    }
+    p a {
+        font-size: 20px;
+        text-align: center;
+        display: inline-block;
+        padding: 15px 30px;
+        background-color: #fff;
+        color: #000;
+        text-decoration: none;
+        border: 2px solid #000;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease;
     }
     .pdf-container {
         width: 100%;
