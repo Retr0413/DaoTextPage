@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory, make_response
 from app.main.models import db, Text
 from werkzeug.utils import secure_filename
 from PyPDF2 import PdfFileReader
@@ -25,6 +25,25 @@ def login_required(func):
         return func(*args, **kwargs)
     wrapper.__name__ = func.__name__
     return wrapper
+
+@main_bp.route('/set_pdf_cookie')
+def set_pdf_cookie():
+    response = make_response(redirect(url_for('main.index')))
+    response.set_cookie(PDF_COOKIE_NAME, PDF_COOKIE_VALUE)
+    flash('Cookieを設定しました。')
+    return response
+
+@main_bp.route('/secure_pdf/<path:filename>')
+def secure_pdf(filename):
+    token = request.cookies.get(PDF_COOKIE_NAME)
+    if token != PDF_COOKIE_VALUE:
+        return redirect(url_for('main.index'))
+
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    if os.path.exists(file_path):
+        return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=False)
+    else:
+        return redirect(url_for('main.index'))
 
 @main_bp.route('/uploads/<path:filename>')
 def uploaded_file(filename):
@@ -100,7 +119,8 @@ def add():
 @main_bp.route('/text/<int:id>')
 def text_detail(id):
     text = Text.query.get_or_404(id)
-    return render_template('text.html', text=text)
+    pdf_url = url_for('main.secure_pdf', filename=text.pdf_path.split('/')[-1])
+    return render_template('text.html', text=text, pdf_url=pdf_url)
 
 @main_bp.route('/mechanism', methods=['GET', 'POST'])
 def mechanism():
