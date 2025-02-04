@@ -25,7 +25,10 @@ body { margin: 0; padding: 0; font-family: sans-serif; background: #fff; }
 .footer-nav li:hover { color: #FFD700; }
 .footer-nav li a { font-size: 10px; color: #8e8e8e; text-align: left; }
 .footer-nav li a:hover { color: #FFD700; }
+.clear-button { font-size: 20px; }
 .pink-section .grid-item { background: #ffe3e6; }
+.section-title { display: flex; align-items: center; justify-content: center; margin: 30px 0; font-size: 40px; font-weight: bold; }
+.section-title::before, .section-title::after { content: ''; flex: 1; border-bottom: 1px solid #ddd; margin: 0 20px; }
 .button-50 { display: flex; justify-content: center; align-items: center; position: relative; width: 150px; margin: 0 auto; margin-top: auto; padding: 0.7em 1em 0.7em 45px; border: none; border-radius: 5px; box-shadow: 0 2px 3px rgb(0 0 0 / 30%), 0 2px 3px -2px rgb(0 0 0 / 20%); background-color: #000000; color: #fff; font-weight: 600; font-size: 1em; text-decoration: none; transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; flex-shrink: 0; }
 .button-50:hover { transform: translateY(-1px); box-shadow: 0 15px 30px -5px rgb(0 0 0 / 20%), 0 0 5px rgb(0 0 0 / 10%); }
 .button-50::before { position: absolute; top: 50%; left: 15px; transform: translateY(-50%); width: 30px; height: 85%; background-color: #fff; clip-path: polygon(0 0, 0 100%, 50% 75%, 100% 100%, 100% 0); content: '★' attr(data-stars); text-align: center; color: #000; font-size: 0.9em; font-weight: bold; }
@@ -43,6 +46,12 @@ body { margin: 0; padding: 0; font-family: sans-serif; background: #fff; }
 .button { display: flex; flex-wrap: wrap; gap: 15px; margin: 5px 5px; }
 .button label { margin-right: 10px; }
 .button [type="checkbox"] { accent-color: #3DA8AA; transform: scale(1.7); }
+.news-section { border: 2px solid #ddd; border-radius: 10px; padding: 20px; margin: 20px 0; background-color: #f9f9f9; }
+.news-date { position: absolute; top: 10px; left: 10px; font-size: 14px; color: #666; background-color: rgba(255, 255, 255, 0.8); padding: 2px 5px; border-radius: 4px; z-index: 1; }
+.news-content { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.news-item { position: relative; width: 80%; max-width: 600px; text-align: center; padding: 10px; border: 1px solid #ccc; border-radius: 8px; background-color: #fff; }
+.news-image { width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px; }
+.news-text { font-size: 20px; color: #333; }
 
 /* ドロップダウンメニューCSS */
 .dropdown-menu { position: absolute; top: 100%; left: 0; background: #000; color: #fff; display: none; flex-direction: column; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); min-width: 150px; z-index: 1000; }
@@ -57,9 +66,9 @@ body { margin: 0; padding: 0; font-family: sans-serif; background: #fff; }
 .img-slide.active { opacity: 1;  }
 .toggle-button { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 10px; background-color: #fff; color: #000; border: 1px solid #ddd; border-radius: 4px; font-weight: bold; font-size: 20px; cursor: pointer; }
 .toggle-button:hover { background-color: #f7f7f7; }
-.toggle-button::after { content: '▼';  font-size: 20px; color: #666; transition: transform 0.3s ease; }
-.toggle-button.open::after { content: '▲';  transform: rotate(180deg); }
-.hidden-content { display: none; padding: 10px; border-top: 1px solid #ddd; font-size: 14px; color: #333; background-color: #fff; transition: max-height 0.3s ease, opacity 0.3s ease; }
+.toggle-button::after { content: '▼'; font-size: 20px; color: #666; transition: transform 0.3s ease; }
+.toggle-button.open::after { content: '▲'; transform: rotate(180deg); }
+.hidden-content { display: block;  padding: 10px; border-top: 1px solid #ddd; font-size: 14px; color: #333; background-color: #fff; transition: max-height 0.3s ease, opacity 0.3s ease; }
 
 /* ================================
 * タブレット (iPadなど) 向け

@@ -70,3 +70,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     setInterval(nextSlide, 5000);
 });
+
+function clearAllCheckboxes() {
+    const checkboxes = document.querySelectorAll('input[name="mechanisms"]');
+
+    checkboxes.forEach(checkbox => checkbox.checked = false);
+    
+    document.getElementById('search-form').submit();
+}
