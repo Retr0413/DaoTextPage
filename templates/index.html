@@ -38,7 +38,7 @@
                 <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
                 作成依頼リンク
                 <div class="dropdown-menu">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作成依頼Googleフォーム</a>
                     <a href="#">その他のリンク</a>
                 </div>
             </div>
@@ -77,7 +77,7 @@
         </div>                     
 
         <section class="notice-title">
-            <button class="toggle-button" onclick="toggleDaodaoText()">だおだおテキストについて</button>
+            <button class="toggle-button open" onclick="toggleDaodaoText()">だおだおテキストについて</button>
 
             <div id="daodao-text" class="hidden-content">
                 <h2 class="title">### だおだおテキストとは？ ###</h2>
@@ -93,10 +93,27 @@
             </div>
         </section>
 
+        <div class="section-title">News</div>
+        <div class="news-section">
+            <div class="news-content">
+                <div class="news-item">
+                    <div class="news-date">2025.02.02</div>
+                    <img src="{{ url_for('static', filename='uploads/だおだおテレビ.png') }}" alt="daodaoterebi" class="news-image">
+                    <p class="news-text">TBSテレビ、ジロジロ有吉に出演しました！</p>
+                </div>
+                <div class="news-item">
+                    <div class="news-date">2025.02.01</div>
+                    <p class="news-text">このテキストサイトはBeta版です。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-title">Text</div>
         <form method="get" action="{{ url_for('main.index') }}" id="search-form">
             <div class="mechanism">
                 <details id="mechanism-details" open>
                     <summary>機構で絞り込む</summary>
+                    <button type="button" class="clear-button" onclick="clearAllCheckboxes()">全選択解除</button>
                     <div class="box1">
                         <h3>ギア</h3>
                         <div class="button">
