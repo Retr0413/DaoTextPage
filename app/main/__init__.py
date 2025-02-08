@@ -2,7 +2,7 @@ from flask import Flask
 from app.main.config import Config
 from app.main.routes import main_bp
 from app.main.models import db, Text
-from app.auth.models import User
+from app.auth.models import User, Public_User
 from app.auth.routes import auth
 from werkzeug.security import generate_password_hash
 from flask_migrate import Migrate
@@ -106,6 +106,14 @@ def seed_data():
             id=1,
             username='daodao', 
             password_hash=generate_password_hash('DefaultTakuma', method='pbkdf2:sha256')
+        )
+        db.session.add(initial_user)
+
+    if not Public_User.query.first():
+        initial_user = Public_User(
+            id=1,
+            username='Shake', 
+            password_hash=generate_password_hash('Shake', method='pbkdf2:sha256')
         )
         db.session.add(initial_user)
 

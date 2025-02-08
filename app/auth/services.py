@@ -1,5 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models import User
+from .models import User, Public_User
 from app.main.models import db
 
 def register_service(data):
@@ -24,6 +24,11 @@ def login_service(data):
     """
     user = User.query.filter_by(username=data['username']).first()
     if user and check_password_hash(user.password_hash, data['password']):
-        return {'id': user.id, 'username': user.username, 'message': 'ログインしました。'}
+        return {'id': user.id, 'username': user.username, 'message': 'ログインしました。', 'user_type': "User"}
+    
+    public_user = Public_User.query.filter_by(username=data['username']).first()
+    if public_user and check_password_hash(public_user.password_hash, data['password']):
+        return {'id': public_user.id, 'username':public_user.username, 'message': 'ログインしました。', 'user_type': "Public_User"}
+     
 
     return {'message': 'ユーザー名またはパスワードが違います。'}, 401
