@@ -17,10 +17,10 @@ import time
 
 migrate = Migrate()
 
-limiter = Limiter(
-    get_remote_address,
-    default_limits=["300 per day", "60 per hour"],
-)
+# limiter = Limiter(
+#     get_remote_address,
+#     default_limits=["300 per day", "60 per hour"],
+# )
 
 # csp = {
 #     'default-src': ['\'self\''],  # デフォルトは自ドメインのみ許可
@@ -80,7 +80,7 @@ def create_app():
 
     # talisman.init_app(app)
 
-    limiter.init_app(app)
+    # limiter.init_app(app)
 
     # Blueprint の登録
     app.register_blueprint(main_bp)
