@@ -9,8 +9,8 @@ main_bp = Blueprint('main', __name__)
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static/uploads')  
 ALLOWED_EXTENSIONS = {'pdf', 'png'}
-PDF_COOKIE_NAME = "text_access_token"
-PDF_COOKIE_VALUE = "text_secure_token"
+# PDF_COOKIE_NAME = "text_access_token"
+# PDF_COOKIE_VALUE = "text_secure_token"
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -26,24 +26,24 @@ def login_required(func):
     wrapper.__name__ = func.__name__
     return wrapper
 
-@main_bp.route('/set_pdf_cookie')
-def set_pdf_cookie():
-    response = make_response(redirect(url_for('main.index')))
-    response.set_cookie(PDF_COOKIE_NAME, PDF_COOKIE_VALUE)
-    flash('Cookieを設定しました。')
-    return response
+# @main_bp.route('/set_pdf_cookie')
+# def set_pdf_cookie():
+#     response = make_response(redirect(url_for('main.index')))
+#     response.set_cookie(PDF_COOKIE_NAME, PDF_COOKIE_VALUE)
+#     flash('Cookieを設定しました。')
+#     return response
 
-@main_bp.route('/secure_pdf/<path:filename>')
-def secure_pdf(filename):
-    token = request.cookies.get(PDF_COOKIE_NAME)
-    if token != PDF_COOKIE_VALUE:
-        return redirect(url_for('main.index'))
+# @main_bp.route('/secure_pdf/<path:filename>')
+# def secure_pdf(filename):
+#     token = request.cookies.get(PDF_COOKIE_NAME)
+#     if token != PDF_COOKIE_VALUE:
+#         return redirect(url_for('main.index'))
 
-    file_path = os.path.join(UPLOAD_FOLDER, filename)
-    if os.path.exists(file_path):
-        return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=False)
-    else:
-        return redirect(url_for('main.index'))
+#     file_path = os.path.join(UPLOAD_FOLDER, filename)
+#     if os.path.exists(file_path):
+#         return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=False)
+#     else:
+#         return redirect(url_for('main.index'))
 
 @main_bp.route('/uploads/<path:filename>')
 def uploaded_file(filename):
