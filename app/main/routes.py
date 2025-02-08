@@ -9,15 +9,13 @@ main_bp = Blueprint('main', __name__)
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static/uploads')  
 ALLOWED_EXTENSIONS = {'pdf', 'png'}
-# PDF_COOKIE_NAME = "text_access_token"
-# PDF_COOKIE_VALUE = "text_secure_token"
+PDF_COOKIE_NAME = "text_access_token"
+PDF_COOKIE_VALUE = "text_secure_token"
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
 def login_required(func):
     def wrapper(*args, **kwargs):
         if 'user_id' not in session:
@@ -25,30 +23,9 @@ def login_required(func):
         return func(*args, **kwargs)
     wrapper.__name__ = func.__name__
     return wrapper
-
-# @main_bp.route('/set_pdf_cookie')
-# def set_pdf_cookie():
-#     response = make_response(redirect(url_for('main.index')))
-#     response.set_cookie(PDF_COOKIE_NAME, PDF_COOKIE_VALUE)
-#     flash('Cookieを設定しました。')
-#     return response
-
-# @main_bp.route('/secure_pdf/<path:filename>')
-# def secure_pdf(filename):
-#     token = request.cookies.get(PDF_COOKIE_NAME)
-#     if token != PDF_COOKIE_VALUE:
-#         return redirect(url_for('main.index'))
-
-#     file_path = os.path.join(UPLOAD_FOLDER, filename)
-#     if os.path.exists(file_path):
-#         return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=False)
-#     else:
-#         return redirect(url_for('main.index'))
-
 @main_bp.route('/uploads/<path:filename>')
 def uploaded_file(filename):
     return send_from_directory(UPLOAD_FOLDER, filename)
-
 @main_bp.route('/')
 def index():
     selected_mechanisms = request.args.getlist('mechanisms')
@@ -58,13 +35,10 @@ def index():
         filters = [Text.mechanism.contains(mechanism) for mechanism in selected_mechanisms]
         texts = texts.filter(or_(*filters))
     texts = texts.all()
-
     texts_by_star = {}
     for text in texts:
         texts_by_star.setdefault(text.stars, []).append(text)
-
     return render_template('index.html', texts_by_star=texts_by_star, selected_mechanism=selected_mechanisms)
-
 @main_bp.route('/add', methods=['GET', 'POST'])
 @login_required
 def add():
@@ -74,7 +48,6 @@ def add():
         mechanism = request.form['mechanism']
         pdf_file = request.files.get('pdf_file')
         png_file = request.files.get('png_file')
-
         if not title or not stars or not pdf_file or not png_file:
             flash('すべての項目を入力してください。')
             return redirect(request.url)
@@ -82,12 +55,10 @@ def add():
         if pdf_file and allowed_file(pdf_file.filename) and png_file and allowed_file(png_file.filename):
             pdf_filename = secure_filename(pdf_file.filename)
             png_filename = secure_filename(png_file.filename)
-
             pdf_path = os.path.join(UPLOAD_FOLDER, pdf_filename)
             png_path = os.path.join(UPLOAD_FOLDER, png_filename)
             pdf_file.save(pdf_path)
             png_file.save(png_path)
-
             pdf_context = ""
             try:
                 reader = PdfFileReader(pdf_path)
@@ -107,7 +78,6 @@ def add():
             )
             db.session.add(new_text)
             db.session.commit()
-
             flash('新しいテキストが追加されました。')
             return redirect(url_for('main.index'))
         
@@ -115,33 +85,25 @@ def add():
         return redirect(request.url)
     
     return render_template('add.html')
-
 @main_bp.route('/text/<int:id>')
 def text_detail(id):
     text = Text.query.get_or_404(id)
-    # pdf_url = url_for('main.secure_pdf', filename=text.pdf_path.split('/')[-1])
     return render_template('text.html', text=text)
-
 @main_bp.route('/mechanism', methods=['GET', 'POST'])
 def mechanism():
     return render_template('mechanism.html')
-
 @main_bp.route('/mechanism/gears', methods=['GET'])
 def gears():
     return render_template('gear_mechanism.html')
-
 @main_bp.route('/mechanism/movement', methods=['GET'])
 def movement():
     return render_template('movement_mechanism.html')
-
 @main_bp.route('/mechanism/basic', methods=['GET'])
 def basic_mechanisms():
     return render_template('basic_mechanism.html')
-
 @main_bp.route('/mechanism/sensors', methods=['GET'])
 def sensors():
     return render_template('sensors_mechanism.html')
-
 @main_bp.route('/mechanism/special', methods=['GET'])
 def special_mechanisms():
     return render_template('special_mechanism.html')
