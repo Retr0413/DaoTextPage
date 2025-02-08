@@ -21,14 +21,22 @@ def login():
         username = request.form['username']
         password = request.form['password']
         result = login_service({'username': username, 'password': password})
-        
+
+        if isinstance(result, tuple):
+            data, status_code = result
+            flash(data.get('message', 'ログイン失敗'), 'danger')
+            return render_template('login.html'), status_code
+
         if 'id' in result:
             session['user_id'] = result['id']
             session['username'] = result['username']
-            flash('ログイン', 'success')
-            return redirect(url_for('main.add'))
+            session['user_type'] = result['user_type']  
+
+            flash('ログインしました。', 'success')
+            return redirect(url_for('main.index'))
         else:
             flash(result.get('message', 'ログイン失敗'), 'danger')
+            return render_template('login.html')
 
     return render_template('login.html')
 

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Public Posts</title>
+</head>
+<body>
+    <h1>投稿された作品一覧</h1>
+    {% for post in posts %}
+    <div>
+        <h2>{{ post.creator_name }}</h2>
+        <img src="{{ url_for('static', filename=post.image_path) }}" alt="Image" style="max-width: 300px;">
+
+        {% if session.get('user_type') == 'User' %}
+            <form action="{{ url_for('main.delete_post', id=post.id) }}" method="POST" style="display:inline;">
+                <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+            </form>
+        {% endif %}
+    </div>
+    {% endfor %}
+</body>
+</html>

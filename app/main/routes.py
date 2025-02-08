@@ -1,14 +1,15 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory, make_response
-from app.main.models import db, Text
+from app.main.models import db, Text, PublicPost
 from werkzeug.utils import secure_filename
 from PyPDF2 import PdfFileReader
 import os
 from sqlalchemy import or_
+from functools import wraps
 
 main_bp = Blueprint('main', __name__)
 
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static/uploads')  
-ALLOWED_EXTENSIONS = {'pdf', 'png'}
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 PDF_COOKIE_NAME = "text_access_token"
 PDF_COOKIE_VALUE = "text_secure_token"
 
@@ -17,30 +18,52 @@ if not os.path.exists(UPLOAD_FOLDER):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 def login_required(func):
+    """ログインしていない場合はリダイレクトするデコレータ"""
+    @wraps(func)
     def wrapper(*args, **kwargs):
         if 'user_id' not in session:
             return redirect(url_for('auth.login'))
         return func(*args, **kwargs)
-    wrapper.__name__ = func.__name__
     return wrapper
-@main_bp.route('/uploads/<path:filename>')
-def uploaded_file(filename):
-    return send_from_directory(UPLOAD_FOLDER, filename)
-@main_bp.route('/')
-def index():
-    selected_mechanisms = request.args.getlist('mechanisms')
-    print(f"Selected mechanisms: {selected_mechanisms}")  # デバッグ用
-    texts = Text.query
-    if selected_mechanisms:
-        filters = [Text.mechanism.contains(mechanism) for mechanism in selected_mechanisms]
-        texts = texts.filter(or_(*filters))
-    texts = texts.all()
-    texts_by_star = {}
-    for text in texts:
-        texts_by_star.setdefault(text.stars, []).append(text)
-    return render_template('index.html', texts_by_star=texts_by_star, selected_mechanism=selected_mechanisms)
+
+def role_required(*required_role):
+    """特定のロール（'User' など）が必要なデコレータ"""
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            if 'user_id' not in session:
+                flash('ログインしてください。', 'danger')
+                return redirect(url_for('auth.login'))
+
+            if session.get('user_type') != required_role:
+                flash('権限がありません。', 'danger')
+                return redirect(url_for('main.index'))
+
+            return func(*args, **kwargs)
+        return wrapper
+    return decorator
+
+@main_bp.route('/set_pdf_cookie')
+def set_pdf_cookie():
+    response = make_response(redirect(url_for('main.index')))
+    response.set_cookie(PDF_COOKIE_NAME, PDF_COOKIE_VALUE)
+    flash('Cookieを設定しました。')
+    return response
+
+@main_bp.route('/secure_pdf/<path:filename>')
+def secure_pdf(filename):
+    token = request.cookies.get(PDF_COOKIE_NAME)
+    if token != PDF_COOKIE_VALUE:
+        return redirect(url_for('main.index'))
+
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    if os.path.exists(file_path):
+        return send_from_directory(UPLOAD_FOLDER, filename, as_attachment=False)
+    else:
+        return redirect(url_for('main.index'))
+
 @main_bp.route('/add', methods=['GET', 'POST'])
-@login_required
+@role_required('User')
 def add():
     if request.method == 'POST':
         title = request.form['title']
@@ -85,6 +108,62 @@ def add():
         return redirect(request.url)
     
     return render_template('add.html')
+
+
+@main_bp.route('/work', methods=['GET', 'POST'])
+@role_required('Public_User', 'User')
+def public_post():
+    if request.method == 'POST':
+        creator_name = request.form.get('creator_name')
+        image_file = request.files.get('image_file')
+
+        if not creator_name or not image_file:
+            flash('すべての項目を入力してください。')
+            return redirect(request.url)
+        
+        if image_file and allowed_file(image_file.filename):
+            filename = secure_filename(image_file.filename)
+            image_path = os.path.join(UPLOAD_FOLDER, filename)
+            image_file.save(image_path)
+
+            new_post = PublicPost(creator_name=creator_name, image_path=f'uploads/{filename}')
+            db.session.add(new_post)
+            db.session.commit()
+
+            flash('新しい投稿が追加されました。')
+            return redirect(url_for('main.view_public_posts'))
+        else:
+            flash('画像ファイルをアップロードしてください。')
+            return redirect(request.url)
+        
+    return render_template('public_post.html')
+
+@main_bp.route('/works', methods=['GET'])
+def view_public_posts():
+    posts = PublicPost.query.all()
+    return render_template('public_posts.html', posts=posts)
+
+@main_bp.route('/delete_public_post/<int:id>', methods=['POST'])
+@role_required('User')
+def delete_public_post(id):
+    """投稿を削除するルート"""
+    public_post = PublicPost.query.get_or_404(id)
+
+    try:
+        if public_post.image_path:
+            file_path = os.path.join(UPLOAD_FOLDER, public_post.image_path.split('/')[-1])
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+        db.session.delete(public_post)
+        db.session.commit()
+        flash('投稿を削除しました。')
+    except Exception as e:
+        db.session.rollback()
+        flash(f'投稿の削除に失敗しました: {e}', 'danger')
+    
+    return redirect(url_for('main.view_public_posts'))
+
 @main_bp.route('/text/<int:id>')
 def text_detail(id):
     text = Text.query.get_or_404(id)
