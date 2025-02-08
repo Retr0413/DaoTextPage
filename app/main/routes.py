@@ -119,8 +119,8 @@ def add():
 @main_bp.route('/text/<int:id>')
 def text_detail(id):
     text = Text.query.get_or_404(id)
-    pdf_url = url_for('main.secure_pdf', filename=text.pdf_path.split('/')[-1])
-    return render_template('text.html', text=text, pdf_url=pdf_url)
+    # pdf_url = url_for('main.secure_pdf', filename=text.pdf_path.split('/')[-1])
+    return render_template('text.html', text=text)
 
 @main_bp.route('/mechanism', methods=['GET', 'POST'])
 def mechanism():
