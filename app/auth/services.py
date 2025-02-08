@@ -1,6 +1,5 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from .models import User
-from .models import Public_User
+from .models import User, Public_User
 from app.main.models import db
 
 def register_service(data):
