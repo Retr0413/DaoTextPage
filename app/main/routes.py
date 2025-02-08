@@ -89,6 +89,19 @@ def add():
 def text_detail(id):
     text = Text.query.get_or_404(id)
     return render_template('text.html', text=text)
+
+@main_bp.route('/uploads/<path:filename>')
+def uploaded_file(filename):
+    try:
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        if not os.path.exists(file_path):
+            flash(f"ファイルが見つかりません: {filename}")
+            return redirect(url_for('main.index'))
+        return send_from_directory(UPLOAD_FOLDER, filename)
+    except Exception as e:
+        flash(f"エラーが発生しました: {e}")
+        return redirect(url_for('main.index'))
+
 @main_bp.route('/mechanism', methods=['GET', 'POST'])
 def mechanism():
     return render_template('mechanism.html')
