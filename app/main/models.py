@@ -12,6 +12,7 @@ class Text(db.Model):
     pdf_path = db.Column(db.String(200), nullable=True)
     text_png = db.Column(db.String(200), nullable=True)
     stars = db.Column(db.Integer, nullable=False)
+    likes = db.Column(db.Integer, nullable=False, default=0)
 
 class PublicPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)

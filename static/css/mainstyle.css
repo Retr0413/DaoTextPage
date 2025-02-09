@@ -53,6 +53,12 @@ body { margin: 0; padding: 0; font-family: sans-serif; background: #fff; }
 .news-image { width: 100%; height: auto; border-radius: 5px; margin-bottom: 10px; }
 .news-text { font-size: 20px; color: #333; }
 
+/* いいね数とボタンを囲む枠 */
+.like-container { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 10px; margin-top: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); }
+.like-button { margin-top: 5px; padding: 8px 16px; font-size: 14px; font-weight: bold; color: #ffffff; background-color: #007bff; border: none; border-radius: 4px; cursor: pointer; transition: background-color 0.3s ease; }
+.like-button:hover { background-color: #0056b3; }
+.like-container p { margin: 0; font-size: 14px; color: #333; text-align: center; }
+
 /* ドロップダウンメニューCSS */
 .dropdown-menu { position: absolute; top: 100%; left: 0; background: #000; color: #fff; display: none; flex-direction: column; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); min-width: 150px; z-index: 1000; }
 .dropdown-menu a { color: #fff; text-decoration: none; padding: 10px 20px; white-space: nowrap; }

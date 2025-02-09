@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory, make_response
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory, make_response, jsonify
 from app.main.models import db, Text
 from werkzeug.utils import secure_filename
 from PyPDF2 import PdfFileReader
@@ -121,6 +121,13 @@ def text_detail(id):
     text = Text.query.get_or_404(id)
     pdf_url = url_for('main.secure_pdf', filename=text.pdf_path.split('/')[-1])
     return render_template('text.html', text=text, pdf_url=pdf_url)
+
+@main_bp.route('/like/<int:id>', methods=['POST'])
+def like_text(id):
+    text = Text.query.get_or_404(id)
+    text.likes += 1
+    db.session.commit()
+    return jsonify({'id': text.id, 'likes': text.likes})
 
 @main_bp.route('/mechanism', methods=['GET', 'POST'])
 def mechanism():

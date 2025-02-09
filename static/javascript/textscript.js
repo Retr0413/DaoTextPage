@@ -47,3 +47,39 @@ document.addEventListener('DOMContentLoaded', function() {
       };
   }
 });
+
+document.addEventListener("DOMContentLoaded", () => {
+    // すべての「いいねボタン」を取得
+    const likeButtons = document.querySelectorAll(".like-button");
+
+    likeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+            const textId = button.dataset.textId;
+
+            // いいね数を取得
+            const likesCountElement = document.getElementById(`likes-${textId}`);
+            let likesCount = parseInt(likesCountElement.textContent, 10);
+
+            // いいね数を1増加
+            likesCount++;
+            likesCountElement.textContent = likesCount;
+
+            // サーバーにいいね数を送信
+            fetch(`/like/${textId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ likes: likesCount }),
+            })
+            .then((response) => {
+                if (!response.ok) {
+                    console.error("Error updating likes");
+                }
+            })
+            .catch((error) => {
+                console.error("Network error:", error);
+            });
+        });
+    });
+});
