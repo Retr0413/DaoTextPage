@@ -126,7 +126,8 @@ def seed_data():
                 "text_png": "uploads/クローラー.png",
                 "context": "みんな大好きクローラー。凸凹な地形も走れる",
                 "mechanism": ["クローラー", "走る"],
-                "stars": 1
+                "stars": 1,
+                "likes": 0
             },
             {
                 "title": "ロボットハンド",
@@ -134,7 +135,8 @@ def seed_data():
                 "text_png": "uploads/ロボットハンド.png",
                 "context": "めっちゃ簡単なロボットハンド。UFOキャッチャーなどでつかえるかも？",
                 "mechanism": ["リンク機構"],
-                "stars": 1
+                "stars": 1,
+                "likes": 0
             },
             {
                 "title": "たじたじくん",
@@ -142,7 +144,8 @@ def seed_data():
                 "text_png": "uploads/たじたじくん.png",
                 "context": "歩きも走りもしない、不思議なロボット。一方向にしか回転しないよ。",
                 "mechanism": ["ラチェット", "すり足"],
-                "stars": 1
+                "stars": 1,
+                "likes": 0
             },
             {
                 "title": "エレベーター",
@@ -150,7 +153,8 @@ def seed_data():
                 "text_png": "uploads/エレベーター.png",
                 "context": "ラックギアを使ったエレベーター。簡単にレールを伸ばせるよ。",
                 "mechanism": ["ラックギア", "昇降機構"],
-                "stars": 2
+                "stars": 2,
+                "likes": 0
             },
             {
                 "title": "ターンテーブル",
@@ -158,7 +162,8 @@ def seed_data():
                 "text_png": "uploads/ターンテーブル.png",
                 "context": "回転する土台だね。",
                 "mechanism": ["ターンテーブル", "回転する台"],
-                "stars": 2
+                "stars": 2,
+                "likes": 0
             },
             {
                 "title": "モノレール",
@@ -166,7 +171,8 @@ def seed_data():
                 "text_png": "uploads/モノレール.png",
                 "context": "カラーセンサーを使って駅に止まれるよ。輪ゴムではなく、ベベルギアを使ってみよう‼",
                 "mechanism": ["べべルギア", "カラーセンサー"],
-                "stars": 3
+                "stars": 3,
+                "likes": 0
             },
             {
                 "title": "ステアリングカー",
@@ -174,7 +180,8 @@ def seed_data():
                 "text_png": "uploads/ステアリングカー.png",
                 "context": "タイヤ4つだけど曲がれるくるま。プログラムが難しいかも",
                 "mechanism": ["べべルギア", "走る", "ターンテーブル"],
-                "stars": 3
+                "stars": 3,
+                "likes": 0
             },
             {
                 "title": "ライントレース",
@@ -182,7 +189,8 @@ def seed_data():
                 "text_png": "uploads/ライントレース.png",
                 "context": "モーター1つで左右に曲がれるよ。走らせるラインが必要だよ。",
                 "mechanism": ["べべルギア", "カラーセンサー", "ライントレース"],
-                "stars": 3
+                "stars": 3,
+                "likes": 0
             },
             {
                 "title": "二足歩行ロボット",
@@ -190,7 +198,8 @@ def seed_data():
                 "text_png": "uploads/二足歩行ロボット.png",
                 "context": "重心を移動させながらペンギン歩き。",
                 "mechanism": ["歩行", "重心移動"],
-                "stars": 3
+                "stars": 3,
+                "likes": 0
             },
             {
                 "title": "六足歩行ロボット",
@@ -198,7 +207,8 @@ def seed_data():
                 "text_png": "uploads/六足歩行ロボット.png",
                 "context": "6本の足でとことこ歩くよ。上級者向けだね‼",
                 "mechanism": ["歩行", "リンク機構", "ノブホイールギア"],
-                "stars": 4
+                "stars": 4,
+                "likes": 0
             },
         ]
         for text_data in base_texts:
@@ -208,7 +218,8 @@ def seed_data():
                 text_png=text_data["text_png"],
                 context=text_data["context"],
                 mechanism=", ".join(text_data["mechanism"]),
-                stars=text_data["stars"]
+                stars=text_data["stars"],
+                likes=text_data["likes"]
             )
             db.session.add(new_text)
 

@@ -78,3 +78,31 @@ function clearAllCheckboxes() {
     
     document.getElementById('search-form').submit();
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    const likeButtons = document.querySelectorAll('.like-button');
+
+    likeButtons.forEach(button => {
+        button.addEventListener('click', async (event) => {
+            const textId = button.getAttribute('data-text-id');
+            try {
+                const response = await fetch(`/like/${textId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    const likesElement = document.getElementById(`likes-${textId}`);
+                    likesElement.innerText = data.likes;
+                } else {
+                    console.error('いいねの送信に失敗しました。');
+                }
+            } catch (error) {
+                console.error('通信エラーが発生しました:', error);
+            }
+        });
+    });
+});

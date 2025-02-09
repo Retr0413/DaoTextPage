@@ -42,13 +42,13 @@
                     <a href="#">その他のリンク</a>
                 </div>
             </div>
-            <div class="nav-item" onclick="toggleDropdown(this)">
+            <!-- <div class="nav-item" onclick="toggleDropdown(this)">
                 <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
                 ログイン
                 <div class="dropdown-menu">
                     <a href="{{ url_for('auth.login') }}">ログイン</a>
                 </div>
-            </div>
+            </div> -->
         </div>
     </header>
 
@@ -95,6 +95,10 @@
         <div class="section-title">News</div>
         <div class="news-section">
             <div class="news-content">
+                <div class="news-item">
+                    <div class="news-date">2025.02.10</div>
+                    <p class="news-text">いいね機能を実装！お気に入りのテキストにいいねをしてみよう！</p>
+                </div>
                 <div class="news-item">
                     <div class="news-date">2025.02.02</div>
                     <img src="{{ url_for('static', filename='uploads/だおだおテレビ.png') }}" alt="daodaoterebi" class="news-image">
@@ -169,6 +173,13 @@
                             </label>
                             {% endfor %}
                         </div>
+                        <h3>絞り込みオプション</h3>
+                        <div class="button">
+                            <label>
+                                <input type="checkbox" name="sort_by_likes" id="sort-by-likes" onchange="sortByLikes()">
+                                いいね数が多い順
+                            </label>
+                        </div>
                     </div>
                 </details>
             </div>
@@ -190,6 +201,10 @@
                         {% endfor %}
                     </small>
                     <p>{{ text.context }}</p>
+                    <div class="like-container">
+                        <p>いいね数：<span id="likes-{{ text.id }}">{{ text.likes }}</span></p>
+                        <button class="like-button" data-text-id="{{ text.id }}">いいね！</button>
+                    </div>                    
                     <a href="{{ url_for('main.text_detail', id=text.id) }}" class="button-50" data-stars="{{ star }}">
                         テキストを見る
                     </a>
