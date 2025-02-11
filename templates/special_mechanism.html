@@ -33,29 +33,35 @@
                 <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
                 リンク
                 <div class="dropdown-menu">
-                    <a href="">だおだお作成作品</a>
+                    <a href="{{ url_for('main.public_posts') }}">だおだお作成作品</a>
                     <a href="https://www.lego.com/ja-jp">LEGO公式サイト</a>
                     <a href="https://akiyuki.jp/">外部リンク1</a>
+                    {% if session.get('user_type') %}
+                    <a href="{{ url_for('main.public_post') }}">投稿</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="nav-item" onclick="toggleDropdown(this)">
                 <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
                 作成依頼リンク
                 <div class="dropdown-menu">
-                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">Googleフォーム</a>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作成依頼Googleフォーム</a>
                     <a href="#">その他のリンク</a>
                 </div>
             </div>
-            <!-- <div class="nav-item" onclick="toggleDropdown(this)">
-                <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
-                ログイン
-                <div class="dropdown-menu">
-                    <a href="{{ url_for('auth.login') }}">ログイン</a>
-                </div>
-            </div> -->
+        </div>
+        <div class="login-item">
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('auth.logout') }}">
+                    <img src="{{ url_for('static', filename='uploads/ログアウト.png') }}" alt="ログアウト" class="nav-icon">
+                </a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">
+                    <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
+                </a>
+            {% endif %}
         </div>
     </header>
-
     <main class="container py-5">
         <h1 class="text-center">特殊機構</h1>
 

@@ -106,6 +106,7 @@ header {
 .nav-item.active .dropdown-menu {
   display: flex;
 }
+.header .login-item { margin-left: auto; cursor: pointer; padding: 10px; position: relative; }
 
 #mechanismTabs {
   display: flex;

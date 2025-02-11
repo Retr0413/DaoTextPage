@@ -2,21 +2,116 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/mainstyle.css') }}">
     <title>Public Posts</title>
 </head>
 <body>
+    <header class="header">
+        <div class="logo">
+            <a href="{{ url_for('main.index') }}">
+                <img src="{{ url_for('static', filename='uploads/だおだおロゴ.png') }}" alt="だおだおテキスト" class="triangle-logo">
+            </a>
+        </div>
+        <div class="nav">
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/歯車.png') }}" alt="説明" class="nav-icon">
+                機構の説明
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('main.mechanism') }}">ロボット基礎知識</a>
+                    <a href="{{ url_for('main.gears') }}">ギアの種類</a>
+                    <a href="{{ url_for('main.movement') }}">移動方式</a>
+                    <a href="{{ url_for('main.basic_mechanisms') }}">基本機構</a>
+                    <a href="{{ url_for('main.sensors') }}">センサー</a>
+                    <a href="{{ url_for('main.special_mechanisms') }}">特殊機構</a>
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
+                リンク
+                <div class="dropdown-menu">
+                    <a href="{{ url_for('main.public_posts') }}">だおだお作成作品</a>
+                    <a href="https://www.lego.com/ja-jp">LEGO公式サイト</a>
+                    <a href="https://akiyuki.jp/">外部リンク1</a>
+                    {% if session.get('user_type') %}
+                    <a href="{{ url_for('main.public_post') }}">投稿</a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="nav-item" onclick="toggleDropdown(this)">
+                <img src="{{ url_for('static', filename='uploads/作成依頼リンク.png') }}" alt="依頼" class="nav-icon">
+                作成依頼リンク
+                <div class="dropdown-menu">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作成依頼Googleフォーム</a>
+                    <a href="#">その他のリンク</a>
+                </div>
+            </div>
+        </div>
+        <div class="login-item">
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('auth.logout') }}">
+                    <img src="{{ url_for('static', filename='uploads/ログアウト.png') }}" alt="ログアウト" class="nav-icon">
+                </a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">
+                    <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
+                </a>
+            {% endif %}
+        </div>
+    </header>
+
     <h1>投稿された作品一覧</h1>
     {% for post in posts %}
     <div>
         <h2>{{ post.creator_name }}</h2>
-        <img src="{{ url_for('static', filename=post.image_path) }}" alt="Image" style="max-width: 300px;">
-
+        <img src="{{ url_for('static', filename='uploads/' ~ post.image_path) }}" alt="Image" style="max-width: 300px;">
         {% if session.get('user_type') == 'User' %}
-            <form action="{{ url_for('main.delete_post', id=post.id) }}" method="POST" style="display:inline;">
-                <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
-            </form>
+        <form action="{{ url_for('main.delete_post', id=post.id) }}" method="POST" style="display:inline;">
+        <button type="submit" onclick="return confirm('本当に削除しますか？')">削除</button>
+        </form>
         {% endif %}
     </div>
     {% endfor %}
+
+    <footer class="footer">
+        <nav class="footer-nav">
+            <div class="text_item">
+                <a href="#">サイトマップ</a>
+                <ul>
+                    <li><a href="{{ url_for('main.index') }}">テキストページ</a></li>
+                    <li><a href="{{ url_for('main.mechanism') }}">機構の説明</a></li>
+                </ul>
+            </div>
+            <a href="{{ url_for('main.index') }}">トップ</a>
+            <div class="text_item">
+                <a href="#">リンク
+                    <ul>
+                        <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSdLXEhs-E4C8cFYCvby7iktfm9dJuClfRFH-XbwikIdS_pWBg/viewform">作品作成依頼</a></li>
+                    </ul>
+                </a>
+            </div>
+            <div class="text_item">
+                <a href="#">だおだおテキスト</a>
+                <div>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=1) }}">クローラー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=2) }}">ロボットハンド</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=3) }}">たじたじくん</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=4) }}">エレベーター</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=5) }}">ターンテーブル</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="{{ url_for('main.text_detail', id=6) }}">モノレール</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=7) }}">ステアリングカー</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=8) }}">ライントレース</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=9) }}">二足歩行ロボット</a></li>
+                        <li><a href="{{ url_for('main.text_detail', id=10) }}">六足歩行ロボット</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <h1 class="footerbottom">@2025 DaoDao_Text_Page</h1>
+    </footer>    
+
+    <script src="{{ url_for('static', filename='javascript/mainscript.js') }}"></script>
 </body>
 </html>

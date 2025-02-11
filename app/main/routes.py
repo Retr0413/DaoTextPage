@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory, make_response, jsonify
-from app.main.models import db, Text
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, send_from_directory, make_response, jsonify, current_app
+from app.main.models import db, Text, PublicPost
 from werkzeug.utils import secure_filename
 from PyPDF2 import PdfFileReader
 import os
@@ -25,6 +25,52 @@ def login_required(func):
         return func(*args, **kwargs)
     wrapper.__name__ = func.__name__
     return wrapper
+
+@main_bp.route('/public_post', methods=['GET', 'POST'])
+def public_post():
+    if 'user_type' not in session:
+        flash('ログインしてください。')
+        return redirect(url_for('main.login'))
+
+    if request.method == 'POST':
+        creator_name = request.form['creator_name']
+        image_file = request.files.get('image_file')
+        if not creator_name or not image_file:
+            flash('必要な情報を入力してください。')
+            return redirect(url_for('main.public_post'))
+        
+        filename = secure_filename(image_file.filename)
+        upload_path = os.path.join(current_app.config.get("UPLOAD_FOLDER", "static/uploads"), filename)
+        image_file.save(upload_path)
+
+        new_post = PublicPost(creator_name=creator_name, image_path=filename)
+        db.session.add(new_post)
+        db.session.commit()
+
+        flash('新しい投稿が追加されました。')
+        return redirect(url_for('main.public_post'))
+    
+    return render_template('public_post.html')
+
+@main_bp.route('/public_posts')
+def public_posts():
+    posts = PublicPost.query.order_by(PublicPost.id.desc()).all()
+    return render_template('public_posts.html', posts=posts)
+
+@main_bp.route('/delete_post/<int:id>', methods=['POST'])
+def delete_post(id):
+    if session.get('user_type') != 'User':
+        flash("権限がありません")
+        return redirect(url_for('main.public_post'))
+    post = PublicPost.query.get(id)
+    if post:
+        db.session.delete(post)
+        db.session.commit()
+        flash('投稿を削除しました。')
+    else:
+        flash('投稿が見つかりません。')
+    
+    return redirect(url_for('main.public_posts'))
 
 @main_bp.route('/set_pdf_cookie')
 def set_pdf_cookie():
@@ -52,6 +98,7 @@ def uploaded_file(filename):
 @main_bp.route('/')
 def index():
     selected_mechanisms = request.args.getlist('mechanisms')
+    sort_by_likes = request.args.get('sort_by_likes') == 'on'
     print(f"Selected mechanisms: {selected_mechanisms}")  # デバッグ用
     texts = Text.query
     if selected_mechanisms:
@@ -62,6 +109,10 @@ def index():
     texts_by_star = {}
     for text in texts:
         texts_by_star.setdefault(text.stars, []).append(text)
+
+    if sort_by_likes:
+        for star in texts_by_star:
+            texts_by_star[star] = sorted(texts_by_star[star], key=lambda x: x.likes, reverse=True)
 
     return render_template('index.html', texts_by_star=texts_by_star, selected_mechanism=selected_mechanisms)
 
@@ -126,6 +177,15 @@ def text_detail(id):
 def like_text(id):
     text = Text.query.get_or_404(id)
     text.likes += 1
+    db.session.commit()
+    return jsonify({'id': text.id, 'likes': text.likes})
+
+@main_bp.route('/reset_like/<int:id>', methods=['POST'])
+def reset_like_text(id):
+    if session.get('user_type') != 'User':
+        return jsonify({'error': '権限がありません'}), 403
+    text = Text.query.get_or_404(id)
+    text.likes = 0
     db.session.commit()
     return jsonify({'id': text.id, 'likes': text.likes})
 

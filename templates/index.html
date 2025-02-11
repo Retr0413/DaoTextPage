@@ -29,9 +29,12 @@
                 <img src="{{ url_for('static', filename='uploads/リンク.png') }}" alt="リンク" class="nav-icon">
                 リンク
                 <div class="dropdown-menu">
-                    <a href="">だおだお作成作品</a>
+                    <a href="{{ url_for('main.public_posts') }}">だおだお作成作品</a>
                     <a href="https://www.lego.com/ja-jp">LEGO公式サイト</a>
                     <a href="https://akiyuki.jp/">外部リンク1</a>
+                    {% if session.get('user_type') %}
+                    <a href="{{ url_for('main.public_post') }}">投稿</a>
+                    {% endif %}
                 </div>
             </div>
             <div class="nav-item" onclick="toggleDropdown(this)">
@@ -42,13 +45,17 @@
                     <a href="#">その他のリンク</a>
                 </div>
             </div>
-            <!-- <div class="nav-item" onclick="toggleDropdown(this)">
-                <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
-                ログイン
-                <div class="dropdown-menu">
-                    <a href="{{ url_for('auth.login') }}">ログイン</a>
-                </div>
-            </div> -->
+        </div>
+        <div class="login-item">
+            {% if 'user_id' in session %}
+                <a href="{{ url_for('auth.logout') }}">
+                    <img src="{{ url_for('static', filename='uploads/ログアウト.png') }}" alt="ログアウト" class="nav-icon">
+                </a>
+            {% else %}
+                <a href="{{ url_for('auth.login') }}">
+                    <img src="{{ url_for('static', filename='uploads/ログイン.png') }}" alt="ログイン" class="nav-icon">
+                </a>
+            {% endif %}
         </div>
     </header>
 
@@ -176,7 +183,7 @@
                         <h3>絞り込みオプション</h3>
                         <div class="button">
                             <label>
-                                <input type="checkbox" name="sort_by_likes" id="sort-by-likes" onchange="sortByLikes()">
+                                <input type="checkbox" name="sort_by_likes" id="sort-by-likes" onchange="submitForm()">
                                 いいね数が多い順
                             </label>
                         </div>
@@ -204,6 +211,11 @@
                     <div class="like-container">
                         <p>いいね数：<span id="likes-{{ text.id }}">{{ text.likes }}</span></p>
                         <button class="like-button" data-text-id="{{ text.id }}">いいね！</button>
+                        {% if session.get('user_type') == 'User' %}
+                        <form action="{{ url_for('main.reset_like_text', id=text.id) }}" method="POST" style="display:inline;" onsubmit="return confirm('いいねをリセットしますか？')">
+                        <button type="submit">いいねリセット</button>
+                        </form>
+                        {% endif %}
                     </div>                    
                     <a href="{{ url_for('main.text_detail', id=text.id) }}" class="button-50" data-stars="{{ star }}">
                         テキストを見る

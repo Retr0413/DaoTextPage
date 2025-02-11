@@ -46,6 +46,8 @@ header {
     color: #FFD700;
 }
 
+.header .login-item { margin-left: auto; cursor: pointer; padding: 10px; position: relative; }
+
 .dropdown-menu {
     display: none;
     position: absolute;
