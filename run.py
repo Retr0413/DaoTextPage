@@ -8,7 +8,8 @@ app = create_app()
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == "__main__":
-    port = int(os.getenv("FLASK_PORT", 5000))  
+    port = int(os.getenv("FLASK_PORT", 5000))  # `PORT` ではなく `FLASK_PORT`
+
     db_path = os.path.join(app.instance_path, 'app.db')
     os.makedirs(app.instance_path, exist_ok=True)
 
@@ -17,4 +18,5 @@ if __name__ == "__main__":
             db.create_all()
             print(f"Database initialized at: {db_path}")
 
+    print(f"Starting Flask server on port {port}...")
     app.run(host="0.0.0.0", port=port)

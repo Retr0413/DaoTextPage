@@ -5,14 +5,23 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"  # Nginx がリスン
-      - "5000:5000"  # Flask がリスン
+    expose:
+      - "5000"  
     volumes:
       - .:/app
     environment:
       FLASK_ENV: "production"
       FLASK_DEBUG: "False"
       SECRET_KEY: "mysecretkey"
-      PORT: "5000"  # Flask を 5000 で起動
+      FLASK_PORT: "5000"  
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app  
     restart: unless-stopped
