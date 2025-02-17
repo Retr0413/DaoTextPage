@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"  # Flask を 8080 で動かす
+      - "8080:8080"  # Flask & Nginx 両方を 8080 でリスン
     volumes:
       - .:/app
     environment:

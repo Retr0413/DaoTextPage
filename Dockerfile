@@ -10,15 +10,15 @@ RUN apt-get update && apt-get install -y nginx \
 
 COPY . .
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
 RUN pip install --upgrade pip
 RUN pip install --no-cache-dir -r requirements.txt
 
 ENV FLASK_APP=run.py
 ENV FLASK_ENV=production
-ENV PORT=8080 
+ENV PORT=8080  
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "nginx -g 'daemon off;' & flask run --host=0.0.0.0 --port=$PORT"]
+CMD ["sh", "-c", "flask run --host=0.0.0.0 --port=$PORT & nginx -g 'daemon off;'"]
