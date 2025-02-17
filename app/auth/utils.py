@@ -5,3 +5,10 @@ def hash_password(password):
 
 def verify_password(password_hash, password):
     return check_password_hash(password_hash, password)
+
+from google.cloud import storage
+
+BUCKET_NAME = "daodaotext-data"
+
+def get_gcs_url(filename):
+    return f"https://storage.googleapis.com/{BUCKET_NAME}/{filename}"

@@ -11,7 +11,7 @@ services:
       - .:/app
     environment:
       FLASK_ENV: "production"
-      FLASK_DEBUG: "False"
+      FLASK_DEBUG: "True"
       SECRET_KEY: "mysecretkey"
       PORT: "8080"  # Cloud Run では 8080 を指定するのが推奨
     restart: unless-stopped

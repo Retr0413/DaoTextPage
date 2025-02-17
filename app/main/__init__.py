@@ -122,7 +122,7 @@ def seed_data():
         base_texts = [
             {
                 "title": "クローラー",
-                "pdf_path": "uploads/星1クローラー.pdf",
+                "pdf_path": "uploads/星1_crawler.pdf",
                 "text_png": "uploads/クローラー.png",
                 "context": "みんな大好きクローラー。凸凹な地形も走れる",
                 "mechanism": ["クローラー", "走る"],
@@ -131,7 +131,7 @@ def seed_data():
             },
             {
                 "title": "ロボットハンド",
-                "pdf_path": "uploads/星1ロボットハンド.pdf",
+                "pdf_path": "uploads/星1_robot_hand.pdf",
                 "text_png": "uploads/ロボットハンド.png",
                 "context": "めっちゃ簡単なロボットハンド。UFOキャッチャーなどでつかえるかも？",
                 "mechanism": ["リンク機構"],
@@ -140,7 +140,7 @@ def seed_data():
             },
             {
                 "title": "たじたじくん",
-                "pdf_path": "uploads/星1たじたじくん.pdf",
+                "pdf_path": "uploads/星1_tajitajikun.pdf",
                 "text_png": "uploads/たじたじくん.png",
                 "context": "歩きも走りもしない、不思議なロボット。一方向にしか回転しないよ。",
                 "mechanism": ["ラチェット", "すり足"],
@@ -149,7 +149,7 @@ def seed_data():
             },
             {
                 "title": "エレベーター",
-                "pdf_path": "uploads/星2エレベーター.pdf",
+                "pdf_path": "uploads/星2_elevator.pdf",
                 "text_png": "uploads/エレベーター.png",
                 "context": "ラックギアを使ったエレベーター。簡単にレールを伸ばせるよ。",
                 "mechanism": ["ラックギア", "昇降機構"],
@@ -158,7 +158,7 @@ def seed_data():
             },
             {
                 "title": "ターンテーブル",
-                "pdf_path": "uploads/星2ターンテーブル.pdf",
+                "pdf_path": "uploads/星2_turntable.pdf",
                 "text_png": "uploads/ターンテーブル.png",
                 "context": "回転する土台だね。",
                 "mechanism": ["ターンテーブル", "回転する台"],
@@ -167,7 +167,7 @@ def seed_data():
             },
             {
                 "title": "モノレール",
-                "pdf_path": "uploads/星3モノレール.pdf",
+                "pdf_path": "uploads/星3_monorail.pdf",
                 "text_png": "uploads/モノレール.png",
                 "context": "カラーセンサーを使って駅に止まれるよ。輪ゴムではなく、ベベルギアを使ってみよう‼",
                 "mechanism": ["べべルギア", "カラーセンサー"],
@@ -176,7 +176,7 @@ def seed_data():
             },
             {
                 "title": "ステアリングカー",
-                "pdf_path": "uploads/星3ステアリングカー.pdf",
+                "pdf_path": "uploads/星3_steering_car.pdf",
                 "text_png": "uploads/ステアリングカー.png",
                 "context": "タイヤ4つだけど曲がれるくるま。プログラムが難しいかも",
                 "mechanism": ["べべルギア", "走る", "ターンテーブル"],
@@ -185,7 +185,7 @@ def seed_data():
             },
             {
                 "title": "ライントレース",
-                "pdf_path": "uploads/星3ライントレース.pdf",
+                "pdf_path": "uploads/星3_line_trace.pdf",
                 "text_png": "uploads/ライントレース.png",
                 "context": "モーター1つで左右に曲がれるよ。走らせるラインが必要だよ。",
                 "mechanism": ["べべルギア", "カラーセンサー", "ライントレース"],
@@ -194,7 +194,7 @@ def seed_data():
             },
             {
                 "title": "二足歩行ロボット",
-                "pdf_path": "uploads/星3二足歩行ロボット.pdf",
+                "pdf_path": "uploads/星3_nisoku_robot.pdf",
                 "text_png": "uploads/二足歩行ロボット.png",
                 "context": "重心を移動させながらペンギン歩き。",
                 "mechanism": ["歩行", "重心移動"],
@@ -203,7 +203,7 @@ def seed_data():
             },
             {
                 "title": "六足歩行ロボット",
-                "pdf_path": "uploads/星4六足歩行ロボット.pdf",
+                "pdf_path": "uploads/星4_rokusoku_robot.pdf",
                 "text_png": "uploads/六足歩行ロボット.png",
                 "context": "6本の足でとことこ歩くよ。上級者向けだね‼",
                 "mechanism": ["歩行", "リンク機構", "ノブホイールギア"],
