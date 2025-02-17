@@ -8,7 +8,7 @@ app = create_app()
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 5000))
+    port = int(os.getenv("PORT", 8080))
 
     db_path = os.path.join(app.instance_path, 'app.db')
     os.makedirs(app.instance_path, exist_ok=True)
