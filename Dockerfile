@@ -17,8 +17,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 ENV FLASK_APP=run.py
 ENV FLASK_ENV=production
-ENV PORT=8080  
+ENV PORT=8080 
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "service nginx start && flask run --host=0.0.0.0 --port=$PORT"]
+CMD ["sh", "-c", "nginx -g 'daemon off;' & flask run --host=0.0.0.0 --port=$PORT"]
