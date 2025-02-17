@@ -170,7 +170,8 @@ def add():
 @main_bp.route('/text/<int:id>')
 def text_detail(id):
     text = Text.query.get_or_404(id)
-    return render_template('text.html', text=text)
+    pdf_url = f"/uploads/{text.pdf_path.split('/')[-1]}"
+    return render_template('text.html', text=text, pdf_url=pdf_url)
 
 @main_bp.route('/like/<int:id>', methods=['POST'])
 def like_text(id):

@@ -1,15 +1,24 @@
-version: '3.8'
 services:
   app:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "8080:8080"
+    expose:
+      - "5000"  # Nginx から Flask に接続するためにポート 5000 を開放
     volumes:
       - .:/app
     environment:
-      FLASK_ENV: "development"    # 必要に応じて変更
-      FLASK_DEBUG: "True"         # 必要に応じて変更
-      SECRET_KEY: "mysecretkey"   # 必要に応じて変更
+      FLASK_ENV: "development"
+      FLASK_DEBUG: "True"
+      SECRET_KEY: "mysecretkey"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - app  # nginx だけが app に依存する
     restart: unless-stopped
