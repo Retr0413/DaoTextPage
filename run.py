@@ -8,8 +8,7 @@ app = create_app()
 logging.basicConfig(level=logging.DEBUG)
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8080))
-
+    port = int(os.getenv("FLASK_PORT", 5000))  
     db_path = os.path.join(app.instance_path, 'app.db')
     os.makedirs(app.instance_path, exist_ok=True)
 
