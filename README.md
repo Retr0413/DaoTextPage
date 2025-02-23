@@ -26,7 +26,7 @@
 
 ## 使用技術スタック
 
-![技術スタック相関図](output.png)
+![技術スタック相関図](tech.png)
 
 - **バックエンド**：Flask (2.3.3)
 - **データベース**：SQLite (3.43.2) & Google Cloud Storage
