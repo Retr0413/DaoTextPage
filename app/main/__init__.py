@@ -49,22 +49,6 @@ limiter = Limiter(
 
 # talisman = Talisman(content_security_policy=csp)
 
-# def wait_for_db(app):
-#     """Wait for the database to be ready."""
-#     retries = 10
-#     while retries > 0:
-#         try:
-#             with app.app_context():
-#                 # 単純なクエリを投げてDBと通信できるか確認
-#                 db.session.execute(text('SELECT 1'))  
-#             print("Database is ready!")
-#             return
-#         except OperationalError:
-#             retries -= 1
-#             print(f"Database not ready, retrying... ({5 - retries}/5)")
-#             time.sleep(3)
-#     raise Exception("Database is not ready after 5 retries")
-
 def create_app():
     app = Flask(
         __name__,
