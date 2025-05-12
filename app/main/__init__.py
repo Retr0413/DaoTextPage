@@ -194,6 +194,15 @@ def seed_data():
                 "stars": 4,
                 "likes": 0
             },
+            {
+                "title": "RTステアリングカー",
+                "pdf_path": "uploads/星4_RT_steering_car.pdf",
+                "text_png": "uploads/RTステアリングカー.png",
+                "context": "テクニカル向け。拡張セットが必要になるよ。",
+                "mechanism": ["ステアリング", "走る", "ジャイロセンサー", "ディファレンシャルギア"],
+                "stars": 4,
+                "likes": 0
+            }
         ]
         for text_data in base_texts:
             new_text = Text(
