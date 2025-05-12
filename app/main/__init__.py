@@ -49,22 +49,6 @@ limiter = Limiter(
 
 # talisman = Talisman(content_security_policy=csp)
 
-# def wait_for_db(app):
-#     """Wait for the database to be ready."""
-#     retries = 10
-#     while retries > 0:
-#         try:
-#             with app.app_context():
-#                 # 単純なクエリを投げてDBと通信できるか確認
-#                 db.session.execute(text('SELECT 1'))  
-#             print("Database is ready!")
-#             return
-#         except OperationalError:
-#             retries -= 1
-#             print(f"Database not ready, retrying... ({5 - retries}/5)")
-#             time.sleep(3)
-#     raise Exception("Database is not ready after 5 retries")
-
 def create_app():
     app = Flask(
         __name__,
@@ -210,6 +194,15 @@ def seed_data():
                 "stars": 4,
                 "likes": 0
             },
+            {
+                "title": "RTステアリングカー",
+                "pdf_path": "uploads/星4_RT_steering_car.pdf",
+                "text_png": "uploads/RTステアリングカー.png",
+                "context": "テクニカル向け。拡張セットが必要になるよ。",
+                "mechanism": ["ステアリング", "走る", "ジャイロセンサー", "ディファレンシャルギア"],
+                "stars": 4,
+                "likes": 0
+            }
         ]
         for text_data in base_texts:
             new_text = Text(
